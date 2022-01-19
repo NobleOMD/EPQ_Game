@@ -1,8 +1,8 @@
 #pragma once
 #include <include/raylib-cpp.hpp>
 
-#include "../settings.hpp"
-#include "../game.hpp"
+#include "settings.hpp"
+#include "game.hpp"
 
 // Entity parent class
 //---------------------------------------------------------------------------------

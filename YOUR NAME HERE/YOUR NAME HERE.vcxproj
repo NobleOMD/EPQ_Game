@@ -148,16 +148,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\entities\player.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\entities\entity.cpp" />
+    <ClCompile Include="src\entities.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\entities\entities.hpp" />
-    <ClInclude Include="src\entities\player.hpp" />
     <ClInclude Include="src\game.hpp" />
-    <ClInclude Include="src\entities\entity.hpp" />
+    <ClInclude Include="src\entities.hpp" />
     <ClInclude Include="src\settings.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

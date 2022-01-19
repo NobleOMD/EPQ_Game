@@ -18,13 +18,10 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\entities\entity.cpp">
+    <ClCompile Include="src\entities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entities\player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,16 +29,10 @@
     <ClInclude Include="src\settings.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\entities\entity.hpp">
+    <ClInclude Include="src\entities.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\game.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\entities\player.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\entities\entities.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

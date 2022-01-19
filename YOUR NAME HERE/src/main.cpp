@@ -1,7 +1,7 @@
 #include <include/raylib-cpp.hpp> // Cpp headers that include class functionality
 
 #include "settings.hpp" // My global variables
-#include "entities/entities.hpp" // Entities include header
+#include "entities.hpp" // Entities include header
 
 int main() {
     // Initialization
