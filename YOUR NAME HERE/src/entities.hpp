@@ -6,7 +6,8 @@
 
 // Entity parent class
 //---------------------------------------------------------------------------------
-class Entity {
+class Entity
+{
 private:
 	// Size, position, grid position, colour/texture
 	raylib::Vector2 size; // Entity is one tile wide and one high
@@ -24,18 +25,28 @@ public:
 	void move(raylib::Vector2 translation);
 
 	// Draw
-	void draw();
+	void drawFilled();
 	void drawOutline(int thickness);
 };
 
-// Player child class
+// PlayerCharacter child class
 //---------------------------------------------------------------------------------
-class Player : public Entity {
+class PlayerCharacter: public Entity
+{
 private:
+	int outlineSize = 3;
+
+	float health = 100.0f;
+	int xp = 0;
+	int level = 0;
+
+	void playerInput(); // Player keyboard input to move / make an action
 
 public:
-	Player(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colour);
+	PlayerCharacter(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colour);
 
-	// Player keyboard input to move
-	void move();
+	int state = 0;
+
+	void update(); // Return a value depending on state
+	void draw();
 };

@@ -4,56 +4,73 @@
 //---------------------------------------------------------------------------------
 
 Entity::Entity(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colour)
-    :
-    size(size),
-    gridPosition(gridPos),
-    entityColour(colour)
+	:
+	size(size),
+	gridPosition(gridPos),
+	entityColour(colour)
 {}
 
 
-raylib::Vector2 Entity::getPosition() {
-    return gridPosition * settings::tileSize;
+raylib::Vector2 Entity::getPosition()
+{
+	return gridPosition * settings::tileSize;
 }
 
-void Entity::move(raylib::Vector2 translation) {
+void Entity::move(raylib::Vector2 translation)
+{
 
-    gridPosition += translation; // Move by translation vector
+	gridPosition += translation; // Move by translation vector
 
-    clampWithin(settings::gridSize, gridPosition, size); // Clamp within the overall grid
+	clampWithin(settings::gridSize, gridPosition, size); // Clamp within the overall grid
 
-    rectangle.SetPosition(getPosition()); // Update the onscreen position
+	rectangle.SetPosition(getPosition()); // Update the onscreen position
 
 }
 
-void Entity::draw() {
+void Entity::drawFilled()
+{
 	rectangle.Draw(entityColour);
 }
 
 void Entity::drawOutline(int thickness)
 {
-    rectangle.DrawLines(entityColour, thickness);
+	rectangle.DrawLines(entityColour, thickness);
 }
 
-// Player child class
+// PlayerCharacter child class
 //---------------------------------------------------------------------------------
 
-Player::Player(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colour)
-    :
-    Entity(size, gridPos, colour)
+PlayerCharacter::PlayerCharacter(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colour)
+	:
+	Entity(size, gridPos, colour)
 {}
 
-void Player::move()
+
+void PlayerCharacter::playerInput()
 {
-    if (IsKeyPressed(KEY_W)) {
-        Entity::move({ 0, -1 });
-    }
-    if (IsKeyPressed(KEY_A)) {
-        Entity::move({ -1, 0 });
-    }
-    if (IsKeyPressed(KEY_S)) {
-        Entity::move({ 0, 1 });
-    }
-    if (IsKeyPressed(KEY_D)) {
-        Entity::move({ 1, 0 });
-    }
+	if (IsKeyPressed(KEY_W)) {
+		Entity::move({ 0, -1 });
+	}
+	if (IsKeyPressed(KEY_A)) {
+		Entity::move({ -1, 0 });
+	}
+	if (IsKeyPressed(KEY_S)) {
+		Entity::move({ 0, 1 });
+	}
+	if (IsKeyPressed(KEY_D)) {
+		Entity::move({ 1, 0 });
+	}
+}
+
+void PlayerCharacter::update()
+{
+	playerInput();
+
+	// State updates
+	if (health < 0) { state = -1; } // -1 = 0 HP
+}
+
+void PlayerCharacter::draw()
+{
+	drawOutline(outlineSize);
 }
