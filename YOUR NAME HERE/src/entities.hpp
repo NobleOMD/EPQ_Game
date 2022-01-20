@@ -11,15 +11,19 @@ class Entity
 private:
 	// Size, position, grid position, colour/texture
 	raylib::Vector2 size; // Entity is one tile wide and one high
+	raylib::Vector2 getSize();
 
 	raylib::Vector2 gridPosition; // Initial starting position of player at 1, 1
 	raylib::Vector2 getPosition();
 
 	raylib::Rectangle rectangle{ getPosition(), size * settings::tileSize }; // The rectange the player is represented as
-	raylib::Color entityColour = BLUE;
+	raylib::Color entityColour;
+	raylib::Vector2 texturePos;
+	raylib::Rectangle textureRect{ texturePos, getSize() };
 
 public:
 	Entity(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colour);
+	Entity(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Vector2 texturePos);
 
 	// Move
 	void move(raylib::Vector2 translation);
@@ -27,6 +31,7 @@ public:
 	// Draw
 	void drawFilled();
 	void drawOutline(int thickness);
+	void drawTexture(raylib::Texture &texture);
 };
 
 // PlayerCharacter child class
@@ -34,6 +39,10 @@ public:
 class PlayerCharacter: public Entity
 {
 private:
+	raylib::Texture entityTextures{ "src/textures/0x72_DungeonTilesetII_v1.4.png" };
+	enum drawStates{ colour, texture };
+	int drawState;
+
 	int outlineSize = 3;
 
 	float health = 100.0f;
@@ -44,6 +53,7 @@ private:
 
 public:
 	PlayerCharacter(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colour);
+	PlayerCharacter(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Vector2 texturePos);
 
 	int state = 0;
 
