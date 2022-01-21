@@ -10,8 +10,15 @@ int main() {
 	raylib::Window window(settings::getScaledSize().x, settings::getScaledSize().y, settings::title);
 	window.SetState(FLAG_VSYNC_HINT); // Use V-Sync to autodetect and run at monitor refresh rate
 
+	// Texture that the game is rendered to, this is then scaled to the window size
 	raylib::RenderTexture scalerCanvas{(int) settings::screenSize.x, (int) settings::screenSize.y};
-	PlayerCharacter player{{1, 2}, {25, 15}, {128, 68}}; // Initialise a player with texture
+
+	PlayerCharacter player(
+		raylib::Vector2{1, 2},							// Size in tiles
+		raylib::Vector2{25, 15},						// Position on tilegrid
+		"textures/0x72_DungeonTilesetII_v1.4.png",		// Texture image file
+		raylib::Vector2{128, 68}						// Location of texture in image
+	);
 	//--------------------------------------------------------------------------------------
 
 	// Main game loop
@@ -23,9 +30,10 @@ int main() {
 		// Toggle full screen on F key pressed
 		if (IsKeyPressed(KEY_F)) { game::setFullscreen(window, (window.IsFullscreen())); };
 		//----------------------------------------------------------------------------------
-
+	
 		// Draw
 		//----------------------------------------------------------------------------------
+		// Draw the game the scale canvas 
 		scalerCanvas.BeginMode();
 		{
 			window.ClearBackground(settings::backgroundColour);
@@ -33,9 +41,12 @@ int main() {
 		}
 		scalerCanvas.EndMode();
 
+		// Stretch the canvas to the window size
 		window.BeginDrawing();
 		{
-			window.ClearBackground(settings::backgroundColour);
+			window.ClearBackground(settings::backgroundColour); // This is the colour of the border around the game
+
+			// This draws the scalerCanvas to scaled up size
 			DrawTexturePro(
 				scalerCanvas.texture,														// Texture
 				raylib::Rectangle(0, 0, settings::screenSize.x, -settings::screenSize.y),	// Source

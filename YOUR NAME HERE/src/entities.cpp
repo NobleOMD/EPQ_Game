@@ -1,9 +1,9 @@
 #include "entities.hpp"
 
-// Entity parent class
+// GameObject base class
 //---------------------------------------------------------------------------------
 
-Entity::Entity(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colour)
+GameObject::GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colour)
 	:
 	size(size),
 	gridPosition(gridPos),
@@ -12,19 +12,53 @@ Entity::Entity(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colo
 	drawState = drawStates::fill;
 }
 
-Entity::Entity(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Vector2 texturePos)
+GameObject::GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, std::string textureFileName, raylib::Vector2 texturePos)
 	:
 	size(size),
 	gridPosition(gridPos),
-	textureRect({texturePos, size * settings::tileSize}) 
+	textureFileName(textureFileName),
+	texturePos(texturePos)
 {
 	drawState = drawStates::texture;
 }
 
+void GameObject::update() {}
 
-raylib::Vector2 Entity::getEntityPosition() {
+
+raylib::Vector2 GameObject::getEntityPosition() {
 	return gridPosition * settings::tileSize;
 }
+
+
+void GameObject::drawFilled() {
+	entityRectangle.Draw(entityColour);
+}
+
+void GameObject::drawOutline(int thickness) {
+	entityRectangle.DrawLines(entityColour, thickness);
+}
+
+void GameObject::drawTexture(raylib::Texture &texture) {
+	texture.Draw(raylib::Rectangle{texturePos, size * settings::tileSize}, getEntityPosition());
+}
+
+void GameObject::draw() {
+	switch (drawState) {
+		case drawStates::fill:
+			drawFilled();
+			break;
+		case drawStates::outline:
+			drawOutline(outlineSize);
+			break;
+
+		case drawStates::texture:
+			drawTexture(entityTextures);
+			break;
+	}
+}
+
+// Entity derived GameObject class
+//---------------------------------------------------------------------------------
 
 void Entity::move(raylib::Vector2 translation) {
 
@@ -36,33 +70,9 @@ void Entity::move(raylib::Vector2 translation) {
 
 }
 
-void Entity::drawFilled() {
-	entityRectangle.Draw(entityColour);
-}
 
-void Entity::drawOutline(int thickness) {
-	entityRectangle.DrawLines(entityColour, thickness);
-}
-
-void Entity::drawTexture(raylib::Texture &texture) {
-	texture.Draw(textureRect, getEntityPosition());
-}
-
-
-
-
-// PlayerCharacter child class
+// PlayerCharacter derived Entity class
 //---------------------------------------------------------------------------------
-
-PlayerCharacter::PlayerCharacter(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colour)
-	:
-	Entity(size, gridPos, colour)
-{}
-
-PlayerCharacter::PlayerCharacter(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Vector2 texturePos)
-	:
-	Entity(size, gridPos, texturePos)
-{}
 
 void PlayerCharacter::playerInput() {
 	if (IsKeyPressed(KEY_W)) {
@@ -81,19 +91,4 @@ void PlayerCharacter::playerInput() {
 
 void PlayerCharacter::update() {
 	playerInput();
-}
-
-void PlayerCharacter::draw() {
-	switch (drawState) {
-		case drawStates::fill:
-			drawFilled();
-			break;
-		case drawStates::outline:
-			drawOutline(outlineSize);
-			break;
-
-		case drawStates::texture:
-			drawTexture(entityTextures);
-			break;
-	}
 }
