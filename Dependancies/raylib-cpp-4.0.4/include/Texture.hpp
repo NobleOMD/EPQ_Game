@@ -2,6 +2,7 @@
 #define RAYLIB_CPP_INCLUDE_TEXTURE_HPP_
 
 #include <string>
+#include <assert.h>
 
 #include "./raylib.hpp"
 #include "./raylib-cpp-utils.hpp"
