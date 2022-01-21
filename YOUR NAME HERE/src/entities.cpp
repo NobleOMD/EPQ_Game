@@ -10,18 +10,6 @@ Entity::Entity(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colo
 	entityColour(colour)
 {}
 
-Entity::Entity(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Vector2 texturePos)
-	:
-	size(size),
-	gridPosition(gridPos),
-	texturePos(texturePos)
-{}
-
-
-raylib::Vector2 Entity::getSize()
-{
-	return size * settings::tileSize;
-}
 
 raylib::Vector2 Entity::getPosition()
 {
@@ -30,10 +18,13 @@ raylib::Vector2 Entity::getPosition()
 
 void Entity::move(raylib::Vector2 translation)
 {
+
 	gridPosition += translation; // Move by translation vector
+
 	clampWithin(settings::gridSize, gridPosition, size); // Clamp within the overall grid
 
 	rectangle.SetPosition(getPosition()); // Update the onscreen position
+
 }
 
 void Entity::drawFilled()
@@ -56,15 +47,9 @@ void Entity::drawTexture(raylib::Texture& texture)
 
 PlayerCharacter::PlayerCharacter(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colour)
 	:
-	Entity(size, gridPos, colour),
-	drawState(drawStates::colour)
+	Entity(size, gridPos, colour)
 {}
 
-PlayerCharacter::PlayerCharacter(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Vector2 texturePos)
-	:
-	Entity(size, gridPos, texturePos),
-	drawState(drawStates::texture)
-{}
 
 void PlayerCharacter::playerInput()
 {
@@ -89,7 +74,6 @@ void PlayerCharacter::update()
 	// State updates
 	if (health < 0) { state = -1; } // -1 = 0 HP
 }
-
 
 void PlayerCharacter::draw()
 {
