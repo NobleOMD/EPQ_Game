@@ -36,8 +36,8 @@ class Texture : public ::Texture {
      * Load texture from file into GPU memory (VRAM)
      */
     Texture(const std::string& fileName) {
-        assert(raylib::FileExists(fileName)); // If assertion triggers: file does not exist
         Load(fileName);
+        assert(width != 0); // If assertion triggers: File did not load (probably not in path specified)
     }
 
     Texture(const Texture&) = delete;
