@@ -11,7 +11,7 @@ int main()
 
 	window.SetState(FLAG_VSYNC_HINT); // Use V-Sync to autodetect and run at monitor refresh rate
 
-	PlayerCharacter player{ { 1, 2 }, { 25, 15 }, { 128, 68 } }; // Initialise a player with texture
+	PlayerCharacter player{ { 1, 2 }, { 25, 15 }, BLUE }; // Initialise a player
 	//--------------------------------------------------------------------------------------
 
 	// Main game loop
