@@ -2,9 +2,9 @@
 
 #include "settings.hpp" // My global variables
 #include "entities.hpp" // Entities include header
+#include "game.hpp"		// General game functions
 
-int main()
-{
+int main() {
 	// Initialization
 	//--------------------------------------------------------------------------------------
 	int &R_scaleFactor = settings::scaleFactor;
@@ -22,27 +22,9 @@ int main()
 		// Update
 		//----------------------------------------------------------------------------------
 		player.update();
-		if (IsKeyPressed(KEY_F) && window.IsFullscreen()) {
-			// Minimise
-			window.SetFullscreen(false);
 
-			settings::scaleFactor = 2;
-			settings::scaleOrigin = {0, 0};
-
-			window.SetSize(settings::getScaledSize());
-		}
-		else if (IsKeyPressed(KEY_F) && !window.IsFullscreen()) {
-			raylib::Vector2 monitorSize{(float) GetMonitorWidth(GetCurrentMonitor()), (float) GetMonitorHeight(GetCurrentMonitor())};
-
-			// Maximise
-			window.SetFullscreen(true);
-
-			raylib::Vector2 scale = monitorSize / (settings::getScaledSize());
-			settings::scaleFactor = std::max(scale.x, scale.y) * settings::scaleFactor; // Scale the image size to match the screen size
-			settings::scaleOrigin = (monitorSize - settings::getScaledSize()) / 2;
-
-			window.SetSize(monitorSize);
-		}
+		// Toggle full screen on F key pressed
+		if (IsKeyPressed(KEY_F)) { game::setFullscreen(window, (window.IsFullscreen())); };
 		//----------------------------------------------------------------------------------
 
 		// Draw

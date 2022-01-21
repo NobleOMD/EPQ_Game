@@ -30,7 +30,7 @@ void Entity::move(raylib::Vector2 translation) {
 
 	gridPosition += translation; // Move by translation vector
 
-	clampWithin(settings::gridSize, gridPosition, size); // Clamp within the overall grid
+	game::clampWithin(settings::gridSize, gridPosition, size); // Clamp within the overall grid
 
 	entityRectangle.SetPosition(getEntityPosition()); // Update the onscreen position
 
