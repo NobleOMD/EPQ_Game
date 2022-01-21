@@ -7,9 +7,6 @@
 int main() {
 	// Initialization
 	//--------------------------------------------------------------------------------------
-	int &R_scaleFactor = settings::scaleFactor;
-	raylib::Vector2 &R_scaleOrigin = settings::scaleOrigin;
-
 	raylib::Window window(settings::getScaledSize().x, settings::getScaledSize().y, settings::title);
 	window.SetState(FLAG_VSYNC_HINT); // Use V-Sync to autodetect and run at monitor refresh rate
 
@@ -38,7 +35,7 @@ int main() {
 
 		window.BeginDrawing();
 		{
-			window.ClearBackground(WHITE);
+			window.ClearBackground(settings::backgroundColour);
 			DrawTexturePro(
 				scalerCanvas.texture,														// Texture
 				raylib::Rectangle(0, 0, settings::screenSize.x, -settings::screenSize.y),	// Source

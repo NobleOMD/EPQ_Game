@@ -3,7 +3,7 @@
 
 #include "settings.hpp"
 
-namespace game 
+namespace game
 {
 	//Used to clamp a position to within an area
 	//Offset used to control the amount offset moved by at the bottom and right of the screen (because normally position of an object is calculated from top left)
