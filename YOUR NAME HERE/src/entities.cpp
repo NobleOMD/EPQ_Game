@@ -62,12 +62,14 @@ void Entity::drawTexture(raylib::Texture &texture)
 PlayerCharacter::PlayerCharacter(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colour)
 	:
 	Entity(size, gridPos, colour)
-{}
+{
+}
 
 PlayerCharacter::PlayerCharacter(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Vector2 texturePos)
 	:
 	Entity(size, gridPos, texturePos)
-{}
+{
+}
 
 void PlayerCharacter::playerInput()
 {
