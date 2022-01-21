@@ -14,8 +14,10 @@ namespace settings
 
 	// Scaling settings
 	inline int scaleFactor = 2;
+	inline raylib::Vector2 getScaledSize() {
+		return screenSize * scaleFactor;
+	};
 	inline raylib::Vector2 scaleOrigin = {0, 0};
-
 
 	// Font Settings
 	inline raylib::Font defaultFont; // The default raylib text glyphs
