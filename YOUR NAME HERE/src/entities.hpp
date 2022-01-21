@@ -8,8 +8,7 @@ enum drawStates { fill, outline, texture };
 
 // Entity parent class
 //---------------------------------------------------------------------------------
-class Entity
-{
+class Entity {
 protected:
 	// Size, position, grid position, colour/texture
 	raylib::Vector2 size; // Entity is one tile wide and one high
@@ -38,8 +37,7 @@ public:
 
 // PlayerCharacter child class
 //---------------------------------------------------------------------------------
-class PlayerCharacter: public Entity
-{
+class PlayerCharacter: public Entity {
 private:
 	raylib::Texture entityTextures{"src/textures/0x72_DungeonTilesetII_v1.4.png"};
 

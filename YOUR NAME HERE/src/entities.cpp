@@ -16,19 +16,17 @@ Entity::Entity(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Vector2 te
 	:
 	size(size),
 	gridPosition(gridPos),
-	textureRect({texturePos, size * settings::tileSize})
+	textureRect({texturePos, size * settings::tileSize}) 
 {
 	drawState = drawStates::texture;
 }
 
 
-raylib::Vector2 Entity::getEntityPosition()
-{
+raylib::Vector2 Entity::getEntityPosition() {
 	return gridPosition * settings::tileSize;
 }
 
-void Entity::move(raylib::Vector2 translation)
-{
+void Entity::move(raylib::Vector2 translation) {
 
 	gridPosition += translation; // Move by translation vector
 
@@ -38,18 +36,15 @@ void Entity::move(raylib::Vector2 translation)
 
 }
 
-void Entity::drawFilled()
-{
+void Entity::drawFilled() {
 	entityRectangle.Draw(entityColour);
 }
 
-void Entity::drawOutline(int thickness)
-{
+void Entity::drawOutline(int thickness) {
 	entityRectangle.DrawLines(entityColour, thickness);
 }
 
-void Entity::drawTexture(raylib::Texture &texture)
-{
+void Entity::drawTexture(raylib::Texture &texture) {
 	texture.Draw(textureRect, getEntityPosition());
 }
 
@@ -62,44 +57,34 @@ void Entity::drawTexture(raylib::Texture &texture)
 PlayerCharacter::PlayerCharacter(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colour)
 	:
 	Entity(size, gridPos, colour)
-{
-}
+{}
 
 PlayerCharacter::PlayerCharacter(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Vector2 texturePos)
 	:
 	Entity(size, gridPos, texturePos)
-{
-}
+{}
 
-void PlayerCharacter::playerInput()
-{
-	if (IsKeyPressed(KEY_W))
-	{
+void PlayerCharacter::playerInput() {
+	if (IsKeyPressed(KEY_W)) {
 		Entity::move({0, -1});
 	}
-	if (IsKeyPressed(KEY_A))
-	{
+	if (IsKeyPressed(KEY_A)) {
 		Entity::move({-1, 0});
 	}
-	if (IsKeyPressed(KEY_S))
-	{
+	if (IsKeyPressed(KEY_S)) {
 		Entity::move({0, 1});
 	}
-	if (IsKeyPressed(KEY_D))
-	{
+	if (IsKeyPressed(KEY_D)) {
 		Entity::move({1, 0});
 	}
 }
 
-void PlayerCharacter::update()
-{
+void PlayerCharacter::update() {
 	playerInput();
 }
 
-void PlayerCharacter::draw()
-{
-	switch (drawState)
-	{
+void PlayerCharacter::draw() {
+	switch (drawState) {
 		case drawStates::fill:
 			drawFilled();
 			break;
