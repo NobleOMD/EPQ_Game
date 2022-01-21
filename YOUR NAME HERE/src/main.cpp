@@ -19,16 +19,24 @@ int main()
 		// Update
 		//----------------------------------------------------------------------------------
 		player.update();
+		if (IsKeyPressed(KEY_F) && window.IsFullscreen())
+		{
+			// Minimise
+		}
+		else if (IsKeyPressed(KEY_F) && !window.IsFullscreen())
+		{
+			// Maximise
+		}
 		//----------------------------------------------------------------------------------
 
 		// Draw
 		//----------------------------------------------------------------------------------
-		BeginDrawing();
+		window.BeginDrawing();
 		{
 			window.ClearBackground(settings::backgroundColour);
 			player.draw();
 		}
-		EndDrawing();
+		window.EndDrawing();
 		//----------------------------------------------------------------------------------
 	}
 

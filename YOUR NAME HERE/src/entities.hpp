@@ -31,16 +31,16 @@ public:
 	// Draw
 	void drawFilled();
 	void drawOutline(int thickness);
-	void drawTexture(raylib::Texture &texture);
+	void drawTexture(raylib::Texture& texture);
 };
 
 // PlayerCharacter child class
 //---------------------------------------------------------------------------------
-class PlayerCharacter: public Entity
+class PlayerCharacter : public Entity
 {
 private:
 	raylib::Texture entityTextures{ "src/textures/0x72_DungeonTilesetII_v1.4.png" };
-	enum drawStates{ colour, texture };
+	enum drawStates { colour, texture };
 	int drawState;
 
 	int outlineSize = 3;

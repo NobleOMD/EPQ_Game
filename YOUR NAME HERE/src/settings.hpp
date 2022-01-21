@@ -13,7 +13,6 @@ namespace settings
 
 	inline raylib::Color backgroundColour(0x282c34ff); // Background colour, note the required use of 100% opacity
 
-
 	// Font Settings
 	inline raylib::Font defaultFont; // The default raylib text glyphs
 	inline raylib::Color textColor = raylib::Color::RayWhite();

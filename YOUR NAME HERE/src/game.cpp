@@ -1,6 +1,6 @@
 #include "Game.hpp"
 
-void clampWithin(raylib::Vector2 area, raylib::Vector2 &position, raylib::Vector2 offset)
+void clampWithin(raylib::Vector2 area, raylib::Vector2& position, raylib::Vector2 offset)
 {
 	area -= offset; // Account for the fact that pos is normally calculated from top left
 

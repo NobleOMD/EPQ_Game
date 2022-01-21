@@ -46,7 +46,7 @@ void Entity::drawOutline(int thickness)
 	rectangle.DrawLines(entityColour, thickness);
 }
 
-void Entity::drawTexture(raylib::Texture &texture)
+void Entity::drawTexture(raylib::Texture& texture)
 {
 	texture.Draw(textureRect, getPosition());
 }
@@ -94,12 +94,12 @@ void PlayerCharacter::update()
 void PlayerCharacter::draw()
 {
 	switch (drawState) {
-		case drawStates::colour:
-			drawOutline(outlineSize);
-			break;
+	case drawStates::colour:
+		drawOutline(outlineSize);
+		break;
 
-		case drawStates::texture:
-			drawTexture(entityTextures);
-			break;
+	case drawStates::texture:
+		drawTexture(entityTextures);
+		break;
 	}
 }
