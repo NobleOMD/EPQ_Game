@@ -37,7 +37,7 @@ class Texture : public ::Texture {
      */
     Texture(const std::string& fileName) {
         Load(fileName);
-        assert(width != 0); // If assertion triggers: File did not load (probably not in path specified)
+        //assert(width != 0); // If assertion triggers: File did not load (probably not in path specified)
     }
 
     Texture(const Texture&) = delete;
