@@ -8,7 +8,7 @@
 extern "C" {
 #endif
 #ifndef RAYLIB_CPP_NO_MATH
-#include "raymath.h" // NOLINT
+#include "include/raymath.h" // NOLINT
 #endif
 #ifdef __cplusplus
 }
