@@ -7,7 +7,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include "include/raylib.h" // NOLINT
+#include "raylib.h" // NOLINT
 #ifdef __cplusplus
 }
 #endif

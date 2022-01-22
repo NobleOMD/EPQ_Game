@@ -2,12 +2,12 @@
 #define RAYLIB_CPP_INCLUDE_TEXTURE_HPP_
 
 #include <string>
-#include <assert.h>
 
 #include "./raylib.hpp"
 #include "./raylib-cpp-utils.hpp"
 #include "./Vector2.hpp"
 #include "./Material.hpp"
+#include "./RaylibException.hpp"
 
 namespace raylib {
 /**
@@ -21,6 +21,9 @@ class Texture : public ::Texture {
 
     Texture(const ::Image& image) {
         LoadFromImage(image);
+        if (!IsReady()) {
+            throw RaylibException("Failed to load Texture from Image");
+        }
     }
 
     /**
@@ -30,6 +33,9 @@ class Texture : public ::Texture {
      */
     Texture(const ::Image& image, int layout) {
         LoadCubemap(image, layout);
+        if (!IsReady()) {
+            throw RaylibException("Failed to load Texture from Cubemap");
+        }
     }
 
     /**
@@ -37,7 +43,9 @@ class Texture : public ::Texture {
      */
     Texture(const std::string& fileName) {
         Load(fileName);
-        //assert(width != 0); // If assertion triggers: File did not load (probably not in path specified)
+        if (!IsReady()) {
+            throw RaylibException(TextFormat("Failed to load Texture from file: %s", fileName.c_str()));
+        }
     }
 
     Texture(const Texture&) = delete;
@@ -271,6 +279,15 @@ class Texture : public ::Texture {
     inline Texture& SetShaderValue(const ::Shader& shader, int locIndex) {
         ::SetShaderValueTexture(shader, locIndex, *this);
         return *this;
+    }
+
+    /**
+     * Determines whether or not the Texture has been loaded and is ready.
+     *
+     * @return True or false depending on whether the Texture has data.
+     */
+    bool IsReady() {
+        return width != 0;
     }
 
  private:
