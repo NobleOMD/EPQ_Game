@@ -23,7 +23,7 @@ protected:
 	raylib::Color entityColour = BLUE;
 	int outlineSize = 1;
 
-	std::string textureFileName;
+	std::string textureFileName = "textures/default.png";
 	raylib::Texture entityTextures{textureFileName};
 	raylib::Vector2 texturePos;
 
@@ -33,11 +33,10 @@ protected:
 	void drawOutline(int thickness);
 	void drawTexture(raylib::Texture &texture);
 
+	virtual void update(); // Override this function for subclasses
 public:
 	GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colour);
 	GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, std::string textureFileName, raylib::Vector2 texturePos = {0, 0});
-
-	virtual void update(); // Override this function for subclasses
 
 	// Draw
 	void draw();
