@@ -7,7 +7,7 @@ GameObject::GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Co
 	:
 	size(size),
 	gridPosition(gridPos),
-	entityColour(colour)
+	objectColour(colour)
 {
 	drawState = drawStates::fill;
 }
@@ -25,21 +25,21 @@ GameObject::GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, std::strin
 void GameObject::update() {}
 
 
-raylib::Vector2 GameObject::getEntityPosition() {
+raylib::Vector2 GameObject::getObjectPosition() {
 	return gridPosition * settings::tileSize;
 }
 
 
 void GameObject::drawFilled() {
-	entityRectangle.Draw(entityColour);
+	objectRectangle.Draw(objectColour);
 }
 
 void GameObject::drawOutline(int thickness) {
-	entityRectangle.DrawLines(entityColour, thickness);
+	objectRectangle.DrawLines(objectColour, thickness);
 }
 
 void GameObject::drawTexture(raylib::Texture &texture) {
-	texture.Draw(raylib::Rectangle{texturePos, size * settings::tileSize}, getEntityPosition());
+	texture.Draw(raylib::Rectangle{texturePos, size * settings::tileSize}, getObjectPosition());
 }
 
 void GameObject::draw() {
@@ -52,7 +52,7 @@ void GameObject::draw() {
 			break;
 
 		case drawStates::texture:
-			drawTexture(entityTextures);
+			drawTexture(objectTexture);
 			break;
 	}
 }
@@ -61,13 +61,9 @@ void GameObject::draw() {
 //---------------------------------------------------------------------------------
 
 void Entity::move(raylib::Vector2 translation) {
-
 	gridPosition += translation; // Move by translation vector
-
 	game::clampWithin(settings::gridSize, gridPosition, size); // Clamp within the overall grid
-
-	entityRectangle.SetPosition(getEntityPosition()); // Update the onscreen position
-
+	objectRectangle.SetPosition(getObjectPosition()); // Update the onscreen position
 }
 
 
@@ -75,18 +71,10 @@ void Entity::move(raylib::Vector2 translation) {
 //---------------------------------------------------------------------------------
 
 void PlayerCharacter::playerInput() {
-	if (IsKeyPressed(KEY_W)) {
-		Entity::move({0, -1});
-	}
-	if (IsKeyPressed(KEY_A)) {
-		Entity::move({-1, 0});
-	}
-	if (IsKeyPressed(KEY_S)) {
-		Entity::move({0, 1});
-	}
-	if (IsKeyPressed(KEY_D)) {
-		Entity::move({1, 0});
-	}
+	if (IsKeyPressed(KEY_W)) { Entity::move({0, -1}); }
+	if (IsKeyPressed(KEY_A)) { Entity::move({-1, 0}); }
+	if (IsKeyPressed(KEY_S)) { Entity::move({0, 1}); }
+	if (IsKeyPressed(KEY_D)) { Entity::move({1, 0}); }
 }
 
 void PlayerCharacter::update() {

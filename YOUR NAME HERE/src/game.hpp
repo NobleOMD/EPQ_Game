@@ -5,10 +5,9 @@
 
 namespace game
 {
-	//Used to clamp a position to within an area
-	//Offset used to control the amount offset moved by at the bottom and right of the screen (because normally position of an object is calculated from top left)
+	// Used to clamp a (position) to within an (area), (offset) is used to account for the fact that position is usually calculated from top left
 	void clampWithin(raylib::Vector2 area, raylib::Vector2 &position, raylib::Vector2 offset);
 
-	// Maximise and minimise the window according to the correct scaling for the monitor being used
-	void setFullscreen(raylib::Window &window, bool fullscreen);
+	// Maximise and minimise the (window) according to the correct scaling for the monitor being used
+	void scaleFullscreen(raylib::Window &window, bool fullscreen);
 }
