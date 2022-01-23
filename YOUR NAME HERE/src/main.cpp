@@ -28,7 +28,7 @@ int main() {
 		player.update();
 
 		// Toggle full screen on F key pressed
-		if (IsKeyPressed(KEY_F)) { game::scaleFullscreen(window, window.IsFullscreen()); };
+		if (IsKeyPressed(KEY_F)) game::scaleFullscreen(window, window.IsFullscreen());
 		//----------------------------------------------------------------------------------
 	
 		// Draw

@@ -71,10 +71,10 @@ void Entity::move(raylib::Vector2 translation) {
 //---------------------------------------------------------------------------------
 
 void PlayerCharacter::playerInput() {
-	if (IsKeyPressed(KEY_W)) { Entity::move({0, -1}); }
-	if (IsKeyPressed(KEY_A)) { Entity::move({-1, 0}); }
-	if (IsKeyPressed(KEY_S)) { Entity::move({0, 1}); }
-	if (IsKeyPressed(KEY_D)) { Entity::move({1, 0}); }
+	if (IsKeyPressed(KEY_W)) Entity::move({0, -1}); 
+	if (IsKeyPressed(KEY_A)) Entity::move({-1, 0}); 
+	if (IsKeyPressed(KEY_S)) Entity::move({0, 1}); 
+	if (IsKeyPressed(KEY_D)) Entity::move({1, 0}); 
 }
 
 void PlayerCharacter::update() {

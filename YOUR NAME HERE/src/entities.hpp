@@ -35,7 +35,9 @@ protected:
 	void drawTexture(raylib::Texture &texture);
 
 	virtual void update(); // Override this function for subclasses
+
 public:
+	// Constructors
 	GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colour);
 	GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, std::string textureFileName, raylib::Vector2 texturePos = {0, 0});
 
