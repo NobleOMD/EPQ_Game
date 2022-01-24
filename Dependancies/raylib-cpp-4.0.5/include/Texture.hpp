@@ -15,13 +15,31 @@ namespace raylib {
  */
 class Texture : public ::Texture {
  public:
+    /**
+     * Default constructor to create an empty Texture object.
+     */
+    Texture(unsigned int id = 0,
+            int width = 0,
+            int height = 0,
+            int mipmaps = 0,
+            int format = 0) : ::Texture{id, width, height, mipmaps, format} {
+        // Nothing.
+    }
+
+    /**
+     * Creates a texture object based on the given Texture struct data.
+     */
     Texture(const ::Texture& texture) {
         set(texture);
     }
 
+    /**
+     * Creates a texture from the given Image.
+     *
+     * @throws raylib::RaylibException Throws if failed to create the texture from the given image.
+     */
     Texture(const ::Image& image) {
-        LoadFromImage(image);
-        if (!IsReady()) {
+        if (!Load(image)) {
             throw RaylibException("Failed to load Texture from Image");
         }
     }
@@ -29,21 +47,23 @@ class Texture : public ::Texture {
     /**
      * Load cubemap from image, multiple image cubemap layouts supported.
      *
+     * @throws raylib::RaylibException Throws if failed to create the texture from the given cubemap.
+     *
      * @see LoadTextureCubemap()
      */
     Texture(const ::Image& image, int layout) {
-        LoadCubemap(image, layout);
-        if (!IsReady()) {
+        if (!Load(image, layout)) {
             throw RaylibException("Failed to load Texture from Cubemap");
         }
     }
 
     /**
      * Load texture from file into GPU memory (VRAM)
+     *
+     * @throws raylib::RaylibException Throws if failed to create the texture from the given file.
      */
     Texture(const std::string& fileName) {
-        Load(fileName);
-        if (!IsReady()) {
+        if (!Load(fileName)) {
             throw RaylibException(TextFormat("Failed to load Texture from file: %s", fileName.c_str()));
         }
     }
@@ -104,22 +124,25 @@ class Texture : public ::Texture {
     /**
      * Load texture from image data
      */
-    void LoadFromImage(const ::Image& image) {
+    bool Load(const ::Image& image) {
         set(::LoadTextureFromImage(image));
+        return IsReady();
     }
 
     /**
      * Load cubemap from image, multiple image cubemap layouts supported
      */
-    void LoadCubemap(const ::Image& image, int layoutType) {
+    bool Load(const ::Image& image, int layoutType) {
         set(::LoadTextureCubemap(image, layoutType));
+        return IsReady();
     }
 
     /**
      * Load texture from file into GPU memory (VRAM)
      */
-    void Load(const std::string& fileName) {
+    bool Load(const std::string& fileName) {
         set(::LoadTexture(fileName.c_str()));
+        return IsReady();
     }
 
     /**
@@ -184,16 +207,9 @@ class Texture : public ::Texture {
     }
 
     /**
-     * Draws the texture at the top left corner of the screen.
-     */
-    inline Texture& Draw() {
-        return Draw(0, 0);
-    }
-
-    /**
      * Draw a Texture2D
      */
-    inline Texture& Draw(int posX, int posY, ::Color tint = {255, 255, 255, 255}) {
+    inline Texture& Draw(int posX = 0, int posY = 0, ::Color tint = {255, 255, 255, 255}) {
         ::DrawTexture(*this, posX, posY, tint);
         return *this;
     }
@@ -286,8 +302,8 @@ class Texture : public ::Texture {
      *
      * @return True or false depending on whether the Texture has data.
      */
-    bool IsReady() {
-        return width != 0;
+    bool IsReady() const {
+        return id != 0;
     }
 
  private:

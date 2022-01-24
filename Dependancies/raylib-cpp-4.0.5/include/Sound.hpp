@@ -21,6 +21,15 @@ class Sound : public ::Sound {
     Sound(const Sound&) = delete;
     Sound& operator=(const Sound&) = delete;
 
+    Sound() {
+        frameCount = 0;
+        stream.buffer = nullptr;
+    }
+
+    Sound(::AudioStream stream, unsigned int frameCount) : ::Sound{stream, frameCount} {
+        // Nothing.
+    }
+
     Sound(Sound&& other) {
         set(other);
 
@@ -29,15 +38,13 @@ class Sound : public ::Sound {
     }
 
     Sound(const std::string& fileName) {
-        set(LoadSound(fileName.c_str()));
-        if (!IsReady()) {
+        if (!Load(fileName)) {
             throw RaylibException(TextFormat("Failed to load Sound from file: %s", fileName.c_str()));
         }
     }
 
     Sound(const ::Wave& wave) {
-        set(LoadSoundFromWave(wave));
-        if (!IsReady()) {
+        if (!Load(wave)) {
             throw RaylibException("Failed to load Sound from Wave");
         }
     }
@@ -157,11 +164,30 @@ class Sound : public ::Sound {
     }
 
     /**
+     * Load a sound from the given file.
+     *
+     * @return True or false depending on loading worked.
+     */
+    bool Load(const std::string& fileName) {
+        set(::LoadSound(fileName.c_str()));
+        return IsReady();
+    }
+
+    /**
+     * Loads the given Wave object into the Sound.
+     */
+    bool Load(const ::Wave& wave) {
+        set(::LoadSoundFromWave(wave));
+        return IsReady();
+    }
+
+
+    /**
      * Retrieve whether or not the Sound buffer is loaded.
      *
      * @return True or false depending on whether the Sound buffer is loaded.
      */
-    bool IsReady() {
+    bool IsReady() const {
         return stream.buffer != nullptr;
     }
 
