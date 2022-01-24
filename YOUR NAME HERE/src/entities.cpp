@@ -3,24 +3,22 @@
 // GameObject base class
 //---------------------------------------------------------------------------------
 
-GameObject::GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colour)
+GameObject::GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colour, drawStates drawState)
 	:
 	size(size),
 	gridPosition(gridPos),
-	entityColour(colour)
-{
-	drawState = drawStates::fill;
-}
+	entityColour(colour),
+	drawState(drawState)
+{}
 
 GameObject::GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, std::string textureFileName, raylib::Vector2 texturePos)
 	:
 	size(size),
 	gridPosition(gridPos),
-	textureFileName(textureFileName),
-	texturePos(texturePos)
-{
-	drawState = drawStates::texture;
-}
+	entityTextures(raylib::Texture(textureFileName)),
+	texturePos(texturePos),
+	drawState(drawStates::texture)
+{}
 
 void GameObject::update() {}
 
