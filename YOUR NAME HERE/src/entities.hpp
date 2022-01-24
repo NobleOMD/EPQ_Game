@@ -4,7 +4,6 @@
 #include "settings.hpp"
 #include "game.hpp"
 
-enum drawStates { fill, outline, texture };
 
 // GameObject parent class
 //---------------------------------------------------------------------------------
@@ -12,45 +11,47 @@ enum drawStates { fill, outline, texture };
 class GameObject {
 protected:
 	// Size / position / grid position
-	raylib::Vector2 size;
+	raylib::Vector2 size; // Size of the object in tiles
 
-	raylib::Vector2 gridPosition;
-	raylib::Vector2 getEntityPosition();
+	raylib::Vector2 gridPosition; // Position on the tile Grid
+	raylib::Vector2 getObjectPosition(); // Function which calculates the object position on screen
 
-	raylib::Rectangle entityRectangle{getEntityPosition(), size * settings::tileSize};
+	raylib::Rectangle objectRectangle{getObjectPosition(), size * settings::tileSize}; 
 
 	// Colour / texture
-	raylib::Color entityColour = BLUE;
-	int outlineSize = 1;
+	raylib::Color objectColour = BLUE;
+	int outlineSize = 1; // Thickness of outline if object outline is drawn
 
-	raylib::Texture entityTextures;
+	raylib::Texture objectTexture;
 	raylib::Vector2 texturePos;
 
 	// Drawing
-	int drawState = 0;
+	enum drawStates { fill, outline, texture }; // The method of drawing the draw() function will use
+	int drawState = drawStates::fill; // The current draw state
+
 	void drawFilled();
 	void drawOutline(int thickness);
 	void drawTexture(raylib::Texture &texture);
+
+	virtual void update(); // Override this function for subclasses
 
 public:
 	GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colour, drawStates drawState = drawStates::fill);
 	GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, std::string textureFileName, raylib::Vector2 texturePos = {0, 0});
 
-	virtual void update(); // Override this function for subclasses
-
 	// Draw
-	void draw();
+	void draw(); // Draw with the method defined by drawState
 };
 
-class Entity: public GameObject {
-protected:
-	float health = 100.0f;
+// Entity derived GameObject class
+//---------------------------------------------------------------------------------
 
+// An Entity is a GameObject with movement
+class Entity: public GameObject {
 public:
 	using GameObject::GameObject; // Use the constructors of GameObject
 
-	// Move
-	void move(raylib::Vector2 translation);
+	void move(raylib::Vector2 translation); // Move on the grid with a vector translation
 };
 
 // PlayerCharacter derived Entity class
@@ -58,15 +59,13 @@ public:
 
 class PlayerCharacter: public Entity {
 private:
-	int xp = 0;
-	int level = 0;
+	int xp = 0; // Player total xp
+	int level = 0; // Player level calculated from xp
 
 	void playerInput(); // Player keyboard input to move / make an action
 
 public:
-	using Entity::Entity;
-	//PlayerCharacter(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colour);
-	//PlayerCharacter(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Vector2 texturePos);
+	using Entity::Entity; // Use the constructors of Entity which in turn uses those of GameObject
 
 	void update(); // Return a value depending on state
 };
