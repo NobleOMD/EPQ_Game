@@ -22,12 +22,12 @@ protected:
 	raylib::Color objectColour = BLUE;
 	int outlineSize = 1; // Thickness of outline if object outline is drawn
 
-	raylib::Texture objectTexture;
+	raylib::Texture *objectTexture = nullptr;
 	raylib::Vector2 texturePos;
 
 	// Drawing
 	enum drawStates { fill, outline, texture }; // The method of drawing the draw() function will use
-	int drawState = drawStates::fill; // The current draw state
+	int drawState; // The current draw state
 
 	void drawFilled();
 	void drawOutline(int thickness);
@@ -37,7 +37,7 @@ protected:
 
 public:
 	GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colour, drawStates drawState = drawStates::fill);
-	GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, std::string textureFileName, raylib::Vector2 texturePos = {0, 0});
+	GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Texture *texture, raylib::Vector2 texturePos = {0, 0});
 
 	// Draw
 	void draw(); // Draw with the method defined by drawState

@@ -13,10 +13,12 @@ int main() {
 	// Texture that the game is rendered to, this is then scaled to the window size
 	raylib::RenderTexture scalerCanvas{(int) settings::screenSize.x, (int) settings::screenSize.y};
 
+	raylib::Texture playerTexture("textures/0x72_DungeonTilesetII_v1.4.png");
+
 	PlayerCharacter player(
 		raylib::Vector2{1, 2},							// Size in tiles
 		raylib::Vector2{25, 15},						// Position on tilegrid
-		"textures/0x72_DungeonTilesetII_v1.4.png",		// Texture image file
+		&playerTexture,									// Pointer to texture
 		raylib::Vector2{128, 68}						// Location of texture in image
 	);
 	//--------------------------------------------------------------------------------------

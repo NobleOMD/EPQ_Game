@@ -11,11 +11,11 @@ GameObject::GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Co
 	drawState(drawState)
 {}
 
-GameObject::GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, std::string textureFileName, raylib::Vector2 texturePos)
+GameObject::GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Texture *texture, raylib::Vector2 texturePos)
 	:
 	size(size),
 	gridPosition(gridPos),
-	objectTexture(raylib::Texture(textureFileName)),
+	objectTexture(texture),
 	texturePos(texturePos),
 	drawState(drawStates::texture)
 {}
@@ -50,7 +50,7 @@ void GameObject::draw() {
 			break;
 
 		case drawStates::texture:
-			drawTexture(objectTexture);
+			drawTexture(*objectTexture);
 			break;
 	}
 }
