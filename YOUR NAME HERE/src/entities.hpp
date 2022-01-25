@@ -1,4 +1,5 @@
 #pragma once
+#include <stdlib.h>
 #include <include/raylib-cpp.hpp>
 
 #include "settings.hpp"
@@ -16,7 +17,7 @@ protected:
 	raylib::Vector2 gridPosition; // Position on the tile Grid
 	raylib::Vector2 getObjectPosition(); // Function which calculates the object position on screen
 
-	raylib::Rectangle objectRectangle{getObjectPosition(), size * settings::tileSize}; 
+	raylib::Rectangle objectRectangle{getObjectPosition(), size * settings::tileSize};
 
 	// Colour / texture
 	raylib::Color objectColour = BLUE;
@@ -26,18 +27,18 @@ protected:
 	raylib::Vector2 texturePos;
 
 	// Drawing
-	enum drawStates { fill, outline, texture }; // The method of drawing the draw() function will use
-	int drawState; // The current draw state
+	enum class drawStates { fill, outline, texture }; // The method of drawing the draw() function will use
+	drawStates drawState; // The current draw state
 
 	void drawFilled();
 	void drawOutline(int thickness);
 	void drawTexture(raylib::Texture &texture);
 
-	virtual void update(); // Override this function for subclasses
-
 public:
 	GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colour, drawStates drawState = drawStates::fill);
 	GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Texture *texture, raylib::Vector2 texturePos = {0, 0});
+
+	virtual void update(); // Override this function for subclasses
 
 	// Draw
 	void draw(); // Draw with the method defined by drawState
@@ -67,5 +68,16 @@ private:
 public:
 	using Entity::Entity; // Use the constructors of Entity which in turn uses those of GameObject
 
-	void update(); // Return a value depending on state
+	void update();
+};
+
+// Enemy derived Entity class
+//---------------------------------------------------------------------------------
+
+class Enemy: public Entity {
+private:
+	float movetimer = 0.0f;
+public:
+	using Entity::Entity; // Use the constructors of Entity which in turn uses those of GameObject
+	void update();
 };

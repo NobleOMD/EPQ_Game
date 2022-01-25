@@ -78,3 +78,20 @@ void PlayerCharacter::playerInput() {
 void PlayerCharacter::update() {
 	playerInput();
 }
+
+// Enemy derived Entity class
+//---------------------------------------------------------------------------------
+
+void Enemy::update() {
+	if (movetimer >= 0.0f) {
+		movetimer -= 1 * GetFrameTime();
+		return;
+	}
+
+	std::vector<raylib::Vector2> moveDirection{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
+	srand(GetTime());
+	move(moveDirection[rand() % 4]);
+
+	movetimer = 1;
+}
