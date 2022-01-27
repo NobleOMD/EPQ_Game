@@ -8,8 +8,7 @@ GameObject::GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Co
 	size(size),
 	gridPosition(gridPos),
 	objectColour(colour),
-	drawState(drawState) 
-{
+	drawState(drawState) {
 	init();
 }
 
@@ -19,8 +18,7 @@ GameObject::GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Te
 	gridPosition(gridPos),
 	objectTexture(texture),
 	textureRect(textureRect),
-	drawState(drawStates::texture)
-{
+	drawState(drawStates::texture) {
 	init();
 }
 
@@ -105,11 +103,10 @@ void Enemy::update() {
 		return;
 	}
 
-	moveTimer = moveSpeed; // Reset the movement timer
+	moveTimer = game::mt19937range(moveSpeed - 1, moveSpeed); // Reset the movement timer
 
 	// Move direction vector is faster than switch case
 	std::vector<raylib::Vector2> moveDirection{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
-	srand(GetTime());
-	move(moveDirection[rand() % 4]);
+	move(moveDirection[game::random() % 4]);
 }

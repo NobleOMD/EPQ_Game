@@ -1,5 +1,10 @@
 #include "Game.hpp"
 
+float game::mt19937range(float min, float max) {
+	int mod = max * 100.0f;
+	return min + (random() % mod) / 100.0f;
+}
+
 // Clamp a (position) vector within a specified (area)
 void game::clampWithin(raylib::Vector2 area, raylib::Vector2 &position, raylib::Vector2 offset) {
 	area -= offset; // Account for the fact that pos is normally calculated from top left

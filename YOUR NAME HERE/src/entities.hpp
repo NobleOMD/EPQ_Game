@@ -1,5 +1,4 @@
 #pragma once
-#include <stdlib.h>
 #include <include/raylib-cpp.hpp>
 
 #include "settings.hpp"
@@ -81,7 +80,7 @@ public:
 class Enemy: public Entity {
 private:
 	float moveSpeed = 1.2f;
-	float moveTimer = 0.0f;
+	float moveTimer = moveSpeed;
 
 public:
 	using Entity::Entity; // Use the constructors of Entity which in turn uses those of GameObject
