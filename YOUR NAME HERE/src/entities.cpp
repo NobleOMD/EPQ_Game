@@ -8,17 +8,25 @@ GameObject::GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Co
 	size(size),
 	gridPosition(gridPos),
 	objectColour(colour),
-	drawState(drawState)
-{}
+	drawState(drawState) 
+{
+	init();
+}
 
-GameObject::GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Texture *texture, raylib::Vector2 texturePos)
+GameObject::GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Texture *texture, raylib::Rectangle textureRect)
 	:
 	size(size),
 	gridPosition(gridPos),
 	objectTexture(texture),
-	texturePos(texturePos),
+	textureRect(textureRect),
 	drawState(drawStates::texture)
-{}
+{
+	init();
+}
+
+void GameObject::init() {
+	gameObjects.push_back(this);
+}
 
 void GameObject::update() {}
 
@@ -37,7 +45,10 @@ void GameObject::drawOutline(int thickness) {
 }
 
 void GameObject::drawTexture(raylib::Texture &texture) {
-	texture.Draw(raylib::Rectangle{texturePos, size * settings::tileSize}, getObjectPosition());
+	texture.Draw(
+		textureRect, 
+		getObjectPosition() - textureRect.GetSize() + size*settings::tileSize // Move the texture inline with the collision box
+	);
 }
 
 void GameObject::draw() {
@@ -68,15 +79,12 @@ void Entity::move(raylib::Vector2 translation) {
 // PlayerCharacter derived Entity class
 //---------------------------------------------------------------------------------
 
-void PlayerCharacter::playerInput() {
-	if (IsKeyPressed(KEY_W)) Entity::move({0, -1}); 
-	if (IsKeyPressed(KEY_A)) Entity::move({-1, 0}); 
-	if (IsKeyPressed(KEY_S)) Entity::move({0, 1}); 
-	if (IsKeyPressed(KEY_D)) Entity::move({1, 0}); 
-}
-
 void PlayerCharacter::update() {
-	playerInput();
+	// Player keyboard input to move
+	if (IsKeyPressed(KEY_W)) Entity::move({0, -1});
+	if (IsKeyPressed(KEY_A)) Entity::move({-1, 0});
+	if (IsKeyPressed(KEY_S)) Entity::move({0, 1});
+	if (IsKeyPressed(KEY_D)) Entity::move({1, 0});
 }
 
 // Enemy derived Entity class
@@ -84,14 +92,14 @@ void PlayerCharacter::update() {
 
 void Enemy::update() {
 	if (movetimer >= 0.0f) {
-		movetimer -= 1 * GetFrameTime();
+		movetimer -= GetFrameTime();
 		return;
 	}
+
+	movetimer = 1.2;
 
 	std::vector<raylib::Vector2> moveDirection{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
 	srand(GetTime());
 	move(moveDirection[rand() % 4]);
-
-	movetimer = 1;
 }

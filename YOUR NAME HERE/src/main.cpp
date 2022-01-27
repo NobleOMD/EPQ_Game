@@ -16,17 +16,17 @@ int main() {
 	raylib::Texture tileSet("textures/0x72_DungeonTilesetII_v1.4.png");
 
 	PlayerCharacter player(
-		raylib::Vector2{1, 2},		// Size in tiles
-		raylib::Vector2{25, 15},	// Position on tilegrid
-		&tileSet,					// Pointer to texture
-		raylib::Vector2{128, 68}	// Location of texture in image
+		raylib::Vector2{1, 1},				// Size in tiles
+		raylib::Vector2{25, 15},			// Position on tilegrid
+		&tileSet,							// Pointer to texture
+		raylib::Rectangle{128, 68, 16, 28}	// Rectangle that represents texture area in image
 	);
 
 	Enemy zombie(
-		raylib::Vector2{1, 2},		// Size in tiles
-		raylib::Vector2{10, 3},		// Position on tilegrid
-		&tileSet,					// Pointer to texture
-		raylib::Vector2{368, 172}	// Location of texture in image
+		raylib::Vector2{2, 2},				// Size in tiles
+		raylib::Vector2{10, 3},				// Position on tilegrid
+		&tileSet,							// Pointer to texture
+		raylib::Rectangle{16, 270, 32, 34}	// Rectangle that represents texture area in image
 	);
 	//--------------------------------------------------------------------------------------
 
@@ -34,8 +34,7 @@ int main() {
 	while (!window.ShouldClose()) { // Detect window close button or ESC key
 		// Update
 		//----------------------------------------------------------------------------------
-		player.update();
-		zombie.update();
+		for (GameObject *object : gameObjects) object->update();
 
 		// Toggle full screen on F key pressed
 		if (IsKeyPressed(KEY_F)) game::scaleFullscreen(window, window.IsFullscreen());
@@ -47,8 +46,7 @@ int main() {
 		scalerCanvas.BeginMode();
 		{
 			window.ClearBackground(settings::backgroundColour);
-			zombie.draw();
-			player.draw();
+			for (GameObject *object : gameObjects) object->draw();
 		}
 		scalerCanvas.EndMode();
 

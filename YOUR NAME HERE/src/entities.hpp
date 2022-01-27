@@ -5,8 +5,11 @@
 #include "settings.hpp"
 #include "game.hpp"
 
+class GameObject;
 
-// GameObject parent class
+inline std::vector<GameObject*> gameObjects;
+
+// GameObject base class
 //---------------------------------------------------------------------------------
 
 class GameObject {
@@ -24,24 +27,25 @@ protected:
 	int outlineSize = 1; // Thickness of outline if object outline is drawn
 
 	raylib::Texture *objectTexture = nullptr;
-	raylib::Vector2 texturePos;
+	raylib::Rectangle textureRect;
 
 	// Drawing
 	enum class drawStates { fill, outline, texture }; // The method of drawing the draw() function will use
 	drawStates drawState; // The current draw state
 
-	void drawFilled();
-	void drawOutline(int thickness);
-	void drawTexture(raylib::Texture &texture);
-
 public:
 	GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colour, drawStates drawState = drawStates::fill);
-	GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Texture *texture, raylib::Vector2 texturePos = {0, 0});
+	GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Texture *texture, raylib::Rectangle textureRect = {0, 0, 0, 0});
+
+	void init();
 
 	virtual void update(); // Override this function for subclasses
 
 	// Draw
 	void draw(); // Draw with the method defined by drawState
+	void drawFilled();
+	void drawOutline(int thickness);
+	void drawTexture(raylib::Texture &texture);
 };
 
 // Entity derived GameObject class
@@ -62,8 +66,6 @@ class PlayerCharacter: public Entity {
 private:
 	int xp = 0; // Player total xp
 	int level = 0; // Player level calculated from xp
-
-	void playerInput(); // Player keyboard input to move / make an action
 
 public:
 	using Entity::Entity; // Use the constructors of Entity which in turn uses those of GameObject
