@@ -16,7 +16,7 @@ void game::scaleFullscreen(raylib::Window &window, bool fullscreen) {
 		// Minimise
 		window.SetFullscreen(false);
 
-		settings::scaleFactor = 2;
+		settings::scaleFactor = settings::defaultScaleFactor;
 		settings::scaleOrigin = {0, 0};
 
 		window.SetSize(settings::getScaledSize());

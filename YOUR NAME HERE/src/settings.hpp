@@ -13,7 +13,8 @@ namespace settings
 	inline raylib::Color backgroundColour(0x282c34ff); // Background colour, note the required use of 100% opacity
 
 	// Scaling settings
-	inline int scaleFactor = 3; // Default scale factor
+	inline constexpr int defaultScaleFactor = 3;
+	inline char scaleFactor = defaultScaleFactor; // Working scale factor
 	inline raylib::Vector2 scaleOrigin = {0, 0}; // Origin used by the scaleCanvas
 
 	// Get the current screen size according to the scale factor
