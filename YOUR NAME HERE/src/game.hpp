@@ -7,7 +7,7 @@
 namespace game
 {
 	// Return a mt19937 random number seeded using time since game initialised
-	std::mt19937 random(GetTime() * 1'000'000);
+	inline std::mt19937 random(GetTime() * 1'000'000);
 	// Return a mt19937 random number within the range specified
 	float mt19937range(float min, float max);
 
