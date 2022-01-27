@@ -23,7 +23,7 @@ int main() {
 	);
 
 	Enemy zombie(
-		raylib::Vector2{2, 2},				// Size in tiles
+		raylib::Vector2{1, 2},				// Size in tiles
 		raylib::Vector2{10, 3},				// Position on tilegrid
 		&tileSet,							// Pointer to texture
 		raylib::Rectangle{16, 270, 32, 34}	// Rectangle that represents texture area in image
@@ -34,19 +34,23 @@ int main() {
 	while (!window.ShouldClose()) { // Detect window close button or ESC key
 		// Update
 		//----------------------------------------------------------------------------------
-		for (GameObject *object : gameObjects) object->update();
+		for (GameObject *object : gameObjects) {
+			object->update();
+		}
 
 		// Toggle full screen on F key pressed
 		if (IsKeyPressed(KEY_F)) game::scaleFullscreen(window, window.IsFullscreen());
 		//----------------------------------------------------------------------------------
-	
+
 		// Draw
 		//----------------------------------------------------------------------------------
 		// Draw the game the scale canvas 
 		scalerCanvas.BeginMode();
 		{
 			window.ClearBackground(settings::backgroundColour);
-			for (GameObject *object : gameObjects) object->draw();
+			for (GameObject *object : gameObjects) {
+				object->draw();
+			}
 		}
 		scalerCanvas.EndMode();
 

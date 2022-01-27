@@ -7,7 +7,7 @@
 
 class GameObject;
 
-inline std::vector<GameObject*> gameObjects;
+inline std::vector<GameObject *> gameObjects;
 
 // GameObject base class
 //---------------------------------------------------------------------------------
@@ -20,7 +20,6 @@ protected:
 	raylib::Vector2 gridPosition; // Position on the tile Grid
 	raylib::Vector2 getObjectPosition(); // Function which calculates the object position on screen
 
-	raylib::Rectangle objectRectangle{getObjectPosition(), size * settings::tileSize};
 
 	// Colour / texture
 	raylib::Color objectColour = BLUE;
@@ -28,6 +27,7 @@ protected:
 
 	raylib::Texture *objectTexture = nullptr;
 	raylib::Rectangle textureRect;
+	const raylib::Vector2 textureOffset = -(raylib::Vector2) textureRect.GetSize() + size * settings::tileSize;
 
 	// Drawing
 	enum class drawStates { fill, outline, texture }; // The method of drawing the draw() function will use
@@ -40,6 +40,8 @@ public:
 	void init();
 
 	virtual void update(); // Override this function for subclasses
+
+	raylib::Rectangle objectRectangle{getObjectPosition(), size * settings::tileSize};
 
 	// Draw
 	void draw(); // Draw with the method defined by drawState
@@ -78,7 +80,9 @@ public:
 
 class Enemy: public Entity {
 private:
-	float movetimer = 0.0f;
+	float moveSpeed = 1.2f;
+	float moveTimer = 0.0f;
+
 public:
 	using Entity::Entity; // Use the constructors of Entity which in turn uses those of GameObject
 	void update();

@@ -46,8 +46,8 @@ void GameObject::drawOutline(int thickness) {
 
 void GameObject::drawTexture(raylib::Texture &texture) {
 	texture.Draw(
-		textureRect, 
-		getObjectPosition() - textureRect.GetSize() + size*settings::tileSize // Move the texture inline with the collision box
+		textureRect,
+		getObjectPosition() + raylib::Vector2(textureOffset.x / 2, textureOffset.y) // Move the texture inline with the collision box
 	);
 }
 
@@ -71,6 +71,14 @@ void GameObject::draw() {
 
 void Entity::move(raylib::Vector2 translation) {
 	gridPosition += translation; // Move by translation vector
+	objectRectangle.SetPosition(getObjectPosition()); // Update the onscreen position
+
+	for (GameObject *object : gameObjects) {
+		if (this == object) continue; // Check that we are not ourselves (we are always colliding with ourselves)
+
+		if (CheckCollisionRecs(this->objectRectangle, object->objectRectangle)) gridPosition -= translation;
+	}
+
 	game::clampWithin(settings::gridSize, gridPosition, size); // Clamp within the overall grid
 	objectRectangle.SetPosition(getObjectPosition()); // Update the onscreen position
 }
@@ -91,13 +99,15 @@ void PlayerCharacter::update() {
 //---------------------------------------------------------------------------------
 
 void Enemy::update() {
-	if (movetimer >= 0.0f) {
-		movetimer -= GetFrameTime();
+	// Decrement the timer by frame time
+	if (moveTimer >= 0.0f) {
+		moveTimer -= GetFrameTime();
 		return;
 	}
 
-	movetimer = 1.2;
+	moveTimer = moveSpeed; // Reset the movement timer
 
+	// Move direction vector is faster than switch case
 	std::vector<raylib::Vector2> moveDirection{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
 	srand(GetTime());
