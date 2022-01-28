@@ -13,7 +13,15 @@ inline std::vector<GameObject *> gameObjects;
 
 class GameObject {
 protected:
+	void init();
+
 	// Size / position / grid position
+	bool noCollision = false;
+	void setCollison(bool value);
+
+	// Collision between two rectangle objects
+	void handleCollision(raylib::Vector2 &translation);
+
 	raylib::Vector2 size; // Size of the object in tiles
 
 	raylib::Vector2 gridPosition; // Position on the tile Grid
@@ -36,14 +44,13 @@ public:
 	GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colour, drawStates drawState = drawStates::fill);
 	GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Texture *texture, raylib::Rectangle textureRect = {0, 0, 0, 0});
 
-	void init();
-
 	virtual void update(); // Override this function for subclasses
 
 	raylib::Rectangle objectRectangle{getObjectPosition(), size * settings::tileSize};
 
 	// Draw
 	void draw(); // Draw with the method defined by drawState
+
 	void drawFilled();
 	void drawOutline(int thickness);
 	void drawTexture(raylib::Texture &texture);

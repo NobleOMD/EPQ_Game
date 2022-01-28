@@ -28,6 +28,23 @@ void GameObject::init() {
 
 void GameObject::update() {}
 
+void GameObject::setCollison(bool value) {
+	noCollision = value;
+}
+
+void GameObject::handleCollision(raylib::Vector2 &translation) {
+	gridPosition += translation; // Move by translation vector
+	if (noCollision)  return; // Check that this object can be collided with
+
+	objectRectangle.SetPosition(getObjectPosition()); // Update the onscreen position
+
+	for (GameObject *object : gameObjects) {
+		if (this == object || object->noCollision) continue; // If the object is ourself or has no collision, continue.
+
+		// If this objects hit box is colliding with another undo the translation
+		if (CheckCollisionRecs(this->objectRectangle, object->objectRectangle)) gridPosition -= translation;
+	}
+}
 
 raylib::Vector2 GameObject::getObjectPosition() {
 	return gridPosition * settings::tileSize;
@@ -68,14 +85,7 @@ void GameObject::draw() {
 //---------------------------------------------------------------------------------
 
 void Entity::move(raylib::Vector2 translation) {
-	gridPosition += translation; // Move by translation vector
-	objectRectangle.SetPosition(getObjectPosition()); // Update the onscreen position
-
-	for (GameObject *object : gameObjects) {
-		if (this == object) continue; // Check that we are not ourselves (we are always colliding with ourselves)
-
-		if (CheckCollisionRecs(this->objectRectangle, object->objectRectangle)) gridPosition -= translation;
-	}
+	handleCollision(translation);
 
 	game::clampWithin(settings::gridSize, gridPosition, size); // Clamp within the overall grid
 	objectRectangle.SetPosition(getObjectPosition()); // Update the onscreen position
