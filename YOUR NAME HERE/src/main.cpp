@@ -56,7 +56,7 @@ int main() {
 		{
 			window.ClearBackground(settings::backgroundColour);
 			for (GameObject *object : gameObjects) {
-				object->draw();
+				object->drawTexture();
 				//object->drawOutline(1); // Used to debug collision boxes
 			}
 		}

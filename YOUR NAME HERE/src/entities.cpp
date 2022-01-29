@@ -10,8 +10,7 @@ GameObject::GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Te
 	size(size),
 	gridPosition(gridPos),
 	objectTexture(texture),
-	textureRect(textureRect),
-	drawState(drawStates::texture) {
+	textureRect(textureRect) {
 	init();
 }
 
@@ -50,26 +49,11 @@ void GameObject::drawOutline(int thickness) {
 	objectRectangle.DrawLines(objectColour, thickness);
 }
 
-void GameObject::drawTexture(raylib::Texture &texture) {
-	texture.Draw(
+void GameObject::drawTexture() {
+	objectTexture->Draw(
 		textureRect,
 		getObjectPosition() + raylib::Vector2(textureOffset.x / 2, textureOffset.y) // Move the texture inline with the collision box
 	);
-}
-
-void GameObject::draw() {
-	switch (drawState) {
-		case drawStates::fill:
-			drawFilled();
-			break;
-		case drawStates::outline:
-			drawOutline(1);
-			break;
-
-		case drawStates::texture:
-			drawTexture(*objectTexture);
-			break;
-	}
 }
 
 // Entity derived GameObject class

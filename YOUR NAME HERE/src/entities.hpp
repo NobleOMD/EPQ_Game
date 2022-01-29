@@ -35,21 +35,15 @@ protected:
 	raylib::Rectangle textureRect; // Rectangle that represents the shape and size of the object within the texture above
 	const raylib::Vector2 textureOffset = -(raylib::Vector2) textureRect.GetSize() + size * settings::tileSize; // Annoying offset to align texture with collision box
 
-	// Drawing
-	enum class drawStates { fill, outline, texture }; // The method of drawing the draw() function will use
-	drawStates drawState; // The current draw state
-
 public:
 	GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Texture *texture, raylib::Rectangle textureRect = {0, 0, 0, 0});
 
 	virtual void update(); // Override this function for subclasses
 
 	// Draw
-	void draw(); // Draw with the method defined by drawState
-
 	void drawFilled();
 	void drawOutline(int thickness);
-	void drawTexture(raylib::Texture &texture);
+	void drawTexture();
 };
 
 // Entity derived GameObject class
