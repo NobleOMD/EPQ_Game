@@ -13,8 +13,6 @@ inline std::vector<GameObject *> gameObjects;
 
 class GameObject {
 protected:
-	void init();
-
 	// Size / position / grid position
 
 	// Check to see if this object is colliding with any other in given pointer vector

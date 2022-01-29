@@ -11,10 +11,6 @@ GameObject::GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Te
 	gridPosition(gridPos),
 	objectTexture(texture),
 	textureRect(textureRect) {
-	init();
-}
-
-void GameObject::init() {
 	gameObjects.push_back(this);
 }
 
