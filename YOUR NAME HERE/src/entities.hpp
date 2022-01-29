@@ -17,21 +17,23 @@ protected:
 
 	// Size / position / grid position
 
-	// Collision between two rectangle objects
+	// Check to see if this object is colliding with any other in given pointer vector
 	GameObject *collisionCheck(std::vector<GameObject *> gameObjects);
 
-	raylib::Vector2 size; // Size of the object in tiles
+	raylib::Vector2 size; // Size in tiles
 
-	raylib::Vector2 gridPosition; // Position on the tile Grid
-	raylib::Vector2 getObjectPosition(); // Function which calculates the object position on screen
+	raylib::Vector2 gridPosition; // Position on tile grid
+	raylib::Vector2 getObjectPosition(); // Calculate object position from grid position and tile size
 
 
 	// Colour / texture
-	raylib::Color objectColour = BLUE;
+	raylib::Rectangle objectRectangle{getObjectPosition(), size * settings::tileSize}; // Rectangle that represents the size and position of the object
 
-	raylib::Texture *objectTexture = nullptr;
-	raylib::Rectangle textureRect;
-	const raylib::Vector2 textureOffset = -(raylib::Vector2) textureRect.GetSize() + size * settings::tileSize;
+	raylib::Color objectColour = BLUE; // Default colour of debug draw functions
+
+	raylib::Texture *objectTexture = nullptr; // Pointer to the texture the gameobject uses for rendering
+	raylib::Rectangle textureRect; // Rectangle that represents the shape and size of the object within the texture above
+	const raylib::Vector2 textureOffset = -(raylib::Vector2) textureRect.GetSize() + size * settings::tileSize; // Annoying offset to align texture with collision box
 
 	// Drawing
 	enum class drawStates { fill, outline, texture }; // The method of drawing the draw() function will use
@@ -41,8 +43,6 @@ public:
 	GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Texture *texture, raylib::Rectangle textureRect = {0, 0, 0, 0});
 
 	virtual void update(); // Override this function for subclasses
-
-	raylib::Rectangle objectRectangle{getObjectPosition(), size * settings::tileSize};
 
 	// Draw
 	void draw(); // Draw with the method defined by drawState
@@ -74,6 +74,7 @@ private:
 public:
 	using Entity::Entity; // Use the constructors of Entity which in turn uses those of GameObject
 
+	// Move the character according to player input
 	void update();
 };
 
@@ -82,10 +83,12 @@ public:
 
 class Enemy: public Entity {
 private:
-	float moveSpeed = 1.2f;
+	float moveSpeed = 1.2f; 
 	float moveTimer = moveSpeed;
 
 public:
 	using Entity::Entity; // Use the constructors of Entity which in turn uses those of GameObject
+
+	// Randomly move the Enemy around the screen using timing offsets to make it look more natural
 	void update();
 };
