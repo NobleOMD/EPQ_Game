@@ -16,11 +16,9 @@ protected:
 	void init();
 
 	// Size / position / grid position
-	bool noCollision = false;
-	void setCollison(bool value);
 
 	// Collision between two rectangle objects
-	void handleCollision(raylib::Vector2 &translation);
+	GameObject *collisionCheck(std::vector<GameObject *> gameObjects);
 
 	raylib::Vector2 size; // Size of the object in tiles
 
@@ -30,7 +28,6 @@ protected:
 
 	// Colour / texture
 	raylib::Color objectColour = BLUE;
-	int outlineSize = 1; // Thickness of outline if object outline is drawn
 
 	raylib::Texture *objectTexture = nullptr;
 	raylib::Rectangle textureRect;
@@ -41,7 +38,6 @@ protected:
 	drawStates drawState; // The current draw state
 
 public:
-	GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colour, drawStates drawState = drawStates::fill);
 	GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Texture *texture, raylib::Rectangle textureRect = {0, 0, 0, 0});
 
 	virtual void update(); // Override this function for subclasses
@@ -72,8 +68,8 @@ public:
 
 class PlayerCharacter: public Entity {
 private:
-	int xp = 0; // Player total xp
-	int level = 0; // Player level calculated from xp
+	int xp = 0; // Entity total xp
+	int level = 0; // Entity level calculated from xp
 
 public:
 	using Entity::Entity; // Use the constructors of Entity which in turn uses those of GameObject

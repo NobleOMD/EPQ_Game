@@ -5,8 +5,6 @@
 #include "settings.hpp"
 #include "entities.hpp"
 
-class GameObject;
-
 namespace game
 {
 	// Return a mt19937 random number seeded using time since game initialised

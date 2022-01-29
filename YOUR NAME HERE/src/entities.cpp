@@ -3,14 +3,7 @@
 // GameObject base class
 //---------------------------------------------------------------------------------
 
-GameObject::GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Color colour, drawStates drawState)
-	:
-	size(size),
-	gridPosition(gridPos),
-	objectColour(colour),
-	drawState(drawState) {
-	init();
-}
+// Construction
 
 GameObject::GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Texture *texture, raylib::Rectangle textureRect)
 	:
@@ -26,30 +19,28 @@ void GameObject::init() {
 	gameObjects.push_back(this);
 }
 
+// Updates
+
 void GameObject::update() {}
 
-void GameObject::setCollison(bool value) {
-	noCollision = value;
-}
-
-void GameObject::handleCollision(raylib::Vector2 &translation) {
-	gridPosition += translation; // Move by translation vector
-	if (noCollision)  return; // Check that this object can be collided with
-
-	objectRectangle.SetPosition(getObjectPosition()); // Update the onscreen position
-
+GameObject *GameObject::collisionCheck(std::vector<GameObject *> gameObjects) {
+	// Check for collision within the 
 	for (GameObject *object : gameObjects) {
-		if (this == object || object->noCollision) continue; // If the object is ourself or has no collision, continue.
+		if (this == object) continue; // If the object is ourself continue.
 
 		// If this objects hit box is colliding with another undo the translation
-		if (CheckCollisionRecs(this->objectRectangle, object->objectRectangle)) gridPosition -= translation;
+		if (CheckCollisionRecs(this->objectRectangle, object->objectRectangle)) return object;
 	}
+
+	return nullptr; // If no collision is found return a nullptr
 }
 
 raylib::Vector2 GameObject::getObjectPosition() {
 	return gridPosition * settings::tileSize;
 }
 
+
+// Drawing
 
 void GameObject::drawFilled() {
 	objectRectangle.Draw(objectColour);
@@ -72,7 +63,7 @@ void GameObject::draw() {
 			drawFilled();
 			break;
 		case drawStates::outline:
-			drawOutline(outlineSize);
+			drawOutline(1);
 			break;
 
 		case drawStates::texture:
@@ -85,7 +76,10 @@ void GameObject::draw() {
 //---------------------------------------------------------------------------------
 
 void Entity::move(raylib::Vector2 translation) {
-	handleCollision(translation);
+	gridPosition += translation; // Move by translation vector
+	objectRectangle.SetPosition(getObjectPosition()); // Update the onscreen position
+
+	if (collisionCheck(gameObjects) != nullptr) gridPosition -= translation;
 
 	game::clampWithin(settings::gridSize, gridPosition, size); // Clamp within the overall grid
 	objectRectangle.SetPosition(getObjectPosition()); // Update the onscreen position
