@@ -87,7 +87,7 @@ void Enemy::update() {
 		return;
 	}
 
-	moveTimer = game::mt19937range(moveSpeed - 1, moveSpeed); // Reset the movement timer
+	moveTimer = game::mt19937range(speed - speedRange, speed + speedRange); // Reset the movement timer
 
 	// Move direction vector is faster than switch case
 	std::vector<raylib::Vector2> moveDirection{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};

@@ -75,8 +75,9 @@ public:
 
 class Enemy: public Entity {
 private:
-	float moveSpeed = 1.2f; 
-	float moveTimer = moveSpeed;
+	const float speed = 1.0f; // Average time in seconds per move
+	const float speedRange = 0.3f; // Fluctuation +- range
+	float moveTimer = speed; // Current speed
 
 public:
 	using Entity::Entity; // Use the constructors of Entity which in turn uses those of GameObject
