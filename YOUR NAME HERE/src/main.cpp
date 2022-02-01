@@ -1,6 +1,6 @@
 #include <include/raylib-cpp.hpp> // Cpp headers that include class functionality
 
-#include "image.h"
+#include "../textures/dungeonTileset.h"
 #include "settings.hpp" // My global variables
 #include "gameObject.hpp" // Entities include header
 #include "game.hpp"		// General game functions
@@ -11,11 +11,12 @@ int main() {
 	raylib::Window window(settings::getScaledSize().x, settings::getScaledSize().y, settings::title);
 	window.SetState(FLAG_VSYNC_HINT); // Use V-Sync to autodetect and run at monitor refresh rate
 
+	raylib::Texture tileSet(
+		raylib::Image(".png", __0x72_DungeonTilesetII_v1_4_png, __0x72_DungeonTilesetII_v1_4_png_len)
+	);
+
 	// Texture that the game is rendered to, this is then scaled to the window size
 	raylib::RenderTexture scalerCanvas{(int) settings::screenSize.x, (int) settings::screenSize.y};
-
-	raylib::Image tileImage(".png", __0x72_DungeonTilesetII_v1_4_png, __0x72_DungeonTilesetII_v1_4_png_len);
-	raylib::Texture tileSet(tileImage);
 
 	PlayerCharacter player(
 		raylib::Vector2{1, 1},				// Size in tiles

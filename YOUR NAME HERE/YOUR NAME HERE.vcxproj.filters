@@ -35,7 +35,7 @@
     <ClInclude Include="src\game.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\image.h">
+    <ClInclude Include="textures\dungeonTileset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
