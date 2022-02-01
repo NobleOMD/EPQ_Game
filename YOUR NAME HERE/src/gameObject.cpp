@@ -11,16 +11,16 @@ GameObject::GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Te
 	gridPosition(gridPos),
 	objectTexture(texture),
 	textureRect(textureRect) {
-	gameObjects.push_back(this);
+	allObjects.push_back(this);
 }
 
 // Updates
 
 void GameObject::update() {}
 
-GameObject *GameObject::collisionCheck(std::vector<GameObject *> gameObjects) {
+GameObject *GameObject::collisionCheck(std::vector<GameObject *> allObjects) {
 	// Check for collision within the 
-	for (GameObject *object : gameObjects) {
+	for (GameObject *object : allObjects) {
 		if (this == object) continue; // If the object is ourself continue.
 
 		// If this objects hit box is colliding with another undo the translation
@@ -55,11 +55,17 @@ void GameObject::drawTexture() {
 // Entity derived GameObject class
 //---------------------------------------------------------------------------------
 
+Entity::Entity(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Texture *texture, raylib::Rectangle textureRect)
+	:
+	GameObject(size, gridPos, texture, textureRect) {
+	collisionObjects.push_back(this);
+}
+
 void Entity::move(raylib::Vector2 translation) {
 	gridPosition += translation; // Move by translation vector
 	objectRectangle.SetPosition(getObjectPosition()); // Update the onscreen position
 
-	if (collisionCheck(gameObjects) != nullptr) gridPosition -= translation;
+	if (collisionCheck(collisionObjects) != nullptr) gridPosition -= translation;
 
 	game::clampWithin(settings::gridSize, gridPosition, size); // Clamp within the overall grid
 	objectRectangle.SetPosition(getObjectPosition()); // Update the onscreen position

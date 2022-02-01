@@ -18,6 +18,19 @@ int main() {
 	// Texture that the game is rendered to, this is then scaled to the window size
 	raylib::RenderTexture scalerCanvas{(int) settings::screenSize.x, (int) settings::screenSize.y};
 
+	GameObject tile(
+		raylib::Vector2{1, 1},				// Size in tiles
+		raylib::Vector2{0, 0},				// Position on tilegrid
+		&tileSet,							// Address of texture
+		raylib::Rectangle{16, 64, 16, 16}	// Rectangle that represents texture area in image
+	);
+	GameObject tile2(
+		raylib::Vector2{1, 1},				// Size in tiles
+		raylib::Vector2{0, 1},				// Position on tilegrid
+		&tileSet,							// Address of texture
+		raylib::Rectangle{16, 64, 16, 16}	// Rectangle that represents texture area in image
+	);
+
 	PlayerCharacter player(
 		raylib::Vector2{1, 1},				// Size in tiles
 		raylib::Vector2{25, 15},			// Position on tilegrid
@@ -31,20 +44,13 @@ int main() {
 		&tileSet,							// Address of texture
 		raylib::Rectangle{16, 270, 32, 34}	// Rectangle that represents texture area in image
 	);
-
-	Enemy zombie2(
-		raylib::Vector2{1, 2},				// Size in tiles
-		raylib::Vector2{10, 3},				// Position on tilegrid
-		&tileSet,							// Address of texture
-		raylib::Rectangle{16, 270, 32, 34}	// Rectangle that represents texture area in image
-	);
 	//--------------------------------------------------------------------------------------
 
 	// Main game loop
 	while (!window.ShouldClose()) { // Detect window close button or ESC key
 		// Update
 		//----------------------------------------------------------------------------------
-		for (GameObject *object : gameObjects) {
+		for (GameObject *object : allObjects) {
 			object->update();
 		}
 
@@ -58,7 +64,7 @@ int main() {
 		scalerCanvas.BeginMode();
 		{
 			window.ClearBackground(settings::backgroundColour);
-			for (GameObject *object : gameObjects) {
+			for (GameObject *object : allObjects) {
 				object->drawTexture();
 				//object->drawOutline(1); // Used to debug collision boxes
 			}

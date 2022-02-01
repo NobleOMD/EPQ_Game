@@ -4,10 +4,6 @@
 #include "settings.hpp"
 #include "game.hpp"
 
-class GameObject;
-
-inline std::vector<GameObject *> gameObjects;
-
 // GameObject base class
 //---------------------------------------------------------------------------------
 
@@ -16,7 +12,7 @@ protected:
 	// Size / position / grid position
 
 	// Check to see if this object is colliding with any other in given pointer vector
-	GameObject *collisionCheck(std::vector<GameObject *> gameObjects);
+	GameObject *collisionCheck(std::vector<GameObject *> allObjects);
 
 	raylib::Vector2 size; // Size in tiles
 
@@ -50,7 +46,7 @@ public:
 // An Entity is a GameObject with movement
 class Entity: public GameObject {
 public:
-	using GameObject::GameObject; // Use the constructors of GameObject
+	Entity(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Texture *texture, raylib::Rectangle textureRect = {0, 0, 0, 0});
 
 	void move(raylib::Vector2 translation); // Move on the grid with a vector translation
 };
