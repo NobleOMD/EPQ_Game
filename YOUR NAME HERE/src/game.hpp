@@ -3,7 +3,6 @@
 #include <include/raylib-cpp.hpp>
 
 #include "settings.hpp"
-#include "entities.hpp"
 
 namespace game
 {

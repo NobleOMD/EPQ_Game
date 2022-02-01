@@ -18,7 +18,7 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\entities.cpp">
+    <ClCompile Include="src\gameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\game.cpp">
@@ -29,7 +29,7 @@
     <ClInclude Include="src\settings.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\entities.hpp">
+    <ClInclude Include="src\gameObject.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\game.hpp">

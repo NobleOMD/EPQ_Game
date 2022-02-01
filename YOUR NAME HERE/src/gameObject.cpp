@@ -1,4 +1,4 @@
-#include "entities.hpp"
+#include "gameObject.hpp"
 
 // GameObject base class
 //---------------------------------------------------------------------------------
