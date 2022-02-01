@@ -1,5 +1,6 @@
 #include <include/raylib-cpp.hpp> // Cpp headers that include class functionality
 
+#include "image.h"
 #include "settings.hpp" // My global variables
 #include "gameObject.hpp" // Entities include header
 #include "game.hpp"		// General game functions
@@ -13,7 +14,8 @@ int main() {
 	// Texture that the game is rendered to, this is then scaled to the window size
 	raylib::RenderTexture scalerCanvas{(int) settings::screenSize.x, (int) settings::screenSize.y};
 
-	raylib::Texture tileSet("textures/0x72_DungeonTilesetII_v1.4.png");
+	raylib::Image tileImage(".png", __0x72_DungeonTilesetII_v1_4_png, __0x72_DungeonTilesetII_v1_4_png_len);
+	raylib::Texture tileSet(tileImage);
 
 	PlayerCharacter player(
 		raylib::Vector2{1, 1},				// Size in tiles
