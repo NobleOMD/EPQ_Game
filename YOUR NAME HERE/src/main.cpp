@@ -18,21 +18,21 @@ int main() {
 	PlayerCharacter player(
 		raylib::Vector2{1, 1},				// Size in tiles
 		raylib::Vector2{25, 15},			// Position on tilegrid
-		&tileSet,							// Pointer to texture
+		&tileSet,							// Address of texture
 		raylib::Rectangle{128, 68, 16, 28}	// Rectangle that represents texture area in image
 	);
 
 	Enemy zombie(
 		raylib::Vector2{1, 2},				// Size in tiles
 		raylib::Vector2{10, 3},				// Position on tilegrid
-		&tileSet,							// Pointer to texture
+		&tileSet,							// Address of texture
 		raylib::Rectangle{16, 270, 32, 34}	// Rectangle that represents texture area in image
 	);
 
 	Enemy zombie2(
 		raylib::Vector2{1, 2},				// Size in tiles
 		raylib::Vector2{10, 3},				// Position on tilegrid
-		&tileSet,							// Pointer to texture
+		&tileSet,							// Address of texture
 		raylib::Rectangle{16, 270, 32, 34}	// Rectangle that represents texture area in image
 	);
 	//--------------------------------------------------------------------------------------
