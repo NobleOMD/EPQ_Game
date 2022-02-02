@@ -23,18 +23,20 @@ protected:
 	// Colour / texture
 	raylib::Rectangle objectRectangle{getObjectPosition(), size * settings::tileSize}; // Rectangle that represents the size and position of the object
 
-	raylib::Color objectColour = BLUE; // Default colour of debug draw functions
+	raylib::Color objectColour; // Colour of debug draw functions
 
 	raylib::Texture *objectTexture = nullptr; // Pointer to the texture the gameobject uses for rendering
 	raylib::Rectangle textureRect; // Rectangle that represents the shape and size of the object within the texture above
 	const raylib::Vector2 textureOffset = -(raylib::Vector2) textureRect.GetSize() + size * settings::tileSize; // Annoying offset to align texture with collision box
 
 public:
-	GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Texture *texture, raylib::Rectangle textureRect = {0, 0, 0, 0});
+	GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Texture *texture, raylib::Rectangle textureRect = {0, 0, 0, 0}, raylib::Color colour = BLUE);
 
 	virtual void update(); // Override this function for subclasses
 
 	// Draw
+	virtual void draw();
+
 	void drawFilled();
 	void drawOutline(int thickness);
 	void drawTexture();
@@ -80,4 +82,14 @@ public:
 
 	// Randomly move the Enemy around the screen using timing offsets to make it look more natural
 	void update();
+};
+
+// Wall derived GameObject class
+//---------------------------------------------------------------------------------
+
+class Wall: public GameObject {
+public:
+	Wall(raylib::Vector2 gridPos);
+
+	void draw();
 };
