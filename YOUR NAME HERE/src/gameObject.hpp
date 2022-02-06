@@ -27,7 +27,6 @@ protected:
 
 	raylib::Texture *objectTexture = nullptr; // Pointer to the texture the gameobject uses for rendering
 	raylib::Rectangle textureRect; // Rectangle that represents the shape and size of the object within the texture above
-	const raylib::Vector2 textureOffset = -(raylib::Vector2) textureRect.GetSize() + size * settings::tileSize; // Annoying offset to align texture with collision box
 
 public:
 	GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Texture *texture, raylib::Rectangle textureRect = {0, 0, 0, 0}, raylib::Color colour = BLUE);

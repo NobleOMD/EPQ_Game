@@ -54,6 +54,9 @@ void GameObject::drawOutline(int thickness) {
 }
 
 void GameObject::drawTexture() {
+	// Janky texture offset that is used to align texture with collison box
+	raylib::Vector2 textureOffset = (raylib::Vector2) objectRectangle.GetSize() - (raylib::Vector2) textureRect.GetSize();
+
 	objectTexture->Draw(
 		textureRect,
 		getObjectPosition() + raylib::Vector2(textureOffset.x / 2, textureOffset.y) // Move the texture inline with the collision box
