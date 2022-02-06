@@ -29,7 +29,13 @@ protected:
 	raylib::Rectangle textureRect; // Rectangle that represents the shape and size of the object within the texture above
 
 public:
-	GameObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Texture *texture, raylib::Rectangle textureRect = {0, 0, 0, 0}, raylib::Color colour = BLUE);
+	GameObject(
+		raylib::Vector2 size, 
+		raylib::Vector2 gridPos,
+		raylib::Texture *texture,
+		raylib::Rectangle textureRect = {0, 0, 0, 0},
+		raylib::Color colour = BLUE
+	);
 
 	virtual void update(); // Override this function for subclasses
 
@@ -49,7 +55,16 @@ public:
 	// Check to see if this object is colliding with any other in given pointer vector
 	CollisionObject *collisionCheck(std::vector<CollisionObject *> objects);
 
-	CollisionObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Texture *texture, raylib::Rectangle textureRect = {0, 0, 0, 0}, raylib::Color colour = BLUE);
+	CollisionObject(
+		raylib::Vector2 size, 
+		raylib::Vector2 gridPos,
+		raylib::Texture *texture, 
+		raylib::Rectangle textureRect = {0, 0, 0, 0}, 
+		float health = FLT_MAX,
+		raylib::Color colour = BLUE
+	);
+
+	float health;
 };
 
 
@@ -101,7 +116,7 @@ public:
 	void draw();
 };
 
-class DamageEntity: public GameObject {
+class DamageEntity: public CollisionObject {
 private:
 	float damage;
 	
@@ -109,7 +124,7 @@ protected:
 	void move(raylib::Vector2 translation);
 
 public:
-	DamageEntity(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Texture *texture, raylib::Rectangle textureRect = {0, 0, 0, 0});
+	using CollisionObject::CollisionObject;
 
 	void update();
 };

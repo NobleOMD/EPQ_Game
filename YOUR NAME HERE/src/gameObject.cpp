@@ -58,9 +58,11 @@ void GameObject::draw() {
 // CollisionObject derived GameObject class
 //---------------------------------------------------------------------------------
 
-CollisionObject::CollisionObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Texture *texture, raylib::Rectangle textureRect, raylib::Color colour)
+CollisionObject::CollisionObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Texture *texture, raylib::Rectangle textureRect, float health, raylib::Color colour)
 	:
-	GameObject(size, gridPos, texture, textureRect, colour) {
+	GameObject(size, gridPos, texture, textureRect, colour),
+	health(health)
+{
 	collisionObjects.push_back(this);
 }
 
@@ -94,6 +96,8 @@ void Entity::move(raylib::Vector2 translation) {
 //---------------------------------------------------------------------------------
 
 void PlayerCharacter::update() {
+	if (health < 0.0F) return;
+
 	// Player keyboard input to move
 	if (IsKeyPressed(KEY_W)) Entity::move({0, -1});
 	if (IsKeyPressed(KEY_A)) Entity::move({-1, 0});
@@ -124,7 +128,7 @@ void Enemy::update() {
 
 Wall::Wall(raylib::Vector2 gridPos)
 	:
-	CollisionObject({1, 1}, gridPos, nullptr, {0, 0, 0, 0}, {0, 0, 0, 0}) {
+	CollisionObject({1, 1}, gridPos, nullptr, {0, 0, 0, 0}, FLT_MAX, {0, 0, 0, 0}) {
 	collisionObjects.push_back(this);
 }
 
@@ -141,4 +145,9 @@ void DamageEntity::move(raylib::Vector2 translation) {
 	objectRectangle.SetPosition(getObjectPosition()); // Update the onscreen position
 }
 
-void DamageEntity::update() {}
+void DamageEntity::update() {
+	CollisionObject *hitObject = collisionCheck(collisionObjects);
+	if (hitObject == nullptr) return;
+
+	hitObject->health -= damage;
+}

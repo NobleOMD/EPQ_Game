@@ -18,7 +18,7 @@ int main() {
 	// Texture that the game is rendered to, this is then scaled to the window size
 	raylib::RenderTexture scalerCanvas{(int) settings::screenSize.x, (int) settings::screenSize.y};
 
-	GameObject tile(
+	DamageEntity tile(
 		raylib::Vector2{1, 1},				// Size in tiles
 		raylib::Vector2{0, 0},				// Position on tilegrid
 		&tileSet,							// Address of texture
@@ -32,14 +32,16 @@ int main() {
 		raylib::Vector2{1, 1},				// Size in tiles
 		raylib::Vector2{25, 15},			// Position on tilegrid
 		&tileSet,							// Address of texture
-		raylib::Rectangle{128, 68, 16, 28}	// Rectangle that represents texture area in image
+		raylib::Rectangle{128, 68, 16, 28},	// Rectangle that represents texture area in image
+		100.0F								// Health
 	);
 
 	Enemy zombie(
 		raylib::Vector2{1, 2},				// Size in tiles
 		raylib::Vector2{10, 3},				// Position on tilegrid
 		&tileSet,							// Address of texture
-		raylib::Rectangle{16, 270, 32, 34}	// Rectangle that represents texture area in image
+		raylib::Rectangle{16, 270, 32, 34},	// Rectangle that represents texture area in image
+		100.0F								// Health
 	);
 	//--------------------------------------------------------------------------------------
 
