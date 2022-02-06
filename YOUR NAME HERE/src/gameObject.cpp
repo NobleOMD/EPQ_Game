@@ -25,18 +25,6 @@ GameObject::GameObject(
 
 void GameObject::update() {}
 
-GameObject *GameObject::collisionCheck(std::vector<GameObject *> allObjects) {
-	// Check for collision within the 
-	for (GameObject *object : allObjects) {
-		if (this == object) continue; // If the object is ourself continue.
-
-		// If this objects hit box is colliding with another undo the translation
-		if (CheckCollisionRecs(this->objectRectangle, object->objectRectangle)) return object;
-	}
-
-	return nullptr; // If no collision is found return a nullptr
-}
-
 raylib::Vector2 GameObject::getObjectPosition() {
 	return gridPosition * settings::tileSize;
 }
@@ -66,14 +54,30 @@ void GameObject::drawTexture() {
 void GameObject::draw() {
 	drawTexture();
 }
-// Entity derived GameObject class
+
+// CollisionObject derived GameObject class
 //---------------------------------------------------------------------------------
 
-Entity::Entity(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Texture *texture, raylib::Rectangle textureRect)
+CollisionObject::CollisionObject(raylib::Vector2 size, raylib::Vector2 gridPos, raylib::Texture *texture, raylib::Rectangle textureRect, raylib::Color colour)
 	:
-	GameObject(size, gridPos, texture, textureRect) {
+	GameObject(size, gridPos, texture, textureRect, colour) {
 	collisionObjects.push_back(this);
 }
+
+CollisionObject *CollisionObject::collisionCheck(std::vector<CollisionObject *> objects) {
+	// Check for collision within the 
+	for (CollisionObject *object : objects) {
+		if (this == object) continue; // If the object is ourself continue.
+
+		// If this objects hit box is colliding with another undo the translation
+		if (CheckCollisionRecs(this->objectRectangle, object->objectRectangle)) return object;
+	}
+
+	return nullptr; // If no collision is found return a nullptr
+}
+
+// Entity derived GameObject class
+//---------------------------------------------------------------------------------
 
 void Entity::move(raylib::Vector2 translation) {
 	gridPosition += translation; // Move by translation vector
@@ -115,12 +119,26 @@ void Enemy::update() {
 	move(moveDirection[game::random() % 4]);
 }
 
+// Wall derived GameObject class
+//---------------------------------------------------------------------------------
+
 Wall::Wall(raylib::Vector2 gridPos)
 	:
-	GameObject({1, 1}, gridPos, nullptr, {0, 0, 0, 0}, {0, 0, 0, 0}) {
+	CollisionObject({1, 1}, gridPos, nullptr, {0, 0, 0, 0}, {0, 0, 0, 0}) {
 	collisionObjects.push_back(this);
 }
 
 void Wall::draw() {
 	drawFilled();
 }
+
+// DamageEntity derived GameObject class
+//---------------------------------------------------------------------------------
+
+void DamageEntity::move(raylib::Vector2 translation) {
+	gridPosition += translation; // Move by translation vector
+	game::clampWithin(settings::gridSize, gridPosition, size); // Clamp within the overall grid
+	objectRectangle.SetPosition(getObjectPosition()); // Update the onscreen position
+}
+
+void DamageEntity::update() {}

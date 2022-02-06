@@ -3,11 +3,6 @@
 #include <include/raylib-cpp.hpp>
 
 #include "settings.hpp"
-// Don't need to #include "gameObject.hpp" as there is a circular dependancy instead just use a forward declaration:
-
-class GameObject;
-inline std::vector<GameObject *> allObjects;
-inline std::vector<GameObject *> collisionObjects;
 
 namespace game
 {
