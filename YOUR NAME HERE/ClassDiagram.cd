@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ObjectRectangle">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAIKAIAAAAAAAACAAAAAAAAAEAAA=</HashCode>
+      <FileName>src\objects.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ObjectTexture">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAABAAAAAAAAAAAQAAABAA=</HashCode>
+      <FileName>src\objects.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ObjectCollision">
+    <Position X="3" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\objects.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ObjectEntity">
+    <Position X="5.25" Y="6.25" Width="1.5" />
+    <InheritanceLine Type="ObjectCollision" FixedFromPoint="true">
+      <Path>
+        <Point X="4.5" Y="4.438" />
+        <Point X="6" Y="4.438" />
+        <Point X="6" Y="6.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\objects.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="raylib::Rectangle" Collapsed="true">
+    <Position X="4.25" Y="0.75" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>EAAABAAAAiAAAgKAAAQYAAAAAAAmEgCAAEAAAAAAAIA=</HashCode>
+      <FileName>D:\Documents\EPQ_Game\Dependancies\raylib-cpp-4.0.5\include\Rectangle.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Rectangle">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAQAAAAAAAAAAAAAAAAABgAAAAAAA=</HashCode>
+      <FileName>D:\Documents\EPQ_Game\Dependancies\raylib-4.0.0\include\raylib.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

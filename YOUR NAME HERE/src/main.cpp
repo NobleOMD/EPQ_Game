@@ -2,7 +2,7 @@
 
 #include "../textures/dungeonTileset.h"
 #include "settings.hpp" // My global variables
-#include "gameObject.hpp" // Entities include header
+#include "objects.hpp"
 #include "game.hpp"		// General game functions
 
 int main() {
@@ -18,7 +18,7 @@ int main() {
 	// Texture that the game is rendered to, this is then scaled to the window size
 	raylib::RenderTexture scalerCanvas{(int) settings::screenSize.x, (int) settings::screenSize.y};
 
-	DamageEntity tile(
+	ObjectTexture tile(
 		raylib::Vector2{1, 1},				// Size in tiles
 		raylib::Vector2{0, 0},				// Position on tilegrid
 		&tileSet,							// Address of texture
@@ -32,24 +32,22 @@ int main() {
 		raylib::Vector2{1, 1},				// Size in tiles
 		raylib::Vector2{25, 15},			// Position on tilegrid
 		&tileSet,							// Address of texture
-		raylib::Rectangle{128, 68, 16, 28},	// Rectangle that represents texture area in image
-		100.0F								// Health
+		raylib::Rectangle{128, 68, 16, 28}	// Rectangle that represents texture area in image
 	);
 
-	Enemy zombie(
-		raylib::Vector2{1, 2},				// Size in tiles
-		raylib::Vector2{10, 3},				// Position on tilegrid
-		&tileSet,							// Address of texture
-		raylib::Rectangle{16, 270, 32, 34},	// Rectangle that represents texture area in image
-		100.0F								// Health
-	);
+	//Enemy zombie(
+	//	raylib::Vector2{1, 2},				// Size in tiles
+	//	raylib::Vector2{10, 3},				// Position on tilegrid
+	//	&tileSet,							// Address of texture
+	//	raylib::Rectangle{16, 270, 32, 34}	// Rectangle that represents texture area in image
+	//);
 	//--------------------------------------------------------------------------------------
 
 	// Main game loop
 	while (!window.ShouldClose()) { // Detect window close button or ESC key
 		// Update
 		//----------------------------------------------------------------------------------
-		for (GameObject *object : allObjects) {
+		for (ObjectRectangle *object : allObjects) {
 			object->update();
 		}
 
@@ -63,7 +61,7 @@ int main() {
 		scalerCanvas.BeginMode();
 		{
 			window.ClearBackground(settings::backgroundColour);
-			for (GameObject *object : allObjects) {
+			for (ObjectRectangle *object : allObjects) {
 				object->draw();
 				//object->drawOutline(1); // Used to debug collision boxes
 			}
