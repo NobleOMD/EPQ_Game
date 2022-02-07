@@ -6,15 +6,13 @@
 
 // ObjectRectangle: base class
 //---------------------------------------------------------------------------------
-class ObjectRectangle: public raylib::Rectangle {
-public:
+struct ObjectRectangle: public raylib::Rectangle {
 	ObjectRectangle(raylib::Vector2 size, raylib::Vector2 position);
 	virtual void update(); // Update object position from grid position and tile size
 	virtual void draw();
 
 	virtual void debug(); // Draw the outline of the rectangle
 
-protected:
 	// Size / position / grid position
 	raylib::Vector2 size; // Size in tiles
 	raylib::Vector2 position; // Position on tile grid
@@ -41,30 +39,22 @@ protected:
 
 // Collision: adds collision to ObjectRectangle
 //---------------------------------------------------------------------------------
-class Collision: public ObjectRectangle {
-public:
-	Collision(raylib::Vector2 size, raylib::Vector2 position);
-	Collision *collisionCheck(std::vector<Collision *> objects);
-};
+ObjectRectangle *collisionCheck(ObjectRectangle *target, std::vector<ObjectRectangle *> objects);
 
-inline std::vector<Collision *> collisionObjects;
+inline std::vector<ObjectRectangle *> collisionObjects;
 //---------------------------------------------------------------------------------
 
 
 // Movement: adds movement to ObjectRectangle
 //---------------------------------------------------------------------------------
-class Movement: public ObjectRectangle {
-public:
-	using ObjectRectangle::ObjectRectangle;
-	void move(raylib::Vector2 translation); // Move on the tile grid using vector translation
-};
+void movement(ObjectRectangle *target, raylib::Vector2 translation); // Move on the tile grid using vector translation
 //---------------------------------------------------------------------------------
 
 
 
 // Entity: combines Textures, Collision and Movement
 //---------------------------------------------------------------------------------
-class Entity: public ObjectRectangle, public ObjectTexture, public Movement, public Collision{
+class Entity: public ObjectTexture {
 public:
 	Entity(raylib::Vector2 size, raylib::Vector2 position, raylib::Texture *texture, raylib::Rectangle textureRect);
 	void move(raylib::Vector2 translation); // Move, checking for collision
@@ -102,7 +92,7 @@ inline std::vector<Enemy *> enemyObjects;
 
 // Wall: collision at grid position
 //---------------------------------------------------------------------------------
-class Wall: public Collision {
+class Wall: public ObjectRectangle {
 public:
 	Wall(raylib::Vector2 gridPos);
 };

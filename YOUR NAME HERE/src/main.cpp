@@ -20,10 +20,11 @@ int main() {
 
 	ObjectTexture tile(
 		raylib::Vector2{1, 1},				// Size in tiles
-		raylib::Vector2{0, 0},				// Position on tilegrid
+		raylib::Vector2{25, 15},				// Position on tilegrid
 		&tileSet,							// Address of texture
 		raylib::Rectangle{16, 64, 16, 16}	// Rectangle that represents texture area in image
 	);
+
 	Wall tile2(
 		raylib::Vector2{0, 1}
 	);
@@ -42,6 +43,7 @@ int main() {
 	//	raylib::Rectangle{16, 270, 32, 34}	// Rectangle that represents texture area in image
 	//);
 	//--------------------------------------------------------------------------------------
+	player.move({5, 0});
 
 	// Main game loop
 	while (!window.ShouldClose()) { // Detect window close button or ESC key
@@ -63,6 +65,7 @@ int main() {
 			window.ClearBackground(settings::backgroundColour);
 			for (ObjectRectangle *object : allObjects) {
 				object->draw();
+				object->debug();
 				//object->drawOutline(1); // Used to debug collision boxes
 			}
 		}
