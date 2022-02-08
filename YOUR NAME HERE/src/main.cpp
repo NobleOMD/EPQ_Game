@@ -36,12 +36,12 @@ int main() {
 		raylib::Rectangle{128, 68, 16, 28}	// Rectangle that represents texture area in image
 	);
 
-	//Enemy zombie(
-	//	raylib::Vector2{1, 2},				// Size in tiles
-	//	raylib::Vector2{10, 3},				// Position on tilegrid
-	//	&tileSet,							// Address of texture
-	//	raylib::Rectangle{16, 270, 32, 34}	// Rectangle that represents texture area in image
-	//);
+	Enemy zombie(
+		raylib::Vector2{1, 2},				// Size in tiles
+		raylib::Vector2{10, 3},				// Position on tilegrid
+		&tileSet,							// Address of texture
+		raylib::Rectangle{16, 270, 32, 34}	// Rectangle that represents texture area in image
+	);
 	//--------------------------------------------------------------------------------------
 	player.move({5, 0});
 

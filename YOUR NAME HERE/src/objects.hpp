@@ -4,6 +4,11 @@
 #include "settings.hpp"
 #include "game.hpp"
 
+class ObjectRectangle;
+inline std::vector<ObjectRectangle *> allObjects;
+inline std::vector<ObjectRectangle *> collisionObjects;
+
+
 // ObjectRectangle: base class
 //---------------------------------------------------------------------------------
 struct ObjectRectangle: public raylib::Rectangle {
@@ -12,13 +17,24 @@ struct ObjectRectangle: public raylib::Rectangle {
 	virtual void draw();
 
 	virtual void debug(); // Draw the outline of the rectangle
+	void updatePosition();
 
 	// Size / position / grid position
 	raylib::Vector2 size; // Size in tiles
 	raylib::Vector2 position; // Position on tile grid
 };
+//---------------------------------------------------------------------------------
 
-inline std::vector<ObjectRectangle *> allObjects;
+
+// Collision: adds collision to ObjectRectangle
+//---------------------------------------------------------------------------------
+ObjectRectangle *collisionCheck(ObjectRectangle *target, std::vector<ObjectRectangle *> objects);
+//---------------------------------------------------------------------------------
+
+
+// Movement: adds movement to ObjectRectangle
+//---------------------------------------------------------------------------------
+void movement(ObjectRectangle *target, raylib::Vector2 translation); // Move on the tile grid using vector translation
 //---------------------------------------------------------------------------------
 
 
@@ -37,21 +53,6 @@ protected:
 //---------------------------------------------------------------------------------
 
 
-// Collision: adds collision to ObjectRectangle
-//---------------------------------------------------------------------------------
-ObjectRectangle *collisionCheck(ObjectRectangle *target, std::vector<ObjectRectangle *> objects);
-
-inline std::vector<ObjectRectangle *> collisionObjects;
-//---------------------------------------------------------------------------------
-
-
-// Movement: adds movement to ObjectRectangle
-//---------------------------------------------------------------------------------
-void movement(ObjectRectangle *target, raylib::Vector2 translation); // Move on the tile grid using vector translation
-//---------------------------------------------------------------------------------
-
-
-
 // Entity: combines Textures, Collision and Movement
 //---------------------------------------------------------------------------------
 class Entity: public ObjectTexture {
@@ -64,10 +65,9 @@ public:
 
 // PlayerCharacter: derived from Entity
 //---------------------------------------------------------------------------------
-class PlayerCharacter: public Entity{
+class PlayerCharacter: public Entity {
 public:
 	using Entity::Entity;
-
 	void update(); // Move according to player input
 };
 //---------------------------------------------------------------------------------

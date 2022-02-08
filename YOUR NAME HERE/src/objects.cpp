@@ -4,25 +4,27 @@
 //---------------------------------------------------------------------------------
 ObjectRectangle::ObjectRectangle(raylib::Vector2 size, raylib::Vector2 position)
 	:
-	raylib::Rectangle(position * settings::tileSize, size *settings::tileSize),
+	raylib::Rectangle(position *settings::tileSize, size *settings::tileSize),
 	size(size),
 	position(position) {
 	allObjects.push_back(this);
 }
 
-void ObjectRectangle::update() {
-	x = position.x * settings::tileSize;
-	y = position.y * settings::tileSize;
-
-	width = size.x * settings::tileSize;
-	height = size.y * settings::tileSize;
-}
+void ObjectRectangle::update() {}
 
 void ObjectRectangle::draw() {}
 
 void ObjectRectangle::debug() {
 	// Draw object outline
 	::DrawRectangleLines(static_cast<int>(x), static_cast<int>(y), static_cast<int>(width), static_cast<int>(height), BLUE);
+}
+
+void ObjectRectangle::updatePosition() {
+	x = position.x * settings::tileSize;
+	y = position.y * settings::tileSize;
+
+	width = size.x * settings::tileSize;
+	height = size.y * settings::tileSize;
 }
 //---------------------------------------------------------------------------------
 
@@ -50,7 +52,6 @@ void ObjectTexture::draw() {
 
 // Collision: adds collision to ObjectRectangle
 //---------------------------------------------------------------------------------
-
 ObjectRectangle *collisionCheck(ObjectRectangle *target, std::vector<ObjectRectangle *> objects) {
 	// Check for collision within a list of objects with collison
 	for (ObjectRectangle *object : objects) {
@@ -62,12 +63,6 @@ ObjectRectangle *collisionCheck(ObjectRectangle *target, std::vector<ObjectRecta
 
 	return nullptr; // If no collision is found return a nullptr
 }
-
-Entity::Entity(raylib::Vector2 size, raylib::Vector2 position, raylib::Texture *texture, raylib::Rectangle textureRect)
-	:
-	ObjectTexture(size, position, texture, textureRect) {
-	collisionObjects.push_back(this);
-}
 //---------------------------------------------------------------------------------
 
 
@@ -76,13 +71,19 @@ Entity::Entity(raylib::Vector2 size, raylib::Vector2 position, raylib::Texture *
 void movement(ObjectRectangle *target, raylib::Vector2 translation) {
 	target->position += translation; // Move by translation vector
 	game::clampWithin(settings::gridSize, target->position, target->size); // Clamp within the overall grid
-	target->update(); // Update the onscreen position
+	target->updatePosition(); // Update the onscreen position
 }
 //---------------------------------------------------------------------------------
 
 
 // Entity: combines Textures, Collision and Movement
 //---------------------------------------------------------------------------------
+Entity::Entity(raylib::Vector2 size, raylib::Vector2 position, raylib::Texture *texture, raylib::Rectangle textureRect)
+	:
+	ObjectTexture(size, position, texture, textureRect) {
+	collisionObjects.push_back(this);
+}
+
 void Entity::move(raylib::Vector2 translation) {
 	movement(this, translation);
 	if (collisionCheck(this, collisionObjects) != nullptr) movement(this, -translation);
@@ -93,8 +94,6 @@ void Entity::move(raylib::Vector2 translation) {
 // PlayerCharacter: derived from Entity
 //---------------------------------------------------------------------------------
 void PlayerCharacter::update() {
-	this->ObjectRectangle::update();
-
 	// Player keyboard input to move
 	if (IsKeyPressed(KEY_W)) move({0, -1});
 	if (IsKeyPressed(KEY_A)) move({-1, 0});
@@ -129,7 +128,9 @@ void Enemy::update() {
 
 // Wall: collision at grid position
 //---------------------------------------------------------------------------------
-Wall::Wall(raylib::Vector2 gridPos) : ObjectRectangle({1, 1}, gridPos) {
+Wall::Wall(raylib::Vector2 gridPos)
+	:
+	ObjectRectangle({1, 1}, gridPos) {
 	collisionObjects.push_back(this);
 }
 
