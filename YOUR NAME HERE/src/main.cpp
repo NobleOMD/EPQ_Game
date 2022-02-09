@@ -20,30 +20,33 @@ int main() {
 
 	ObjectTexture tile(
 		raylib::Vector2{1, 1},				// Size in tiles
-		raylib::Vector2{25, 15},				// Position on tilegrid
+		raylib::Vector2{15, 9},				// Position on tilegrid
 		&tileSet,							// Address of texture
 		raylib::Rectangle{16, 64, 16, 16}	// Rectangle that represents texture area in image
 	);
 
-	Wall tile2(
-		raylib::Vector2{0, 1}
+	Damage tile2(
+		raylib::Vector2{0.5, 0.5},
+		raylib::Vector2{0.25, 0.25},
+		5.0F
 	);
 
 	PlayerCharacter player(
 		raylib::Vector2{1, 1},				// Size in tiles
-		raylib::Vector2{25, 15},			// Position on tilegrid
+		raylib::Vector2{10, 8},				// Position on tilegrid
 		&tileSet,							// Address of texture
-		raylib::Rectangle{128, 68, 16, 28}	// Rectangle that represents texture area in image
+		raylib::Rectangle{128, 68, 16, 28},	// Rectangle that represents texture area in image
+		100.0F								// Health
 	);
 
 	Enemy zombie(
 		raylib::Vector2{1, 2},				// Size in tiles
 		raylib::Vector2{10, 3},				// Position on tilegrid
 		&tileSet,							// Address of texture
-		raylib::Rectangle{16, 270, 32, 34}	// Rectangle that represents texture area in image
+		raylib::Rectangle{16, 270, 32, 34},	// Rectangle that represents texture area in image
+		100.0F								// Health
 	);
 	//--------------------------------------------------------------------------------------
-	player.move({5, 0});
 
 	// Main game loop
 	while (!window.ShouldClose()) { // Detect window close button or ESC key

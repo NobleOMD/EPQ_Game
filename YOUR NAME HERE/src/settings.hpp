@@ -7,7 +7,7 @@ namespace settings
 	inline std::string title = "YOUR NAME HERE"; // Title of the window
 
 	inline constexpr int tileSize = 16; // Tile size used to multiply many calculations, in future dynamically change to percentage of screen size
-	inline raylib::Vector2 gridSize{38, 20}; // Size of the screen "grid" in tiles
+	inline raylib::Vector2 gridSize{25, 15}; // Size of the screen "grid" in tiles
 	inline raylib::Vector2 screenSize = gridSize * tileSize; // True screen size
 
 	inline raylib::Color backgroundColour(0x282c34ff); // Background colour, note the required use of 100% opacity

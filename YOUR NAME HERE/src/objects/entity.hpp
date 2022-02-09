@@ -9,10 +9,10 @@
 //---------------------------------------------------------------------------------
 	// DATA:
 	// ------------
-	// health
 	// position
 	// size
 	// texture
+	// health
 	// current item
 	// ------------
 
@@ -23,12 +23,17 @@
 	// draw
 	// ------------
 class Entity: public ObjectTexture {
-protected:
-	float health = 100;
-	Item *currentItem = nullptr;
-
 public:
-	Entity(raylib::Vector2 size, raylib::Vector2 position, raylib::Texture *texture, raylib::Rectangle textureRect);
+	Entity(raylib::Vector2 size, raylib::Vector2 position, raylib::Texture *texture, raylib::Rectangle textureRect, float health);
+	Entity(ObjectTexture objectTexture, float health);
+
 	void move(raylib::Vector2 translation); // Move, checking for collision
+
+	float health;
+
+protected:
+	Item *currentItem = nullptr;
 };
+
+inline std::vector<Entity *> damageableObjects;
 //---------------------------------------------------------------------------------

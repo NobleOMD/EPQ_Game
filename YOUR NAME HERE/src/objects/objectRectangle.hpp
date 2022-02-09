@@ -11,7 +11,7 @@ inline std::vector<ObjectRectangle *> collisionObjects;
 //---------------------------------------------------------------------------------
 struct ObjectRectangle: public raylib::Rectangle {
 	ObjectRectangle(raylib::Vector2 size, raylib::Vector2 position);
-	virtual void update(); // Update object position from grid position and tile size
+	virtual void update();
 	virtual void draw();
 
 	virtual void debug(); // Draw the outline of the rectangle

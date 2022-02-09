@@ -3,6 +3,7 @@
 #include "../settings.hpp"
 
 #include "objectRectangle.hpp"
+#include "entity.hpp"
 #include "particle.hpp"
 
 // Attack
@@ -38,6 +39,12 @@ class Attack: public Particle {
 	// damage targets
 	// ------------
 class Damage: public ObjectRectangle {
+public:
+	Damage(raylib::Vector2 size, raylib::Vector2 position, float damage);
+
+	void update();
+private:
+	float damage;
 };
 //--------------------------------------------------------------------------------------
 
