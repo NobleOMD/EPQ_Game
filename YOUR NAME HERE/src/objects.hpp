@@ -1,9 +1,81 @@
 #pragma once
 #include <include/raylib-cpp.hpp>
 
-// Entity
-//--------------------------------------------------------------------------------------
-struct Entity {
+#include "settings.hpp"
+#include "game.hpp"
+
+class ObjectRectangle;
+inline std::vector<ObjectRectangle *> allObjects;
+inline std::vector<ObjectRectangle *> collisionObjects;
+
+
+// ObjectRectangle: base class
+//---------------------------------------------------------------------------------
+	// DATA:
+	// ------------
+	// position
+	// size
+	// ------------
+
+	// FUNCTIONS:
+	// ------------
+	// draw
+	// ------------
+struct ObjectRectangle: public raylib::Rectangle {
+	ObjectRectangle(raylib::Vector2 size, raylib::Vector2 position);
+	virtual void update(); // Update object position from grid position and tile size
+	virtual void draw();
+
+	virtual void debug(); // Draw the outline of the rectangle
+	void updatePosition();
+
+	// Size / position / grid position
+	raylib::Vector2 size; // Size in tiles
+	raylib::Vector2 position; // Position on tile grid
+};
+//---------------------------------------------------------------------------------
+
+
+// Collision: adds collision to ObjectRectangle
+//---------------------------------------------------------------------------------
+ObjectRectangle *collisionCheck(ObjectRectangle *target, std::vector<ObjectRectangle *> objects);
+//---------------------------------------------------------------------------------
+
+
+// Movement: adds movement to ObjectRectangle
+//---------------------------------------------------------------------------------
+void movement(ObjectRectangle *target, raylib::Vector2 translation); // Move on the tile grid using vector translation
+//---------------------------------------------------------------------------------
+
+
+// ObjectTexture: ObjectRectangle drawn with texture
+//---------------------------------------------------------------------------------
+	// DATA:
+	// ------------
+	// position
+	// size
+	// texture
+	// ------------
+
+	// FUNCTIONS:
+	// ------------
+	// draw
+	// ------------
+class ObjectTexture: public ObjectRectangle {
+public:
+	ObjectTexture(raylib::Vector2 size, raylib::Vector2 position, raylib::Texture *texture, raylib::Rectangle textureRect);
+	void draw();
+
+protected:
+	// Colour / texture
+	raylib::Texture *objectTexture; // Pointer to the texture the gameobject uses for rendering
+	raylib::Rectangle textureRect; // Rectangle that represents the shape and size of the object within the texture above
+};
+//---------------------------------------------------------------------------------
+
+
+// Entity: combines Textures, Collision and Movement
+//---------------------------------------------------------------------------------
 	// DATA:
 	// ------------
 	// health
@@ -19,12 +91,16 @@ struct Entity {
 	// move
 	// draw
 	// ------------
+class Entity: public ObjectTexture {
+public:
+	Entity(raylib::Vector2 size, raylib::Vector2 position, raylib::Texture *texture, raylib::Rectangle textureRect);
+	void move(raylib::Vector2 translation); // Move, checking for collision
 };
-//--------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------
 
-// Player Character
-//--------------------------------------------------------------------------------------
-struct PlayerCharacter {
+
+// PlayerCharacter: derived from Entity
+//---------------------------------------------------------------------------------
 	// DATA:
 	// ------------
 	// xp
@@ -49,12 +125,16 @@ struct PlayerCharacter {
 	//		damage
 	//		xp
 	//		stop at walls and other entites
+class PlayerCharacter: public Entity {
+public:
+	using Entity::Entity;
+	void update(); // Move according to player input
 };
-//--------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------
 
-// Enemy
-//--------------------------------------------------------------------------------------
-struct Enemy {
+
+// Enemy: derived from Entity
+//---------------------------------------------------------------------------------
 	// DATA:
 	// ------------
 	// difficulty
@@ -79,12 +159,23 @@ struct Enemy {
 	// collision
 	//		damage other entities
 	//		stop at walls and other entities
-};
-//--------------------------------------------------------------------------------------
+class Enemy: public Entity {
+public:
+	Enemy(raylib::Vector2 size, raylib::Vector2 position, raylib::Texture *texture, raylib::Rectangle textureRect);
+	void update();
 
-// Wall
-//--------------------------------------------------------------------------------------
-struct Wall {
+private:
+	const float speed = 1.0f; // Average time in seconds per move
+	const float speedRange = 0.3f; // Fluctuation +- range
+	float moveTimer = speed; // Current speed
+};
+
+inline std::vector<Enemy *> enemyObjects;
+//---------------------------------------------------------------------------------
+
+
+// Wall: collision at grid position
+//---------------------------------------------------------------------------------
 	// DATA:
 	// ------------
 	// Position
@@ -93,12 +184,15 @@ struct Wall {
 	// FUNCTIONS:
 	// ------------
 	// ------------
+class Wall: public ObjectRectangle {
+public:
+	Wall(raylib::Vector2 gridPos);
 };
-//--------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------
 
 // Chest
 //--------------------------------------------------------------------------------------
-struct Chest {
+class Chest: public ObjectTexture {
 	// DATA:
 	// ------------
 	// Item drops
@@ -115,7 +209,6 @@ struct Chest {
 
 // Spawn Point
 //--------------------------------------------------------------------------------------
-struct SpawnPoint {
 	// DATA:
 	// ------------
 	// lock state
@@ -127,12 +220,12 @@ struct SpawnPoint {
 	// ------------
 	// spawn entity
 	// ------------
-}
+class SpawnPoint: public ObjectRectangle {
+};
 //--------------------------------------------------------------------------------------
 
 // Entrance
 //--------------------------------------------------------------------------------------
-struct Entrance{
 	// DATA:
 	// ------------
 	// lock state
@@ -143,12 +236,12 @@ struct Entrance{
 	// ------------
 	// load level
 	// ------------
+class Entrance: SpawnPoint {
 };
 //--------------------------------------------------------------------------------------
 
 // Exit
 //--------------------------------------------------------------------------------------
-struct Exit {
 	// DATA:
 	// ------------
 	// lock state
@@ -162,12 +255,12 @@ struct Exit {
 	// unload level
 	// load next level
 	// ------------
+class Exit: SpawnPoint {
 };
 //--------------------------------------------------------------------------------------
 
 // Item
 //--------------------------------------------------------------------------------------
-struct Item {
 	// DATA:
 	// ------------
 	// item damage/defense
@@ -181,48 +274,12 @@ struct Item {
 	// consume item
 	// drop item
 	// ------------
-};
-//--------------------------------------------------------------------------------------
-
-// Attack
-//--------------------------------------------------------------------------------------
-struct Attack {
-	// DATA:
-	// ------------
-	// position
-	// shape
-	// damage
-	// time
-	// targets
-	// ------------
-
-	// FUNCTIONS:
-	// ------------
-	// attack
-	// ------------
-};
-//--------------------------------------------------------------------------------------
-
-// Damage
-//--------------------------------------------------------------------------------------
-struct Damage {
-	// DATA:
-	// ------------
-	// position
-	// damage
-	// targets
-	// ------------
-	// 
-	// FUNCTIONS:
-	// ------------
-	// damage targets
-	// ------------
+class Item: public ObjectTexture {
 };
 //--------------------------------------------------------------------------------------
 
 // Particle
 //--------------------------------------------------------------------------------------
-struct Particle {
 	// DATA:
 	// ------------
 	// position
@@ -238,5 +295,44 @@ struct Particle {
 	// destroy
 	// collide
 	// ------------
-}
+
+class Particle: public ObjectTexture {
+};
+//--------------------------------------------------------------------------------------
+
+
+// Attack
+//--------------------------------------------------------------------------------------
+	// DATA:
+	// ------------
+	// position
+	// shape
+	// damage
+	// time
+	// targets
+	// ------------
+
+	// FUNCTIONS:
+	// ------------
+	// attack
+	// ------------
+class Attack: public Particle {
+};
+//--------------------------------------------------------------------------------------
+
+// Damage
+//--------------------------------------------------------------------------------------
+	// DATA:
+	// ------------
+	// position
+	// damage
+	// targets
+	// ------------
+	// 
+	// FUNCTIONS:
+	// ------------
+	// damage targets
+	// ------------
+class Damage: public ObjectRectangle {
+};
 //--------------------------------------------------------------------------------------
