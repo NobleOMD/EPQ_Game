@@ -151,11 +151,10 @@
   <ItemGroup>
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\objects.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\game.hpp" />
     <ClInclude Include="src\objects.hpp" />
+    <ClInclude Include="src\game.hpp" />
     <ClInclude Include="textures\dungeonTileset.h" />
     <ClInclude Include="src\settings.hpp" />
   </ItemGroup>

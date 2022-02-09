@@ -18,3 +18,87 @@ namespace game
 	// Maximise and minimise the (window) according to the correct scaling for the monitor being used
 	void scaleFullscreen(raylib::Window &window, bool fullscreen);
 }
+
+// User Interface
+//--------------------------------------------------------------------------------------
+// DATA:
+// ------------
+// HUD
+//		health
+//		XP
+//		current item
+//		character mugshot
+// 
+// Inventory
+//		player items
+//		selected item
+//			item damage/defense
+//			item name
+//			item description
+//  
+// Skill Tree
+//		skills available
+//		selected item
+//			item name
+//			item description
+// Level
+//		Name
+//		Wave number
+//		Wave progression
+// 
+// Main menu
+//		Level selected
+//		Levels completed
+// ------------
+// 
+// FUNCTIONS:
+// ------------
+// Display item icon
+// Display item scaled up
+// 
+// Select grid position
+// 
+// Exit screen state
+// 69
+// 420
+// :)
+// ------------
+//--------------------------------------------------------------------------------------
+
+// Level
+//--------------------------------------------------------------------------------------
+// DATA:
+// ------------
+// Name
+// Position in world
+// Entrance
+// Texture
+// Collision areas
+// Current wave number
+// Waves
+// Chest position
+// Exit(s)
+// ------------
+// 
+// FUNCTIONS:
+// ------------
+// Initialise level
+// Spawn wave
+// Generate chest
+// Destroy level
+// ------------
+//--------------------------------------------------------------------------------------
+
+// Wave
+//--------------------------------------------------------------------------------------
+// DATA:
+// ------------
+// Wave number
+// Enemy spawning positions
+// ------------
+// 
+// FUNCTIONS:
+// ------------
+// Spawn enemies
+// ------------
+//--------------------------------------------------------------------------------------

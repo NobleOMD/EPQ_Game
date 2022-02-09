@@ -11,6 +11,16 @@ inline std::vector<ObjectRectangle *> collisionObjects;
 
 // ObjectRectangle: base class
 //---------------------------------------------------------------------------------
+	// DATA:
+	// ------------
+	// position
+	// size
+	// ------------
+
+	// FUNCTIONS:
+	// ------------
+	// draw
+	// ------------
 struct ObjectRectangle: public raylib::Rectangle {
 	ObjectRectangle(raylib::Vector2 size, raylib::Vector2 position);
 	virtual void update(); // Update object position from grid position and tile size
@@ -40,6 +50,17 @@ void movement(ObjectRectangle *target, raylib::Vector2 translation); // Move on 
 
 // ObjectTexture: ObjectRectangle drawn with texture
 //---------------------------------------------------------------------------------
+	// DATA:
+	// ------------
+	// position
+	// size
+	// texture
+	// ------------
+
+	// FUNCTIONS:
+	// ------------
+	// draw
+	// ------------
 class ObjectTexture: public ObjectRectangle {
 public:
 	ObjectTexture(raylib::Vector2 size, raylib::Vector2 position, raylib::Texture *texture, raylib::Rectangle textureRect);
@@ -55,6 +76,21 @@ protected:
 
 // Entity: combines Textures, Collision and Movement
 //---------------------------------------------------------------------------------
+	// DATA:
+	// ------------
+	// health
+	// position
+	// size
+	// texture
+	// current item
+	// ------------
+
+	// FUNCTIONS:
+	// ------------
+	// use item
+	// move
+	// draw
+	// ------------
 class Entity: public ObjectTexture {
 public:
 	Entity(raylib::Vector2 size, raylib::Vector2 position, raylib::Texture *texture, raylib::Rectangle textureRect);
@@ -65,6 +101,30 @@ public:
 
 // PlayerCharacter: derived from Entity
 //---------------------------------------------------------------------------------
+	// DATA:
+	// ------------
+	// xp
+	// level
+	// health
+	// position
+	// size
+	// texture
+	// current item
+	// inventory
+	//		items
+
+	// FUNCTIONS:
+	// ------------
+	// movement
+	// input
+	//		show inventory
+	//		move
+	//		attack
+	// 
+	// collision
+	//		damage
+	//		xp
+	//		stop at walls and other entites
 class PlayerCharacter: public Entity {
 public:
 	using Entity::Entity;
@@ -75,6 +135,30 @@ public:
 
 // Enemy: derived from Entity
 //---------------------------------------------------------------------------------
+	// DATA:
+	// ------------
+	// difficulty
+	// xp dropped
+	// health
+	// position
+	// size
+	// texture
+	// current item
+	// item drops
+
+	// FUNCTIONS:
+	// ------------
+	// movement
+	//		AI
+	//		movement
+	//			swarming
+	//			not getting stuck
+	//			path finding
+	//		timing attacks
+	// 
+	// collision
+	//		damage other entities
+	//		stop at walls and other entities
 class Enemy: public Entity {
 public:
 	Enemy(raylib::Vector2 size, raylib::Vector2 position, raylib::Texture *texture, raylib::Rectangle textureRect);
@@ -92,9 +176,163 @@ inline std::vector<Enemy *> enemyObjects;
 
 // Wall: collision at grid position
 //---------------------------------------------------------------------------------
+	// DATA:
+	// ------------
+	// Position
+	// ------------
+
+	// FUNCTIONS:
+	// ------------
+	// ------------
 class Wall: public ObjectRectangle {
 public:
 	Wall(raylib::Vector2 gridPos);
 };
 //---------------------------------------------------------------------------------
 
+// Chest
+//--------------------------------------------------------------------------------------
+class Chest: public ObjectTexture {
+	// DATA:
+	// ------------
+	// Item drops
+	// Lock state
+	// ------------
+
+	// FUNCTIONS:
+	// ------------
+	// Open chest
+	//		drop all items
+	// ------------
+};
+//--------------------------------------------------------------------------------------
+
+// Spawn Point
+//--------------------------------------------------------------------------------------
+	// DATA:
+	// ------------
+	// lock state
+	// position
+	// entity spawn type
+	// ------------
+
+	// FUNCTIONS:
+	// ------------
+	// spawn entity
+	// ------------
+class SpawnPoint: public ObjectRectangle {
+};
+//--------------------------------------------------------------------------------------
+
+// Entrance
+//--------------------------------------------------------------------------------------
+	// DATA:
+	// ------------
+	// lock state
+	// position
+	// ------------
+
+	// FUNCTIONS:
+	// ------------
+	// load level
+	// ------------
+class Entrance: SpawnPoint {
+};
+//--------------------------------------------------------------------------------------
+
+// Exit
+//--------------------------------------------------------------------------------------
+	// DATA:
+	// ------------
+	// lock state
+	// position
+	// next level
+	// ------------
+
+	// FUNCTIONS:
+	// ------------
+	// unlock exit
+	// unload level
+	// load next level
+	// ------------
+class Exit: SpawnPoint {
+};
+//--------------------------------------------------------------------------------------
+
+// Item
+//--------------------------------------------------------------------------------------
+	// DATA:
+	// ------------
+	// item damage/defense
+	// item name
+	// item description
+	// ------------
+
+	// FUNCTIONS:
+	// ------------
+	// use item
+	// consume item
+	// drop item
+	// ------------
+class Item: public ObjectTexture {
+};
+//--------------------------------------------------------------------------------------
+
+// Particle
+//--------------------------------------------------------------------------------------
+	// DATA:
+	// ------------
+	// position
+	// lifetime
+	// time existed
+	// texture
+	// size
+	// ------------
+	// 
+	// FUNCTIONS:
+	// ------------
+	// move
+	// destroy
+	// collide
+	// ------------
+
+class Particle: public ObjectTexture {
+};
+//--------------------------------------------------------------------------------------
+
+
+// Attack
+//--------------------------------------------------------------------------------------
+	// DATA:
+	// ------------
+	// position
+	// shape
+	// damage
+	// time
+	// targets
+	// ------------
+
+	// FUNCTIONS:
+	// ------------
+	// attack
+	// ------------
+class Attack: public Particle {
+};
+//--------------------------------------------------------------------------------------
+
+// Damage
+//--------------------------------------------------------------------------------------
+	// DATA:
+	// ------------
+	// position
+	// damage
+	// targets
+	// ------------
+	// 
+	// FUNCTIONS:
+	// ------------
+	// damage targets
+	// ------------
+class Damage: public ObjectRectangle {
+};
+//--------------------------------------------------------------------------------------
