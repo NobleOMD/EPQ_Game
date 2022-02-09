@@ -65,8 +65,7 @@ int main() {
 			window.ClearBackground(settings::backgroundColour);
 			for (ObjectRectangle *object : allObjects) {
 				object->draw();
-				object->debug();
-				//object->drawOutline(1); // Used to debug collision boxes
+				//object->debug();
 			}
 		}
 		scalerCanvas.EndMode();

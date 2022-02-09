@@ -151,11 +151,27 @@
   <ItemGroup>
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\objects.cpp" />
+    <ClCompile Include="src\objects\enemy.cpp" />
+    <ClCompile Include="src\objects\entity.cpp" />
+    <ClCompile Include="src\objects\objectRectangle.cpp" />
+    <ClCompile Include="src\objects\objectTexture.cpp" />
+    <ClCompile Include="src\objects\playerCharacter.cpp" />
+    <ClCompile Include="src\objects\wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\objects.hpp" />
     <ClInclude Include="src\game.hpp" />
+    <ClInclude Include="src\objects\chest.hpp" />
+    <ClInclude Include="src\objects\damage.hpp" />
+    <ClInclude Include="src\objects\enemy.hpp" />
+    <ClInclude Include="src\objects\entity.hpp" />
+    <ClInclude Include="src\objects\item.hpp" />
+    <ClInclude Include="src\objects\objectRectangle.hpp" />
+    <ClInclude Include="src\objects\objectTexture.hpp" />
+    <ClInclude Include="src\objects\particle.hpp" />
+    <ClInclude Include="src\objects\playerCharacter.hpp" />
+    <ClInclude Include="src\objects\spawnPoints.hpp" />
+    <ClInclude Include="src\objects\wall.hpp" />
     <ClInclude Include="textures\dungeonTileset.h" />
     <ClInclude Include="src\settings.hpp" />
   </ItemGroup>
