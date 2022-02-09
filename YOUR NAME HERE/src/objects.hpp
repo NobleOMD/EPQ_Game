@@ -3,216 +3,240 @@
 
 // Entity
 //--------------------------------------------------------------------------------------
-// DATA:
-// ------------
-// health
-// position
-// size
-// texture
-// current item
-// ------------
-// 
-// FUNCTIONS:
-// ------------
-// use item
-// move
-// draw
-// ------------
+struct Entity {
+	// DATA:
+	// ------------
+	// health
+	// position
+	// size
+	// texture
+	// current item
+	// ------------
+
+	// FUNCTIONS:
+	// ------------
+	// use item
+	// move
+	// draw
+	// ------------
+};
 //--------------------------------------------------------------------------------------
 
 // Player Character
 //--------------------------------------------------------------------------------------
-// DATA:
-// ------------
-// xp
-// level
-// health
-// position
-// size
-// texture
-// current item
-// inventory
-//		items
-// 
-// FUNCTIONS:
-// ------------
-// movement
-// input
-//		show inventory
-//		move
-//		attack
-// 
-// collision
-//		damage
-//		xp
-//		stop at walls and other entites
+struct PlayerCharacter {
+	// DATA:
+	// ------------
+	// xp
+	// level
+	// health
+	// position
+	// size
+	// texture
+	// current item
+	// inventory
+	//		items
+
+	// FUNCTIONS:
+	// ------------
+	// movement
+	// input
+	//		show inventory
+	//		move
+	//		attack
+	// 
+	// collision
+	//		damage
+	//		xp
+	//		stop at walls and other entites
+};
 //--------------------------------------------------------------------------------------
 
 // Enemy
 //--------------------------------------------------------------------------------------
-// DATA:
-// ------------
-// difficulty
-// xp dropped
-// health
-// position
-// size
-// texture
-// current item
-// item drops
-// 
-// FUNCTIONS:
-// ------------
-// movement
-//		AI
-//		movement
-//			swarming
-//			not getting stuck
-//			path finding
-//		timing attacks
-// 
-// collision
-//		damage other entities
-//		stop at walls and other entities
+struct Enemy {
+	// DATA:
+	// ------------
+	// difficulty
+	// xp dropped
+	// health
+	// position
+	// size
+	// texture
+	// current item
+	// item drops
+
+	// FUNCTIONS:
+	// ------------
+	// movement
+	//		AI
+	//		movement
+	//			swarming
+	//			not getting stuck
+	//			path finding
+	//		timing attacks
+	// 
+	// collision
+	//		damage other entities
+	//		stop at walls and other entities
+};
 //--------------------------------------------------------------------------------------
 
 // Wall
 //--------------------------------------------------------------------------------------
-// DATA:
-// ------------
-// Position
-// ------------
-// 
-// FUNCTIONS:
-// ------------
-// ------------
+struct Wall {
+	// DATA:
+	// ------------
+	// Position
+	// ------------
+
+	// FUNCTIONS:
+	// ------------
+	// ------------
+};
 //--------------------------------------------------------------------------------------
 
 // Chest
 //--------------------------------------------------------------------------------------
-// DATA:
-// ------------
-// Item drops
-// Lock state
-// ------------
-// 
-// FUNCTIONS:
-// ------------
-// Open chest
-//		drop all items
-// ------------
+struct Chest {
+	// DATA:
+	// ------------
+	// Item drops
+	// Lock state
+	// ------------
+
+	// FUNCTIONS:
+	// ------------
+	// Open chest
+	//		drop all items
+	// ------------
+};
 //--------------------------------------------------------------------------------------
 
 // Spawn Point
 //--------------------------------------------------------------------------------------
-// DATA:
-// ------------
-// lock state
-// position
-// entity spawn type
-// ------------
-// 
-// FUNCTIONS:
-// ------------
-// spawn entity
-// ------------
-//--------------------------------------------------------------------------------------
+struct SpawnPoint {
+	// DATA:
+	// ------------
+	// lock state
+	// position
+	// entity spawn type
+	// ------------
 
-// Exit
-//--------------------------------------------------------------------------------------
-// DATA:
-// ------------
-// lock state
-// position
-// next level
-// ------------
-// 
-// FUNCTIONS:
-// ------------
-// unlock exit
-// unload level
-// load next level
-// ------------
+	// FUNCTIONS:
+	// ------------
+	// spawn entity
+	// ------------
+}
 //--------------------------------------------------------------------------------------
 
 // Entrance
 //--------------------------------------------------------------------------------------
-// DATA:
-// ------------
-// lock state
-// position
-// ------------
-// 
-// FUNCTIONS:
-// ------------
-// load level
-// ------------
+struct Entrance{
+	// DATA:
+	// ------------
+	// lock state
+	// position
+	// ------------
+
+	// FUNCTIONS:
+	// ------------
+	// load level
+	// ------------
+};
+//--------------------------------------------------------------------------------------
+
+// Exit
+//--------------------------------------------------------------------------------------
+struct Exit {
+	// DATA:
+	// ------------
+	// lock state
+	// position
+	// next level
+	// ------------
+
+	// FUNCTIONS:
+	// ------------
+	// unlock exit
+	// unload level
+	// load next level
+	// ------------
+};
 //--------------------------------------------------------------------------------------
 
 // Item
 //--------------------------------------------------------------------------------------
-// DATA:
-// ------------
-// item damage/defense
-// item name
-// item description
-// ------------
-// 
-// FUNCTIONS:
-// ------------
-// use item
-// consume item
-// drop item
-// ------------
+struct Item {
+	// DATA:
+	// ------------
+	// item damage/defense
+	// item name
+	// item description
+	// ------------
+
+	// FUNCTIONS:
+	// ------------
+	// use item
+	// consume item
+	// drop item
+	// ------------
+};
 //--------------------------------------------------------------------------------------
 
 // Attack
 //--------------------------------------------------------------------------------------
-// DATA:
-// ------------
-// position
-// shape
-// damage
-// time
-// targets
-// ------------
-// 
-// FUNCTIONS:
-// ------------
-// attack
-// ------------
+struct Attack {
+	// DATA:
+	// ------------
+	// position
+	// shape
+	// damage
+	// time
+	// targets
+	// ------------
+
+	// FUNCTIONS:
+	// ------------
+	// attack
+	// ------------
+};
 //--------------------------------------------------------------------------------------
 
 // Damage
 //--------------------------------------------------------------------------------------
-// DATA:
-// ------------
-// position
-// damage
-// targets
-// ------------
-// 
-// FUNCTIONS:
-// ------------
-// damage targets
-// ------------
+struct Damage {
+	// DATA:
+	// ------------
+	// position
+	// damage
+	// targets
+	// ------------
+	// 
+	// FUNCTIONS:
+	// ------------
+	// damage targets
+	// ------------
+};
 //--------------------------------------------------------------------------------------
 
 // Particle
 //--------------------------------------------------------------------------------------
-// DATA:
-// ------------
-// position
-// lifetime
-// time existed
-// texture
-// size
-// ------------
-// 
-// FUNCTIONS:
-// ------------
-// move
-// destroy
-// collide
-// ------------
+struct Particle {
+	// DATA:
+	// ------------
+	// position
+	// lifetime
+	// time existed
+	// texture
+	// size
+	// ------------
+	// 
+	// FUNCTIONS:
+	// ------------
+	// move
+	// destroy
+	// collide
+	// ------------
+}
 //--------------------------------------------------------------------------------------
