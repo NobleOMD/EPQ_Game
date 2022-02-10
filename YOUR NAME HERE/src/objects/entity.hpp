@@ -35,5 +35,5 @@ protected:
 	Item *currentItem = nullptr;
 };
 
-inline std::vector<Entity *> damageableObjects;
+inline std::vector<Entity *> damageableEntities;
 //---------------------------------------------------------------------------------

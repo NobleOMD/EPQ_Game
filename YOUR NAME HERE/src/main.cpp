@@ -25,10 +25,11 @@ int main() {
 		raylib::Rectangle{16, 64, 16, 16}	// Rectangle that represents texture area in image
 	);
 
-	Damage tile2(
-		raylib::Vector2{0.5, 0.5},
-		raylib::Vector2{0.25, 0.25},
-		5.0F
+	Damage spikeyBoi(
+		raylib::Vector2{0.5, 0.5},			// Size
+		raylib::Vector2{0.25, 0.25},		// Position
+		5.0F,								// Damage
+		damageableEntities					// Target entities
 	);
 
 	PlayerCharacter player(

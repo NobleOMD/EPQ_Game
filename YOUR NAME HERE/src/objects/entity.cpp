@@ -7,7 +7,7 @@ Entity::Entity(raylib::Vector2 size, raylib::Vector2 position, raylib::Texture *
 	ObjectTexture(size, position, texture, textureRect),
 	health(health) {
 	collisionObjects.push_back(this);
-	damageableObjects.push_back(this);
+	damageableEntities.push_back(this);
 }
 
 Entity::Entity(ObjectTexture objectTexture, float health)
@@ -15,7 +15,7 @@ Entity::Entity(ObjectTexture objectTexture, float health)
 	ObjectTexture(objectTexture),
 	health(health) {
 	collisionObjects.push_back(this);
-	damageableObjects.push_back(this);
+	damageableEntities.push_back(this);
 }
 
 void Entity::move(raylib::Vector2 translation) {
