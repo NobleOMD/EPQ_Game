@@ -30,13 +30,13 @@ void ObjectRectangle::updatePosition() {
 
 // Collision: adds collision to ObjectRectangle
 //---------------------------------------------------------------------------------
-ObjectRectangle *collisionCheck(ObjectRectangle *target, std::vector<ObjectRectangle *> objects) {
+ObjectRectangle *collisionCheck(ObjectRectangle *testRectangle, std::vector<ObjectRectangle *> objects) {
 	// Check for collision within a list of objects with collison
-	for (ObjectRectangle *object : objects) {
-		if (target == object) continue; // If the object is ourself continue.
+	for (ObjectRectangle *targetRectangle : objects) {
+		if (testRectangle == targetRectangle) continue; // If the targetRectangle is ourself continue.
 
 		// If this objects hit box is colliding with another undo the translation
-		if (CheckCollisionRecs(*target, *object)) return object;
+		if (CheckCollisionRecs(*testRectangle, *targetRectangle)) return targetRectangle;
 	}
 
 	return nullptr; // If no collision is found return a nullptr

@@ -6,8 +6,7 @@
 
 // Wall: collision at grid position (Complete)
 //---------------------------------------------------------------------------------
-class Wall: public ObjectRectangle {
-public:
+struct Wall: public ObjectRectangle {
 	Wall(raylib::Vector2 gridPos);
 };
 //---------------------------------------------------------------------------------

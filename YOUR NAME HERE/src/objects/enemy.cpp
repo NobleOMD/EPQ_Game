@@ -2,9 +2,9 @@
 
 // Enemy: derived from Entity
 //---------------------------------------------------------------------------------
-Enemy::Enemy(raylib::Vector2 size, raylib::Vector2 position, raylib::Texture *texture, raylib::Rectangle textureRect)
+Enemy::Enemy(raylib::Vector2 size, raylib::Vector2 position, raylib::Texture *texture, raylib::Rectangle textureRect, float health)
 	:
-	Entity(size, position, texture, textureRect) {
+	Entity(size, position, texture, textureRect, health) {
 	enemyObjects.push_back(this);
 }
 

@@ -151,6 +151,7 @@
   <ItemGroup>
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\objects\damage.cpp" />
     <ClCompile Include="src\objects\enemy.cpp" />
     <ClCompile Include="src\objects\entity.cpp" />
     <ClCompile Include="src\objects\objectRectangle.cpp" />

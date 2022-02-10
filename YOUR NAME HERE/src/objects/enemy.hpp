@@ -33,7 +33,7 @@
 	//		stop at walls and other entities
 class Enemy: public Entity {
 public:
-	Enemy(raylib::Vector2 size, raylib::Vector2 position, raylib::Texture *texture, raylib::Rectangle textureRect);
+	Enemy(raylib::Vector2 size, raylib::Vector2 position, raylib::Texture *texture, raylib::Rectangle textureRect, float health);
 	void update();
 
 private:
