@@ -32,12 +32,16 @@ int main() {
 		damageableEntities					// Target entities
 	);
 
-	PlayerCharacter player(
-		raylib::Vector2{1, 1},				// Size in tiles
-		raylib::Vector2{10, 8},				// Position on tilegrid
-		&tileSet,							// Address of texture
-		raylib::Rectangle{128, 68, 16, 28},	// Rectangle that represents texture area in image
-		100.0F								// Health
+	AnimatedTexture player(
+		ObjectTexture{
+			raylib::Vector2{1, 1},				// Size in tiles
+			raylib::Vector2{10, 8},				// Position on tilegrid
+			&tileSet,							// Address of texture
+			raylib::Rectangle{128, 68, 16, 28}	// Rectangle that represents texture area in image
+		},
+		0.2,	// Frame time
+		4,		// Num frames
+		16		// Frame spacing
 	);
 
 	Enemy zombie(
@@ -53,6 +57,8 @@ int main() {
 	while (!window.ShouldClose()) { // Detect window close button or ESC key
 		// Update
 		//----------------------------------------------------------------------------------
+		particleManager.updateParticles();
+
 		for (ObjectRectangle *object : allObjects) {
 			object->update();
 		}

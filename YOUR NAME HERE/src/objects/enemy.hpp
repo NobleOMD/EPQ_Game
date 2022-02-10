@@ -36,7 +36,7 @@ public:
 	Enemy(raylib::Vector2 size, raylib::Vector2 position, raylib::Texture *texture, raylib::Rectangle textureRect, float health);
 	void update();
 
-private:
+protected:
 	const float speed = 1.0f; // Average time in seconds per move
 	const float speedRange = 0.3f; // Fluctuation +- range
 	float moveTimer = speed; // Current speed

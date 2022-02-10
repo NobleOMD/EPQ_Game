@@ -156,6 +156,7 @@
     <ClCompile Include="src\objects\entity.cpp" />
     <ClCompile Include="src\objects\objectRectangle.cpp" />
     <ClCompile Include="src\objects\objectTexture.cpp" />
+    <ClCompile Include="src\objects\particle.cpp" />
     <ClCompile Include="src\objects\playerCharacter.cpp" />
     <ClCompile Include="src\objects\wall.cpp" />
   </ItemGroup>

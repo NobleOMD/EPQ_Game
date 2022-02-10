@@ -32,9 +32,9 @@ public:
 	Damage(raylib::Vector2 size, raylib::Vector2 position, float damage, std::vector<Entity *> &targets);
 	void update();
 
-private:
+protected:
 	float damage;
-	std::vector<Entity *> targets;
+	std::vector<Entity *> &targets;
 };
 //--------------------------------------------------------------------------------------
 
