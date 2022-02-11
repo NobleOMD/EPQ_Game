@@ -7,6 +7,7 @@ ObjectRectangle::ObjectRectangle(raylib::Vector2 size, raylib::Vector2 position)
 	raylib::Rectangle(position *settings::tileSize, size *settings::tileSize),
 	size(size),
 	position(position) {
+	id = allObjects.size();
 	allObjects.push_back(this);
 }
 

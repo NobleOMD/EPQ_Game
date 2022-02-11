@@ -1,7 +1,5 @@
 #pragma once
-#include <memory>
-#include <list>
-
+#include <vector>
 #include <include/raylib-cpp.hpp>
 
 #include "objectTexture.hpp"
@@ -16,7 +14,7 @@ public:
 	void updateParticles();
 
 private:
-	std::list<Particle> particleList;
+	std::vector<Particle> particleVector;
 };
 
 inline ParticleManager particleManager;
@@ -26,7 +24,7 @@ inline ParticleManager particleManager;
 //--------------------------------------------------------------------------------------
 struct Particle: public ObjectTexture {
 	Particle(ObjectTexture particleTexture, float frameTime);
-	virtual void onDeath() {};
+	virtual void onDeath();
 
 	float frameTime;
 };

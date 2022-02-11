@@ -39,7 +39,7 @@ int main() {
 			&tileSet,							// Address of texture
 			raylib::Rectangle{128, 68, 16, 28}	// Rectangle that represents texture area in image
 		},
-		0.2,	// Frame time
+		2,	// Frame time
 		4,		// Num frames
 		16		// Frame spacing
 	);

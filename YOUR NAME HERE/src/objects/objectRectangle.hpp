@@ -17,6 +17,8 @@ struct ObjectRectangle: public raylib::Rectangle {
 	virtual void debug(); // Draw the outline of the rectangle
 	void updatePosition();
 
+	int id;
+
 	// Size / position / grid position
 	raylib::Vector2 size; // Size in tiles
 	raylib::Vector2 position; // Position on tile grid

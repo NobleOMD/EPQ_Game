@@ -10,7 +10,7 @@ ObjectTexture::ObjectTexture(raylib::Vector2 size, raylib::Vector2 position, ray
 }
 
 void ObjectTexture::draw() {
-		// Janky texture offset that is used to align texture with collison box
+	// Janky texture offset that is used to align texture with collison box
 	raylib::Vector2 textureOffset = (raylib::Vector2) this->GetSize() - (raylib::Vector2) textureRect.GetSize();
 
 	objectTexture->Draw(
