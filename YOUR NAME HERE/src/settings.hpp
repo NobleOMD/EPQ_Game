@@ -25,4 +25,7 @@ namespace settings
 	// Font Settings
 	inline raylib::Font defaultFont; // The default raylib text glyphs
 	inline raylib::Color textColor = raylib::Color::RayWhite();
+
+	// Misc
+	inline constexpr size_t MAX_COMPONENTS = 32; // The maximim number of components
 }
