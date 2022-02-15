@@ -1,11 +1,30 @@
-Object
-	Interface to access components -> ObjectID mapped to component
-	Components that make up object -> Bitset signature that represents components used 
-	Call all the correct updates at all the right times -> Update order ???
-	Draw the objects that need to be drawn -> Draw order ???
-	Create and destroy objects -> Object manager
+enum Features
+	Rectangle
+	Texture
+	Collision
+	Movement
+	User control
+	AI.Movement
+	AI.Attack
+	AI.___
+	Health
 
-Component
-	Access other components within same / different object -> object manager
-	Update self and other components -> update function
-	Create and destroy components -> Component manager
+std::unordered_map<Feature, std::unordered_map<ObjectID, Component>> allDictionaries
+	std::unordered_map<ObjectID, Rectangle> rectangles;
+	std::unordered_map<ObjectID, Texture> textures;
+	...
+
+addComponent(ObjectID, feature)
+removeComponent(ObjectID, feature)
+
+Component <- Must have default constructor
+	unsigned int ObjectID
+	void update()
+
+Object
+	Object(std::vector<Feature> features)
+		ObjectID = createdObjects
+		createdObjects++
+
+	unsigned int ObjectID
+	std::vector<Feature> features

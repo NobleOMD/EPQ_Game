@@ -162,8 +162,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\container.hpp" />
-    <ClInclude Include="src\objects.hpp" />
     <ClInclude Include="src\game.hpp" />
+    <ClInclude Include="src\objects.hpp" />
     <ClInclude Include="src\objects\chest.hpp" />
     <ClInclude Include="src\objects\damage.hpp" />
     <ClInclude Include="src\objects\enemy.hpp" />
@@ -175,7 +175,6 @@
     <ClInclude Include="src\objects\playerCharacter.hpp" />
     <ClInclude Include="src\objects\spawnPoints.hpp" />
     <ClInclude Include="src\objects\wall.hpp" />
-    <ClInclude Include="textures\dungeonTileset.h" />
     <ClInclude Include="src\settings.hpp" />
   </ItemGroup>
   <ItemGroup>

@@ -1,60 +1,84 @@
 #pragma once
 #include <vector>
+#include <typeinfo>
+#include <typeindex>
 #include <unordered_map>
-#include <bitset>
 
 #include "settings.hpp"
 
+// Features
+//---------------------------------------------------------------------------------
+template <typename TemplateComponent>
+inline std::unordered_map<std::type_index, std::unordered_map<unsigned int, TemplateComponent *>> allMaps;
+
+template <typename TemplateComponent>
+void addComponent(unsigned int objectID, TemplateComponent *component) {
+	allMaps<TemplateComponent>[typeid(component)].emplace(objectID, component);
+};
+
+template <typename TemplateComponent>
+void removeComponent(unsigned int objectID, TemplateComponent *component) {
+	allMaps<TemplateComponent>[typeid(component)].erase(objectID);
+};
+//---------------------------------------------------------------------------------
+
+// Feature
+//---------------------------------------------------------------------------------
 struct Component {
+	Component(int objectID)
+		:
+		objectID(objectID)
+	{}
+
 	// Parent object id
 	int objectID;
-	// Used to check if object has this component
-	std::bitset<settings::MAX_COMPONENTS> componentID;
-
 	// Update function that most components should use
-	virtual void update() = 0;
+	virtual void update() {};
 };
+//---------------------------------------------------------------------------------
+
+// Object
+//---------------------------------------------------------------------------------
+inline unsigned int createdObjects = 0;
 
 struct Object {
+	Object(std::vector<Component> &requiredComponents) 
+		:
+		objectID(createdObjects)
+	{
+		for (Component component : requiredComponents) {
+			addComponent(objectID, &component);
+			Object::requiredComponents.push_back(typeid(component));
+		}
+	}
+
 	// Object ID used to match objects
-	int objectID;
-	// Bitmask used to check which components object has
-	std::bitset<settings::MAX_COMPONENTS> requiredComponents;
+	unsigned int objectID;
+	std::vector<std::type_index> requiredComponents;
 };
+//---------------------------------------------------------------------------------
 
-template<typename T>
-class ComponentContainer;
+//RectangleComponent
+//---------------------------------------------------------------------------------
+struct RectangleComponent: public Component {
+	RectangleComponent()
+		:
+		Component(-1),
+		x(0),
+		y(0),
+		width(0),
+		height(0)
+	{};
 
-template<typename T>
-struct GlobalContainer {
-	// Stores vector of ObjectContainers
-	std::vector<ComponentContainer> everything;
+	RectangleComponent(float x, float y, float width, float height)
+		:
+		Component(-1),
+		x(x),
+		y(y),
+		width(width),
+		height(height)
+	{};
 
-	// Update all containers
-	void update() {
-		for (ComponentContainer components : everything) {
-			components.update();
-		}
-	}
+	float x, y, width, height;
 };
-
-template<typename T>
-struct ComponentContainer {
-	// Stores map object id : component
-	std::unordered_map<int, T> components;
-	
-	// Create new component with object id
-	void addComponent(int objectID, T component) {
-		components[objectID] = component;
-	}
-	// Remove component by object id
-	void removeComponent(int objectID) {
-		components.erase(objectID);
-	}
-	// Update all objects
-	void update() {
-		for (T component : components) {
-			component.update();
-		}
-	}
-};
+//---------------------------------------------------------------------------------

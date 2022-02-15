@@ -3,6 +3,7 @@
 #include "../textures/dungeonTileset.h"
 #include "settings.hpp" // My global variables
 #include "objects.hpp"
+#include "container.hpp"
 #include "game.hpp"		// General game functions
 
 int main() {
@@ -14,6 +15,10 @@ int main() {
 	raylib::Texture tileSet(
 		raylib::Image(".png", __0x72_DungeonTilesetII_v1_4_png, __0x72_DungeonTilesetII_v1_4_png_len)
 	);
+
+	RectangleComponent rect;
+	addComponent(0, &rect);
+	removeComponent(0, &rect);
 
 	// Texture that the game is rendered to, this is then scaled to the window size
 	raylib::RenderTexture scalerCanvas{(int) settings::screenSize.x, (int) settings::screenSize.y};
