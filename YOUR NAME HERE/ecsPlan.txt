@@ -1,0 +1,11 @@
+Object
+	Interface to access components -> ObjectID mapped to component
+	Components that make up object -> Bitset signature that represents components used 
+	Call all the correct updates at all the right times -> Update order ???
+	Draw the objects that need to be drawn -> Draw order ???
+	Create and destroy objects -> Object manager
+
+Component
+	Access other components within same / different object -> object manager
+	Update self and other components -> update function
+	Create and destroy components -> Component manager
