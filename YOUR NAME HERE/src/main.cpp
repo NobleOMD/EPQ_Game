@@ -6,18 +6,6 @@
 #include "container.hpp"
 #include "game.hpp"		// General game functions
 
-void hitMemory() {
-	for (unsigned int i = 0; i < 1000; i++) {
-		RectangleComponent rect(createdObjects, 3, i, 5, 5);
-		addComponent(rect.objectID, rect);
-		createdObjects++;
-
-		TextureComponent texture(createdObjects, nullptr, raylib::Rectangle{5, 5, 5, 5});
-		addComponent(texture.objectID, texture);
-		createdObjects++;
-	}
-}
-
 int main() {
 	// Initialization
 	//--------------------------------------------------------------------------------------
@@ -30,10 +18,6 @@ int main() {
 
 	// Texture that the game is rendered to, this is then scaled to the window size
 	raylib::RenderTexture scalerCanvas{(int) settings::screenSize.x, (int) settings::screenSize.y};
-
-	hitMemory();
-	RectangleComponent rect = getComponent<RectangleComponent>(100);
-	TextureComponent texture = getComponent<TextureComponent>(101);
 
 	ObjectTexture tile(
 		raylib::Vector2{1, 1},				// Size in tiles
