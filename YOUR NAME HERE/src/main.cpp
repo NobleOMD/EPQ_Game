@@ -6,6 +6,16 @@
 #include "container.hpp"
 #include "game.hpp"		// General game functions
 
+void hitMemory() {
+	for (unsigned int i = 0; i < 1000; i++) {
+		addComponent(i, RectangleComponent(i, 3, i, 5, 5));
+		createdObjects++;
+
+		addComponent(i + 1, TextureComponent(i, nullptr, RectangleComponent{i, 5, 5, 5, 5}));
+		createdObjects++;
+	}
+}
+
 int main() {
 	// Initialization
 	//--------------------------------------------------------------------------------------
@@ -16,15 +26,12 @@ int main() {
 		raylib::Image(".png", __0x72_DungeonTilesetII_v1_4_png, __0x72_DungeonTilesetII_v1_4_png_len)
 	);
 
-	addComponent(0, RectangleComponent(3, 3, 5, 5));
-	createdObjects++;
-	addComponent(1, TextureComponent());
-
-	removeComponent(0, RectangleComponent());
-	removeComponent(1, TextureComponent());
-
 	// Texture that the game is rendered to, this is then scaled to the window size
 	raylib::RenderTexture scalerCanvas{(int) settings::screenSize.x, (int) settings::screenSize.y};
+
+	hitMemory();
+	RectangleComponent rect = getComponent<RectangleComponent>(100);
+	TextureComponent *texture = &getComponent<TextureComponent>(100);
 
 	ObjectTexture tile(
 		raylib::Vector2{1, 1},				// Size in tiles

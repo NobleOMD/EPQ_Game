@@ -12,9 +12,9 @@
 inline unsigned int createdObjects = 0;
 
 struct Component {
-	Component()
+	Component(const unsigned int &objectID)
 		:
-		objectID(createdObjects)
+		objectID(objectID)
 	{}
 
 	// Parent object id
@@ -29,14 +29,16 @@ struct Component {
 struct RectangleComponent: public Component {
 	RectangleComponent()
 		:
+		Component(createdObjects),
 		x(0),
 		y(0),
 		width(0),
 		height(0)
 	{};
 
-	RectangleComponent(float x, float y, float width, float height)
+	RectangleComponent(const unsigned int &objectID, float x, float y, float width, float height)
 		:
+		Component(objectID),
 		x(x),
 		y(y),
 		width(width),
@@ -48,6 +50,19 @@ struct RectangleComponent: public Component {
 //---------------------------------------------------------------------------------
 
 struct TextureComponent: public Component {
+	TextureComponent() 
+		:
+		Component(createdObjects),
+		texture(nullptr),
+		rectangle({createdObjects, 0, 0, 0, 0})
+	{}
+
+	TextureComponent(const unsigned int &objectID, float *texture, RectangleComponent rectangle)
+		:
+		Component(objectID),
+		texture(texture),
+		rectangle(rectangle)
+	{};
 	float *texture;
 	RectangleComponent rectangle;
 };
@@ -58,13 +73,18 @@ template <typename TemplateComponent>
 inline std::unordered_map<std::type_index, std::unordered_map<unsigned int, TemplateComponent>> allMaps;
 
 template <typename TemplateComponent>
-void addComponent(unsigned int objectID, const TemplateComponent component) {
-	allMaps<TemplateComponent>[typeid(component)].emplace(objectID, component);
+void addComponent(const unsigned int &objectID, const TemplateComponent &component) {
+	allMaps<TemplateComponent>[typeid(TemplateComponent)].emplace(objectID, component);
 };
 
 template <typename TemplateComponent>
-void removeComponent(unsigned int objectID, const TemplateComponent &component) {
-	allMaps<TemplateComponent>[typeid(component)].erase(objectID);
+void removeComponent(const unsigned int &objectID) {
+	allMaps<TemplateComponent>[typeid(TemplateComponent)].erase(objectID);
+};
+
+template <typename TemplateComponent>
+TemplateComponent getComponent(const unsigned int &objectID) {
+	return allMaps<TemplateComponent>[typeid(TemplateComponent)][objectID];
 };
 
 //inline std::unordered_map<std::type_index, std::unordered_map<unsigned int, Component>> allMaps;
