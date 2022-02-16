@@ -8,10 +8,12 @@
 
 void hitMemory() {
 	for (unsigned int i = 0; i < 1000; i++) {
-		addComponent(i, RectangleComponent(i, 3, i, 5, 5));
+		RectangleComponent rect(createdObjects, 3, i, 5, 5);
+		addComponent(rect.objectID, rect);
 		createdObjects++;
 
-		addComponent(i + 1, TextureComponent(i, nullptr, RectangleComponent{i, 5, 5, 5, 5}));
+		TextureComponent texture(createdObjects, nullptr, raylib::Rectangle{5, 5, 5, 5});
+		addComponent(texture.objectID, texture);
 		createdObjects++;
 	}
 }
@@ -31,7 +33,7 @@ int main() {
 
 	hitMemory();
 	RectangleComponent rect = getComponent<RectangleComponent>(100);
-	TextureComponent *texture = &getComponent<TextureComponent>(100);
+	TextureComponent texture = getComponent<TextureComponent>(101);
 
 	ObjectTexture tile(
 		raylib::Vector2{1, 1},				// Size in tiles
