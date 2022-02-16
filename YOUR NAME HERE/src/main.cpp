@@ -2,7 +2,6 @@
 
 #include "../textures/dungeonTileset.h"
 #include "settings.hpp" // My global variables
-#include "objects.hpp"
 #include "container.hpp"
 #include "game.hpp"		// General game functions
 
@@ -18,52 +17,23 @@ int main() {
 
 	// Texture that the game is rendered to, this is then scaled to the window size
 	raylib::RenderTexture scalerCanvas{(int) settings::screenSize.x, (int) settings::screenSize.y};
-
-	ObjectTexture tile(
-		raylib::Vector2{1, 1},				// Size in tiles
-		raylib::Vector2{15, 9},				// Position on tilegrid
-		&tileSet,							// Address of texture
-		raylib::Rectangle{16, 64, 16, 16}	// Rectangle that represents texture area in image
-	);
-
-	Damage spikeyBoi(
-		raylib::Vector2{0.5, 0.5},			// Size
-		raylib::Vector2{0.25, 0.25},		// Position
-		5.0F,								// Damage
-		damageableEntities					// Target entities
-	);
-
-	AnimatedTexture player(
-		ObjectTexture{
-			raylib::Vector2{1, 1},				// Size in tiles
-			raylib::Vector2{10, 8},				// Position on tilegrid
-			&tileSet,							// Address of texture
-			raylib::Rectangle{128, 68, 16, 28}	// Rectangle that represents texture area in image
-		},
-		2,	// Frame time
-		4,		// Num frames
-		16		// Frame spacing
-	);
-
-	Enemy zombie(
-		raylib::Vector2{1, 2},				// Size in tiles
-		raylib::Vector2{10, 3},				// Position on tilegrid
-		&tileSet,							// Address of texture
-		raylib::Rectangle{16, 270, 32, 34},	// Rectangle that represents texture area in image
-		100.0F								// Health
-	);
 	//--------------------------------------------------------------------------------------
+
+	for (int i = 0; i < 5; i++) {
+		addBlob(createdObjects, EnemyObject({1, 2}, {5, 7}, &tileSet, {16, 270, 32, 34}));
+		std::unordered_map<unsigned int, Object *> objects = blobContainer<Object *>[typeid(Object *)];
+	}
 
 	// Main game loop
 	while (!window.ShouldClose()) { // Detect window close button or ESC key
 		// Update
 		//----------------------------------------------------------------------------------
-		particleManager.updateParticles();
-
-		for (ObjectRectangle *object : allObjects) {
-			object->update();
+		std::unordered_map<unsigned int, Object *> objects = blobContainer<Object *>[typeid(Object *)];
+		for (const std::pair<unsigned int, Object *> &pair : objects) {
+			pair.second->update();
 		}
 
+		EnemyObject rect = getBlob<EnemyObject>(3);
 		// Toggle full screen on F key pressed
 		if (IsKeyPressed(KEY_F)) game::scaleFullscreen(window, window.IsFullscreen());
 		//----------------------------------------------------------------------------------
@@ -74,10 +44,6 @@ int main() {
 		scalerCanvas.BeginMode();
 		{
 			window.ClearBackground(settings::backgroundColour);
-			for (ObjectRectangle *object : allObjects) {
-				object->draw();
-				//object->debug();
-			}
 		}
 		scalerCanvas.EndMode();
 
