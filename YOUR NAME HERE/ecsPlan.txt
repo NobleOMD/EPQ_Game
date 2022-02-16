@@ -28,3 +28,10 @@ Object
 
 	unsigned int ObjectID
 	std::vector<Feature> features
+
+https://www.cplusplus.com/reference/unordered_map/unordered_map/
+https://en.cppreference.com/w/cpp/utility/variant
+https://en.cppreference.com/w/cpp/header/memory
+https://en.cppreference.com/w/cpp/language/dynamic_cast
+https://en.cppreference.com/w/cpp/language/static_cast
+https://en.cppreference.com/w/cpp/language/reinterpret_cast

@@ -14,7 +14,7 @@ template <typename TemplateBlob>
 inline std::unordered_map<std::type_index, std::unordered_map<unsigned int, TemplateBlob>> blobContainer;
 
 template <typename TemplateBlob>
-void addBlob(const unsigned int &objectID, const TemplateBlob &component) {
+void addBlob(const unsigned int &objectID, const TemplateBlob component) {
 	blobContainer<TemplateBlob>[typeid(TemplateBlob)].emplace(objectID, component);
 };
 
@@ -26,7 +26,7 @@ void removeBlob(const unsigned int &objectID) {
 template <typename TemplateBlob>
 TemplateBlob getBlob(const unsigned int &objectID) {
 	auto &componentMap = blobContainer<TemplateBlob>[typeid(TemplateBlob)];
-	assert(componentMap.find(objectID) != componentMap.end() && "No component in map with specified object ID.");
+	assert(componentMap.find(objectID) != componentMap.end() && "No blob in map with specified object ID.");
 	return componentMap.at(objectID);
 };
 
@@ -42,15 +42,18 @@ void replaceBlob(const unsigned int &objectID, const TemplateBlob &replacement) 
 inline unsigned int createdObjects = 0;
 
 struct Object {
-	Object(std::vector<std::type_index> requiredComponents) {
-		objectID = createdObjects;
+	Object(std::vector<std::type_index> requiredComponents)
+		:
+		objectID(createdObjects),
+		requiredComponents(requiredComponents) {
 		createdObjects++;
+		addBlob(objectID, this);
+	};
 
-		addBlob<Object *>(objectID, this);
-	}
+	virtual void update() {};
 
 	// Object ID used to match objects
-	unsigned int objectID;
+	const unsigned int objectID;
 	std::vector<std::type_index> requiredComponents;
 };
 //---------------------------------------------------------------------------------
@@ -89,14 +92,14 @@ struct RectangleComponent: public Component {
 // TextureComponent
 //---------------------------------------------------------------------------------
 struct TextureComponent: public Component {
-	TextureComponent(const unsigned int &objectID, float *texture, raylib::Rectangle rectangle)
+	TextureComponent(const unsigned int &objectID, raylib::Texture *texture, raylib::Rectangle rectangle)
 		:
 		Component(objectID),
 		texture(texture),
 		rectangle(rectangle) {
 	};
 
-	float *texture;
+	raylib::Texture *texture;
 	raylib::Rectangle rectangle;
 };
 //---------------------------------------------------------------------------------
@@ -104,7 +107,7 @@ struct TextureComponent: public Component {
 // EnemyObject
 //---------------------------------------------------------------------------------
 struct EnemyObject: public Object {
-	EnemyObject(raylib::Vector2 size, raylib::Vector2 position, float *texture, raylib::Rectangle textureRect)
+	EnemyObject(raylib::Vector2 size, raylib::Vector2 position, raylib::Texture *texture, raylib::Rectangle textureRect)
 		:
 		Object({typeid(RectangleComponent), typeid(TextureComponent)}) {
 		addBlob(objectID, RectangleComponent(objectID, position.x, position.y, size.x, size.y));
