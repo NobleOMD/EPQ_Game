@@ -1,5 +1,6 @@
 #pragma once
 #include <include/raylib-cpp.hpp>
+#include "entityComponentSystem.hpp"
 
 namespace globals
 {
@@ -27,6 +28,6 @@ namespace globals
 	inline raylib::Color textColor = raylib::Color::RayWhite();
 
 	// Components
-	using ObjectID = const uint16_t &;
-	inline size_t createdObjects = 0;
+	inline ComponentManager manager;
+	inline uint16_t createdObjects = 0;
 }

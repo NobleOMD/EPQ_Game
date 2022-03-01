@@ -2,5 +2,5 @@
 #include "../settings.hpp"
 
 struct Component {
-	globals::ObjectID objectID;
+	uint16_t objectID;
 };
