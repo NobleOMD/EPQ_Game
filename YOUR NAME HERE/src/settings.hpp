@@ -1,7 +1,7 @@
 #pragma once
 #include <include/raylib-cpp.hpp>
 
-namespace settings
+namespace globals
 {
 	// Window Settings
 	inline std::string title = "YOUR NAME HERE"; // Title of the window
@@ -12,7 +12,7 @@ namespace settings
 
 	inline raylib::Color backgroundColour(0x282c34ff); // Background colour, note the required use of 100% opacity
 
-	// Scaling settings
+	// Scaling globals
 	inline constexpr int defaultScaleFactor = 3;
 	inline char scaleFactor = defaultScaleFactor; // Working scale factor
 	inline raylib::Vector2 scaleOrigin = {0, 0}; // Origin used by the scaleCanvas
@@ -26,6 +26,7 @@ namespace settings
 	inline raylib::Font defaultFont; // The default raylib text glyphs
 	inline raylib::Color textColor = raylib::Color::RayWhite();
 
-	// Misc
-	inline constexpr size_t MAX_COMPONENTS = 32; // The maximim number of components
+	// Components
+	using ObjectID = const uint16_t &;
+	inline size_t createdObjects = 0;
 }

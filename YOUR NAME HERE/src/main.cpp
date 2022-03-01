@@ -8,7 +8,7 @@
 int main() {
 	// Initialization
 	//--------------------------------------------------------------------------------------
-	raylib::Window window(settings::getScaledSize().x, settings::getScaledSize().y, settings::title);
+	raylib::Window window(globals::getScaledSize().x, globals::getScaledSize().y, globals::title);
 	window.SetState(FLAG_VSYNC_HINT); // Use V-Sync to autodetect and run at monitor refresh rate
 
 	raylib::Texture tileSet(
@@ -16,7 +16,7 @@ int main() {
 	);
 
 	// Texture that the game is rendered to, this is then scaled to the window size
-	raylib::RenderTexture scalerCanvas{(int) settings::screenSize.x, (int) settings::screenSize.y};
+	raylib::RenderTexture scalerCanvas{(int) globals::screenSize.x, (int) globals::screenSize.y};
 	//--------------------------------------------------------------------------------------
 
 	// Main game loop
@@ -32,20 +32,20 @@ int main() {
 		// Draw the game the scale canvas 
 		scalerCanvas.BeginMode();
 		{
-			window.ClearBackground(settings::backgroundColour);
+			window.ClearBackground(globals::backgroundColour);
 		}
 		scalerCanvas.EndMode();
 
 		// Stretch the canvas to the window size
 		window.BeginDrawing();
 		{
-			window.ClearBackground(settings::backgroundColour); // This is the colour of the border around the game
+			window.ClearBackground(globals::backgroundColour); // This is the colour of the border around the game
 
 			// This draws the scalerCanvas to scaled up size
 			DrawTexturePro(
 				scalerCanvas.texture,														// Texture
-				raylib::Rectangle(0, 0, settings::screenSize.x, -settings::screenSize.y),	// Source
-				raylib::Rectangle(settings::scaleOrigin, settings::getScaledSize()),		// Destination
+				raylib::Rectangle(0, 0, globals::screenSize.x, -globals::screenSize.y),	// Source
+				raylib::Rectangle(globals::scaleOrigin, globals::getScaledSize()),		// Destination
 				raylib::Vector2{0, 0},														// Origin
 				0,																			// Rotation
 				WHITE																		// Tint

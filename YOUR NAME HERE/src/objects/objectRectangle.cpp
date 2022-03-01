@@ -4,7 +4,7 @@
 //---------------------------------------------------------------------------------
 ObjectRectangle::ObjectRectangle(raylib::Vector2 size, raylib::Vector2 position)
 	:
-	raylib::Rectangle(position *settings::tileSize, size *settings::tileSize),
+	raylib::Rectangle(position *globals::tileSize, size *globals::tileSize),
 	size(size),
 	position(position) {
 	id = allObjects.size();
@@ -21,11 +21,11 @@ void ObjectRectangle::debug() {
 }
 
 void ObjectRectangle::updatePosition() {
-	x = position.x * settings::tileSize;
-	y = position.y * settings::tileSize;
+	x = position.x * globals::tileSize;
+	y = position.y * globals::tileSize;
 
-	width = size.x * settings::tileSize;
-	height = size.y * settings::tileSize;
+	width = size.x * globals::tileSize;
+	height = size.y * globals::tileSize;
 }
 //---------------------------------------------------------------------------------
 
@@ -49,7 +49,7 @@ ObjectRectangle *collisionCheck(ObjectRectangle *testRectangle, std::vector<Obje
 //---------------------------------------------------------------------------------
 void movement(ObjectRectangle *target, raylib::Vector2 translation) {
 	target->position += translation; // Move by translation vector
-	game::clampWithin(settings::gridSize, target->position, target->size); // Clamp within the overall grid
+	game::clampWithin(globals::gridSize, target->position, target->size); // Clamp within the overall grid
 	target->updatePosition(); // Update the onscreen position
 }
 //---------------------------------------------------------------------------------

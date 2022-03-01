@@ -5,8 +5,7 @@
 #include <typeindex>
 #include <memory>
 
-using ObjectID = const uint16_t &;
-size_t createdObjects = 0;
+#include "settings.hpp"
 
 class BaseComponentVector {}; // Base class that we can cast to the correct type
 
@@ -15,17 +14,14 @@ class ComponentVector: public BaseComponentVector {
 public:
 	std::vector<Component> components;
 
-	void add(ObjectID objectID, Component component) {
+	void add(Component component) {
 		const size_t index = aliveComponents;
 		components.push_back(component);
-
-		//index_objectID[aliveComponents] = objectID;
-		objectID_index[objectID] = aliveComponents;
-
+		objectID_index[component.objectID] = aliveComponents;
 		aliveComponents++;
 	}
 
-	void remove(ObjectID objectID) {
+	void remove(globals::ObjectID objectID) {
 		assert(aliveComponents != 0);
 
 		const size_t index = objectID_index[objectID];
@@ -34,14 +30,12 @@ public:
 		aliveComponents--;
 	}
 
-	Component &get(ObjectID objectID) {
+	Component &get(globals::ObjectID objectID) {
 		return components[objectID_index[objectID]];
 	}
 
 private:
 	size_t aliveComponents = 0;
-
-	//std::unordered_map<size_t, uint16_t> index_objectID;
 	std::unordered_map<uint16_t, size_t> objectID_index;
 };
 
@@ -54,18 +48,18 @@ public:
 	}
 
 	template<typename Component>
-	void addComponent(ObjectID entity, Component component) {
-		getComponentVector<Component>()->add(entity, component);
+	void addComponent(Component component) {
+		getComponentVector<Component>()->add(component.objectID, component);
 	}
 
 	template<typename Component>
-	void removeComponent(ObjectID entity) {
-		getComponentVector<Component>()->remove(entity);
+	void removeComponent(globals::ObjectID objectID) {
+		getComponentVector<Component>()->remove(objectID);
 	}
 
 	template<typename Component>
-	Component &getComponent(ObjectID entity) {
-		return getComponentVector<Component>()->get(entity);
+	Component &getComponent(globals::ObjectID objectID) {
+		return getComponentVector<Component>()->get(objectID);
 	}
 
 private:
