@@ -21,15 +21,14 @@ int main() {
 
 	for (int i = 0; i < 5; i++) {
 		addBlob(createdObjects, EnemyObject({1, 2}, {5, 7}, &tileSet, {16, 270, 32, 34}));
-		std::unordered_map<unsigned int, Object *> objects = blobContainer<Object *>[typeid(Object *)];
+		auto objects = blobContainer<std::unique_ptr<Object>>[typeid(std::unique_ptr<Object>)];
 	}
 
 	// Main game loop
 	while (!window.ShouldClose()) { // Detect window close button or ESC key
 		// Update
 		//----------------------------------------------------------------------------------
-		std::unordered_map<unsigned int, Object *> objects = blobContainer<Object *>[typeid(Object *)];
-		for (const std::pair<unsigned int, Object *> &pair : objects) {
+		for (auto pair : blobContainer<std::unique_ptr<Object>>[typeid(std::unique_ptr<Object>)]) {
 			pair.second->update();
 		}
 
