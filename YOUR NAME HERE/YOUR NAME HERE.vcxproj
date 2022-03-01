@@ -161,6 +161,7 @@
     <ClCompile Include="src\objects\wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\entityComponentSystem.hpp" />
     <ClInclude Include="src\container.hpp" />
     <ClInclude Include="src\game.hpp" />
     <ClInclude Include="src\objects.hpp" />

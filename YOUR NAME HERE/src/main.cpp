@@ -2,7 +2,7 @@
 
 #include "../textures/dungeonTileset.h"
 #include "settings.hpp" // My global variables
-#include "container.hpp"
+#include "entityComponentSystem.hpp"
 #include "game.hpp"		// General game functions
 
 int main() {
@@ -19,20 +19,10 @@ int main() {
 	raylib::RenderTexture scalerCanvas{(int) settings::screenSize.x, (int) settings::screenSize.y};
 	//--------------------------------------------------------------------------------------
 
-	for (int i = 0; i < 5; i++) {
-		addBlob(createdObjects, EnemyObject({1, 2}, {5, 7}, &tileSet, {16, 270, 32, 34}));
-		auto objects = blobContainer<std::unique_ptr<Object>>[typeid(std::unique_ptr<Object>)];
-	}
-
 	// Main game loop
 	while (!window.ShouldClose()) { // Detect window close button or ESC key
 		// Update
 		//----------------------------------------------------------------------------------
-		for (auto pair : blobContainer<std::unique_ptr<Object>>[typeid(std::unique_ptr<Object>)]) {
-			pair.second->update();
-		}
-
-		EnemyObject rect = getBlob<EnemyObject>(3);
 		// Toggle full screen on F key pressed
 		if (IsKeyPressed(KEY_F)) game::scaleFullscreen(window, window.IsFullscreen());
 		//----------------------------------------------------------------------------------
