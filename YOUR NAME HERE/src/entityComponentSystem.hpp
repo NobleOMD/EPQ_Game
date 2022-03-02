@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <set>
 #include <unordered_map>
 #include <cassert>
 #include <typeindex>
@@ -7,17 +8,21 @@
 
 #include "settings.hpp"
 
-class BaseComponentVector {}; // Base class that we can cast to the correct type
+inline uint16_t createdObjects = 0;
+using ObjectID = uint16_t;
+using Group = std::set<ObjectID>;
+
+class BaseContainer {}; // Base class that we can cast to the correct type
 
 template <typename Component>
-class ComponentVector: public BaseComponentVector {
+class ComponentVector: public BaseContainer {
 public:
 	std::vector<Component> components;
 
-	void add(uint16_t objectID, Component component) {
-		const size_t index = aliveComponents;
+	void add(Component component) {
+		const uint16_t index = aliveComponents;
 		components.push_back(component);
-		objectID_index[objectID] = aliveComponents;
+		objectID_index[component.objectID] = aliveComponents;
 		aliveComponents++;
 	}
 
@@ -41,7 +46,7 @@ private:
 };
 
 struct ComponentManager {
-	std::unordered_map<std::type_index, std::shared_ptr<BaseComponentVector>> componentVectors;
+	std::unordered_map<std::type_index, std::shared_ptr<BaseContainer>> componentVectors;
 
 	template<typename Component>
 	void newComponent() {
@@ -50,8 +55,8 @@ struct ComponentManager {
 	}
 
 	template<typename Component>
-	void addComponent(uint16_t objectID, Component component) {
-		getComponentVector<Component>()->add(objectID, component);
+	void addComponent(Component component) {
+		getComponentVector<Component>()->add(component);
 	}
 
 	template<typename Component>
@@ -70,3 +75,5 @@ struct ComponentManager {
 		return std::static_pointer_cast<ComponentVector<Component>>(componentVectors[typeName]);
 	}
 };
+
+inline ComponentManager componentManager;

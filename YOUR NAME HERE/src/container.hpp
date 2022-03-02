@@ -6,63 +6,39 @@
 #include "settings.hpp"
 #include "entityComponentSystem.hpp"
 
-// Object
+// Entity
 //---------------------------------------------------------------------------------
-struct Object {
-	Object(std::vector<std::type_index> requiredComponents)
-		:
-		objectID(globals::createdObjects),
-		requiredComponents(requiredComponents) {
-		globals::createdObjects++;
-		globals::manager.addComponent<Object>(*this);
-	};
-
-	virtual void update() {};
-
-	// Object ID used to match objects
-	const unsigned int objectID;
-	std::vector<std::type_index> requiredComponents;
-};
-//---------------------------------------------------------------------------------
-
-// Component
-//---------------------------------------------------------------------------------
-struct Component {
-	uint16_t objectID;
-};
+inline Group entities;
 //---------------------------------------------------------------------------------
 
 //RectangleComponent
 //---------------------------------------------------------------------------------
-struct RectangleComponent: public Component {
-	float x;
-	float y;
-	float width;
-	float height;
+struct PositionComponent {
+	ObjectID objectID;
+	raylib::Vector2 position;
+};
+
+struct SizeComponent {
+	ObjectID objectID;
+	raylib::Vector2 size;
 };
 //---------------------------------------------------------------------------------
 
 // TextureComponent
 //---------------------------------------------------------------------------------
-struct TextureComponent: public Component {
+struct TextureComponent {
+	ObjectID objectID;
 	raylib::Texture *texture;
 	raylib::Rectangle rectangle;
 };
 //---------------------------------------------------------------------------------
 
-// EnemyObject
-//---------------------------------------------------------------------------------
-struct EnemyObject: public Object {
-	EnemyObject(raylib::Vector2 size, raylib::Vector2 position, raylib::Texture *texture, raylib::Rectangle textureRect)
-		:
-		Object({typeid(RectangleComponent), typeid(TextureComponent)}) {
-		//addBlob(objectID, RectangleComponent(objectID, position.x, position.y, size.x, size.y));
-		//addBlob(objectID, TextureComponent(objectID, texture, textureRect));
-	};
+void registerComponents();
 
-	void update() {
-		//RectangleComponent &rect = getBlob<RectangleComponent>(objectID);
-		//rect.x += 5;
-	}
+struct Actor {
+	Actor(raylib::Vector2 position, raylib::Vector2 size, raylib::Texture *texture, raylib::Rectangle textureRect);
 };
-//---------------------------------------------------------------------------------
+
+inline Group drawnObjects; // Requires Texture and Position components
+void drawECS();
+

@@ -21,10 +21,10 @@ void game::scaleFullscreen(raylib::Window &window, bool fullscreen) {
 		// Minimise
 		window.SetFullscreen(false);
 
-		globals::scaleFactor = globals::defaultScaleFactor;
-		globals::scaleOrigin = {0, 0};
+		settings::scaleFactor = settings::defaultScaleFactor;
+		settings::scaleOrigin = {0, 0};
 
-		window.SetSize(globals::getScaledSize());
+		window.SetSize(settings::getScaledSize());
 	}
 	else if (!fullscreen) {
 		raylib::Vector2 monitorSize{(float) GetMonitorWidth(GetCurrentMonitor()), (float) GetMonitorHeight(GetCurrentMonitor())};
@@ -32,9 +32,9 @@ void game::scaleFullscreen(raylib::Window &window, bool fullscreen) {
 		// Maximise
 		window.SetFullscreen(true);
 
-		raylib::Vector2 scale = monitorSize / (globals::getScaledSize());
-		globals::scaleFactor = std::max(scale.x, scale.y) * globals::scaleFactor; // Scale the image size to match the screen size
-		globals::scaleOrigin = (monitorSize - globals::getScaledSize()) / 2;
+		raylib::Vector2 scale = monitorSize / (settings::getScaledSize());
+		settings::scaleFactor = std::max(scale.x, scale.y) * settings::scaleFactor; // Scale the image size to match the screen size
+		settings::scaleOrigin = (monitorSize - settings::getScaledSize()) / 2;
 
 		window.SetSize(monitorSize);
 	}

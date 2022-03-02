@@ -2,7 +2,7 @@
 #include <include/raylib-cpp.hpp>
 #include "entityComponentSystem.hpp"
 
-namespace globals
+namespace settings
 {
 	// Window Settings
 	inline std::string title = "YOUR NAME HERE"; // Title of the window
@@ -26,8 +26,4 @@ namespace globals
 	// Font Settings
 	inline raylib::Font defaultFont; // The default raylib text glyphs
 	inline raylib::Color textColor = raylib::Color::RayWhite();
-
-	// Components
-	inline ComponentManager manager;
-	inline uint16_t createdObjects = 0;
 }

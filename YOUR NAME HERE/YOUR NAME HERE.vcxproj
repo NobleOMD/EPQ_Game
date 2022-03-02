@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\container.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\objects\damage.cpp" />
@@ -161,7 +162,6 @@
     <ClCompile Include="src\objects\wall.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\objects\component.hpp" />
     <ClInclude Include="src\entityComponentSystem.hpp" />
     <ClInclude Include="src\container.hpp" />
     <ClInclude Include="src\game.hpp" />

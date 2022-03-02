@@ -3,20 +3,29 @@
 #include "../textures/dungeonTileset.h"
 #include "settings.hpp" // My global variables
 #include "entityComponentSystem.hpp"
+#include "container.hpp"
 #include "game.hpp"		// General game functions
 
 int main() {
 	// Initialization
 	//--------------------------------------------------------------------------------------
-	raylib::Window window(globals::getScaledSize().x, globals::getScaledSize().y, globals::title);
+	raylib::Window window(settings::getScaledSize().x, settings::getScaledSize().y, settings::title);
 	window.SetState(FLAG_VSYNC_HINT); // Use V-Sync to autodetect and run at monitor refresh rate
 
+	registerComponents(); // Register all components to the componentManager
 	raylib::Texture tileSet(
 		raylib::Image(".png", __0x72_DungeonTilesetII_v1_4_png, __0x72_DungeonTilesetII_v1_4_png_len)
 	);
 
+	Actor player(
+		raylib::Vector2{100, 100},
+		raylib::Vector2{16, 16},
+		&tileSet,
+		raylib::Rectangle{128, 68, 16, 28}
+	);
+
 	// Texture that the game is rendered to, this is then scaled to the window size
-	raylib::RenderTexture scalerCanvas{(int) globals::screenSize.x, (int) globals::screenSize.y};
+	raylib::RenderTexture scalerCanvas{(int) settings::screenSize.x, (int) settings::screenSize.y};
 	//--------------------------------------------------------------------------------------
 
 	// Main game loop
@@ -32,20 +41,21 @@ int main() {
 		// Draw the game the scale canvas 
 		scalerCanvas.BeginMode();
 		{
-			window.ClearBackground(globals::backgroundColour);
+			window.ClearBackground(settings::backgroundColour);
+			drawECS();
 		}
 		scalerCanvas.EndMode();
 
 		// Stretch the canvas to the window size
 		window.BeginDrawing();
 		{
-			window.ClearBackground(globals::backgroundColour); // This is the colour of the border around the game
+			window.ClearBackground(settings::backgroundColour); // This is the colour of the border around the game
 
 			// This draws the scalerCanvas to scaled up size
 			DrawTexturePro(
 				scalerCanvas.texture,														// Texture
-				raylib::Rectangle(0, 0, globals::screenSize.x, -globals::screenSize.y),	// Source
-				raylib::Rectangle(globals::scaleOrigin, globals::getScaledSize()),		// Destination
+				raylib::Rectangle(0, 0, settings::screenSize.x, -settings::screenSize.y),	// Source
+				raylib::Rectangle(settings::scaleOrigin, settings::getScaledSize()),		// Destination
 				raylib::Vector2{0, 0},														// Origin
 				0,																			// Rotation
 				WHITE																		// Tint
