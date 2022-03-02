@@ -1,6 +1,5 @@
 #pragma once
 #include <include/raylib-cpp.hpp>
-#include "entityComponentSystem.hpp"
 
 namespace settings
 {

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -149,35 +149,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\container.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\objects\damage.cpp" />
-    <ClCompile Include="src\objects\enemy.cpp" />
-    <ClCompile Include="src\objects\entity.cpp" />
-    <ClCompile Include="src\objects\objectRectangle.cpp" />
-    <ClCompile Include="src\objects\objectTexture.cpp" />
-    <ClCompile Include="src\objects\particle.cpp" />
-    <ClCompile Include="src\objects\playerCharacter.cpp" />
-    <ClCompile Include="src\objects\wall.cpp" />
+    <ClCompile Include="src\systems.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\entityComponentSystem.hpp" />
-    <ClInclude Include="src\container.hpp" />
+    <ClInclude Include="src\components.hpp" />
+    <ClInclude Include="src\ecs\componentManager.hpp" />
+    <ClInclude Include="src\ecs\componentVector.hpp" />
+    <ClInclude Include="src\ecs\entityComponentSystem.hpp" />
+    <ClInclude Include="src\ecs\types.hpp" />
     <ClInclude Include="src\game.hpp" />
     <ClInclude Include="src\objects.hpp" />
-    <ClInclude Include="src\objects\chest.hpp" />
-    <ClInclude Include="src\objects\damage.hpp" />
-    <ClInclude Include="src\objects\enemy.hpp" />
-    <ClInclude Include="src\objects\entity.hpp" />
-    <ClInclude Include="src\objects\item.hpp" />
-    <ClInclude Include="src\objects\objectRectangle.hpp" />
-    <ClInclude Include="src\objects\objectTexture.hpp" />
-    <ClInclude Include="src\objects\particle.hpp" />
-    <ClInclude Include="src\objects\playerCharacter.hpp" />
-    <ClInclude Include="src\objects\spawnPoints.hpp" />
-    <ClInclude Include="src\objects\wall.hpp" />
     <ClInclude Include="src\settings.hpp" />
+    <ClInclude Include="src\systems.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

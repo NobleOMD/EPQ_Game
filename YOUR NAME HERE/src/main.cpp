@@ -2,9 +2,9 @@
 
 #include "../textures/dungeonTileset.h"
 #include "settings.hpp" // My global variables
-#include "entityComponentSystem.hpp"
-#include "container.hpp"
 #include "game.hpp"		// General game functions
+#include "systems.hpp"
+#include "objects.hpp"
 
 int main() {
 	// Initialization
