@@ -2,6 +2,9 @@
 #include <include/raylib-cpp.hpp>
 #include "ecs/types.hpp"
 
+// Setup all components with the component manager
+namespace ecs { void registerComponents(); }
+
 // Components should be data only
 
 struct PositionComponent {
@@ -19,4 +22,3 @@ struct TextureComponent {
 	raylib::Texture *texture;
 	raylib::Rectangle rectangle;
 };
-

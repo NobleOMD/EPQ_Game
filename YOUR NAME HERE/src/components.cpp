@@ -1,4 +1,5 @@
-#include "entityComponentSystem.hpp"
+#include "components.hpp"
+#include "ecs/entityComponentSystem.hpp"
 
 void ecs::registerComponents() {
 	componentManager.newComponent<PositionComponent>();

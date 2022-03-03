@@ -4,9 +4,7 @@ Actor::Actor(raylib::Vector2 position, raylib::Vector2 size, raylib::Texture *te
 	uint16_t objectID = ecs::createdObjects++;	// Unique objectID used to identify the components as belonging to this object
 	
 	// Add object to relevant groups
-	systems::entities.insert(objectID);
-	systems::drawnObjects.insert(objectID);
-	systems::moveableObjects.insert(objectID);
+	systems::addToGroups(objectID, {&systems::drawnObjects, &systems::moveableObjects, &systems::collidableObjects});
 
 	// Create components using this objectID and the parameters specified above
 	ecs::componentManager.addComponent<PositionComponent>({objectID, position});

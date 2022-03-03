@@ -15,13 +15,14 @@ int main() {
 	window.SetState(FLAG_VSYNC_HINT); // Use V-Sync to autodetect and run at monitor refresh rate
 
 	ecs::registerComponents(); // Register all components to the componentManager
+
 	raylib::Texture tileSet(
 		raylib::Image(".png", __0x72_DungeonTilesetII_v1_4_png, __0x72_DungeonTilesetII_v1_4_png_len)
 	);
 
 	Actor player(
-		raylib::Vector2{100, 100},
-		raylib::Vector2{16, 16},
+		raylib::Vector2{10, 10},
+		raylib::Vector2{1, 1},
 		&tileSet,
 		raylib::Rectangle{128, 68, 16, 28}
 	);
@@ -48,6 +49,7 @@ int main() {
 		{
 			window.ClearBackground(settings::backgroundColour);
 			systems::drawTextured();
+			systems::drawDebug();
 		}
 		scalerCanvas.EndMode();
 
