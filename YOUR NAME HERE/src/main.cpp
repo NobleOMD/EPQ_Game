@@ -14,7 +14,7 @@ int main() {
 	raylib::Window window(settings::getScaledSize().x, settings::getScaledSize().y, settings::title);
 	window.SetState(FLAG_VSYNC_HINT); // Use V-Sync to autodetect and run at monitor refresh rate
 
-	registerComponents(); // Register all components to the componentManager
+	ecs::registerComponents(); // Register all components to the componentManager
 	raylib::Texture tileSet(
 		raylib::Image(".png", __0x72_DungeonTilesetII_v1_4_png, __0x72_DungeonTilesetII_v1_4_png_len)
 	);
@@ -26,7 +26,7 @@ int main() {
 		raylib::Rectangle{128, 68, 16, 28}
 	);
 
-	playerInput.insert(0);
+	systems::playerInput.insert(0);
 
 	// Texture that the game is rendered to, this is then scaled to the window size
 	raylib::RenderTexture scalerCanvas{(int) settings::screenSize.x, (int) settings::screenSize.y};
@@ -37,7 +37,7 @@ int main() {
 		// Update
 		//----------------------------------------------------------------------------------
 		// Toggle full screen on F key presseds
-		handlePlayerInput();
+		systems::handlePlayerInput();
 		if (IsKeyPressed(KEY_F)) game::scaleFullscreen(window, window.IsFullscreen());
 		//----------------------------------------------------------------------------------
 
@@ -47,7 +47,7 @@ int main() {
 		scalerCanvas.BeginMode();
 		{
 			window.ClearBackground(settings::backgroundColour);
-			drawTextured();
+			systems::drawTextured();
 		}
 		scalerCanvas.EndMode();
 

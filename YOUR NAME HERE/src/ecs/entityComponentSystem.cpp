@@ -1,6 +1,6 @@
 #include "entityComponentSystem.hpp"
 
-void registerComponents() {
+void ecs::registerComponents() {
 	componentManager.newComponent<PositionComponent>();
 	componentManager.newComponent<SizeComponent>();
 	componentManager.newComponent<TextureComponent>();

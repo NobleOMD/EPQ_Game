@@ -3,25 +3,25 @@
 #include "game.hpp"
 #include <cassert>
 
-void drawTextured() {
+void systems::drawTextured() {
 	for (Group::iterator it = drawnObjects.begin(); it != drawnObjects.end(); it++) {
-		TextureComponent textureComponent = componentManager.getComponent<TextureComponent>(*it);
-		PositionComponent position = componentManager.getComponent<PositionComponent>(*it);
+		TextureComponent textureComponent = ecs::componentManager.getComponent<TextureComponent>(*it);
+		PositionComponent position = ecs::componentManager.getComponent<PositionComponent>(*it);
 		textureComponent.texture->Draw(textureComponent.rectangle, position.position);
 	}
 }
 
-void move(ObjectID objectID, raylib::Vector2 translation) {
+void systems::move(ObjectID objectID, raylib::Vector2 translation) {
 	assert(moveableObjects.find(objectID) != moveableObjects.end() && "This object is not a moveable object.");
 
-	PositionComponent &position = componentManager.getComponent<PositionComponent>(objectID);
-	SizeComponent &size = componentManager.getComponent<SizeComponent>(objectID);
+	PositionComponent &position = ecs::componentManager.getComponent<PositionComponent>(objectID);
+	SizeComponent &size = ecs::componentManager.getComponent<SizeComponent>(objectID);
 
 	position.position += translation;
 	game::clampWithin(settings::screenSize, position.position, size.size); // Clamp within the overall grid
 }
 
-void handlePlayerInput() {
+void systems::handlePlayerInput() {
 	if (playerInput.size() == 0) return;
 	ObjectID playerID = *playerInput.begin();
 
