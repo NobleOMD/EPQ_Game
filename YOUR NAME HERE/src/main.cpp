@@ -1,8 +1,10 @@
 #include <include/raylib-cpp.hpp> // Cpp headers that include class functionality
 
 #include "../textures/dungeonTileset.h"
+
 #include "settings.hpp" // My global variables
 #include "game.hpp"		// General game functions
+
 #include "systems.hpp"
 #include "objects.hpp"
 
@@ -42,7 +44,7 @@ int main() {
 		scalerCanvas.BeginMode();
 		{
 			window.ClearBackground(settings::backgroundColour);
-			drawECS();
+			draw();
 		}
 		scalerCanvas.EndMode();
 

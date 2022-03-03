@@ -2,6 +2,8 @@
 #include <include/raylib-cpp.hpp>
 #include "ecs/types.hpp"
 
+// Components should be data only
+
 struct PositionComponent {
 	ObjectID objectID;
 	raylib::Vector2 position;

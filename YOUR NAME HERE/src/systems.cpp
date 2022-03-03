@@ -6,7 +6,7 @@ void registerComponents() {
 	componentManager.newComponent<TextureComponent>();
 }
 
-void drawECS() {
+void draw() {
 	for (Group::iterator it = drawnObjects.begin(); it != drawnObjects.end(); it++) {
 		TextureComponent textureComponent = componentManager.getComponent<TextureComponent>(*it);
 		PositionComponent position = componentManager.getComponent<PositionComponent>(*it);

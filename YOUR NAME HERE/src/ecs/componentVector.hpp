@@ -4,30 +4,29 @@
 
 #include "types.hpp"
 
-extern ObjectID;
-
 class BaseContainer {}; // Base class that we can cast to the correct type
 
 template <typename Component>
+// ComponentVector stores and components of template type, components can be fetched by their objectID
 class ComponentVector: public BaseContainer {
 public:
-	std::vector<Component> components;
+	std::vector<Component> components; // The storage location for all the components
 
 	void add(Component component) {
-		const size_t index = aliveComponents;
+		objectID_index[component.objectID] = components.size(); // Get the index that this object is created at
 		components.push_back(component);
-		objectID_index[component.objectID] = aliveComponents;
-		aliveComponents++;
 	}
 
 	void remove(ObjectID objectID) {
-		assert(aliveComponents != 0);
+		assert(components.size() != 0 && "No components in vector to remove.");
 
-		const size_t index = objectID_index[objectID];
-		components.erase(components.begin() + index);
-		objectID_index.erase(objectID);
+		const size_t index = objectID_index[objectID];		// Get the index of the component to be removed
+		objectID_index.erase(objectID);						// Remove the entry in the | objectID : index | map
 
-		aliveComponents--;
+		components[index] = components.back();				// Replace the component to be removed with a copy of the last element in the vector
+		objectID_index[components[index].objectID] = index; // Update the map of | objectID : index | with the new position of the last element
+
+		components.pop_back();								// Remove the last element that had been duplicated
 	}
 
 	Component &get(ObjectID objectID) {
@@ -35,6 +34,5 @@ public:
 	}
 
 private:
-	size_t aliveComponents = 0;
 	std::unordered_map<ObjectID, size_t> objectID_index;
 };
