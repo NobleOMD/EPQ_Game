@@ -26,6 +26,8 @@ int main() {
 		raylib::Rectangle{128, 68, 16, 28}
 	);
 
+	playerInput.insert(0);
+
 	// Texture that the game is rendered to, this is then scaled to the window size
 	raylib::RenderTexture scalerCanvas{(int) settings::screenSize.x, (int) settings::screenSize.y};
 	//--------------------------------------------------------------------------------------
@@ -34,7 +36,8 @@ int main() {
 	while (!window.ShouldClose()) { // Detect window close button or ESC key
 		// Update
 		//----------------------------------------------------------------------------------
-		// Toggle full screen on F key pressed
+		// Toggle full screen on F key presseds
+		handlePlayerInput();
 		if (IsKeyPressed(KEY_F)) game::scaleFullscreen(window, window.IsFullscreen());
 		//----------------------------------------------------------------------------------
 
@@ -44,7 +47,7 @@ int main() {
 		scalerCanvas.BeginMode();
 		{
 			window.ClearBackground(settings::backgroundColour);
-			draw();
+			drawTextured();
 		}
 		scalerCanvas.EndMode();
 

@@ -149,8 +149,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\ecs\entityComponentSystem.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\objects.cpp" />
     <ClCompile Include="src\systems.cpp" />
   </ItemGroup>
   <ItemGroup>
