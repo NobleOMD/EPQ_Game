@@ -22,8 +22,8 @@ namespace systems
 
 	inline Group playerInput;
 	void handlePlayerInput();
-
-	inline Group collidableObjects;		// Must have collision rectangle component
-	inline std::set<int> occupied;
-	void handleCollisions();
+	
+	inline Group collisionObjects;
+	ObjectID collisionCheck(ObjectID objectID, const Group &objects);
+	void move(ObjectID objectID, raylib::Vector2 translation, const Group &collisionObjects);
 }

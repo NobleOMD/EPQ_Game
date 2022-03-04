@@ -27,6 +27,13 @@ int main() {
 		raylib::Rectangle{128, 68, 16, 28}
 	);
 
+	Actor play(
+		raylib::Vector2{10, 10},
+		raylib::Vector2{1, 1},
+		&tileSet,
+		raylib::Rectangle{128, 68, 16, 28}
+	);
+
 	systems::playerInput.insert(0);
 
 	// Texture that the game is rendered to, this is then scaled to the window size

@@ -30,7 +30,7 @@ void systems::drawDebug() {
 		PositionComponent position = ecs::componentManager.getComponent<PositionComponent>(*it);
 		SizeComponent size = ecs::componentManager.getComponent<SizeComponent>(*it);
 
-		raylib::Rectangle rectangle{position.position, size.size};
+		raylib::Rectangle rectangle{position.position * settings::tileSize, size.size * settings::tileSize};
 		rectangle.DrawLines(BLUE);
 	}
 }
@@ -49,21 +49,37 @@ void systems::handlePlayerInput() {
 	if (playerInput.size() == 0) return;
 	ObjectID playerID = *playerInput.begin();
 
-	if (IsKeyPressed(KEY_W)) move(playerID, {0, -1});
-	if (IsKeyPressed(KEY_A)) move(playerID, {-1, 0});
-	if (IsKeyPressed(KEY_S)) move(playerID, {0, 1});
-	if (IsKeyPressed(KEY_D)) move(playerID, {1, 0});
+	if (IsKeyPressed(KEY_W)) move(playerID, {0, -1}, collisionObjects);
+	if (IsKeyPressed(KEY_A)) move(playerID, {-1, 0}, collisionObjects);
+	if (IsKeyPressed(KEY_S)) move(playerID, {0, 1}, collisionObjects);
+	if (IsKeyPressed(KEY_D)) move(playerID, {1, 0}, collisionObjects);
+
+	
 }
 
-void systems::handleCollisions() {
-	for (Group::iterator it = collidableObjects.begin(); it != collidableObjects.end(); it++) {
-		ObjectID objectID = *it;
-		PositionComponent &position = ecs::componentManager.getComponent<PositionComponent>(objectID);
-		SizeComponent &size = ecs::componentManager.getComponent<SizeComponent>(objectID);
+ObjectID systems::collisionCheck(ObjectID objectID, const Group &objects) {
+	raylib::Rectangle targetRectangle{
+		ecs::componentManager.getComponent<PositionComponent>(objectID).position,
+		ecs::componentManager.getComponent<SizeComponent>(objectID).size
+	};
 
-		for (float i = 0; i < size.size.x; i++) {
-			for (float j = 0; i < size.size.y; i++) {
-			}
-		}
+	// Check for collision within a list of objects with collison
+	for (ObjectID testObject : objects) {
+		if (objectID == testObject) continue; // If the targetRectangle is ourself continue.
+
+		raylib::Rectangle testRectangle{
+			ecs::componentManager.getComponent<PositionComponent>(testObject).position,
+			ecs::componentManager.getComponent<SizeComponent>(testObject).size
+		};
+
+		// If this objects hit box is colliding, handle by returning the objectID
+		if (CheckCollisionRecs(targetRectangle, testRectangle)) return testObject;
 	}
+
+	return -1; // If no collision is found return -1
+}
+
+void systems::move(ObjectID objectID, raylib::Vector2 translation, const Group &collisionObjects) {
+	move(objectID, translation);
+	if (collisionCheck(objectID, collisionObjects) != UINT16_MAX) move(objectID, -translation);
 }
