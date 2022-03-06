@@ -2,7 +2,7 @@
 #include <include/raylib-cpp.hpp>
 #include <vector>
 
-#include "ecs/entityComponentSystem.hpp"
+#include "ecs/ECSManager.hpp"
 #include "components.hpp"
 
 namespace systems
@@ -24,6 +24,6 @@ namespace systems
 	void handlePlayerInput();
 	
 	inline Group collisionObjects;
-	ObjectID collisionCheck(ObjectID objectID, const Group &objects);
+	ObjectID collisionCheck(ObjectID objectID, const Group &createObject);
 	void move(ObjectID objectID, raylib::Vector2 translation, const Group &collisionObjects);
 }

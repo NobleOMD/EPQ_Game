@@ -14,20 +14,20 @@ int main() {
 	raylib::Window window(settings::getScaledSize().x, settings::getScaledSize().y, settings::title);
 	window.SetState(FLAG_VSYNC_HINT); // Use V-Sync to autodetect and run at monitor refresh rate
 
-	ecs::registerComponents(); // Register all components to the componentManager
+	registerComponents(); // Register all components to the componentManager
 
 	raylib::Texture tileSet(
 		raylib::Image(".png", __0x72_DungeonTilesetII_v1_4_png, __0x72_DungeonTilesetII_v1_4_png_len)
 	);
 
-	Actor player(
+	createObject::Actor(
 		raylib::Vector2{10, 10},
 		raylib::Vector2{1, 1},
 		&tileSet,
 		raylib::Rectangle{128, 68, 16, 28}
 	);
 
-	Actor play(
+	createObject::Actor(
 		raylib::Vector2{10, 10},
 		raylib::Vector2{1, 1},
 		&tileSet,

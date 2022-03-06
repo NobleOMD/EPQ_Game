@@ -12,7 +12,7 @@ struct ComponentManager {
 
 	template<typename Component>
 	// Register a new component by creating a new ComponentVector and adding it to the map
-	void newComponent() {
+	void newComponentVector() {
 		std::type_index typeName = typeid(Component);
 		componentVectors[typeName] = std::make_shared<ComponentVector<Component>>();
 	}

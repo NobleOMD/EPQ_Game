@@ -11,9 +11,9 @@ void systems::addToGroups(ObjectID objectID, std::vector<Group *> groups) {
 
 void systems::drawTextured() {
 	for (Group::iterator it = drawnObjects.begin(); it != drawnObjects.end(); it++) {
-		TextureComponent textureComponent = ecs::componentManager.getComponent<TextureComponent>(*it);
-		PositionComponent position = ecs::componentManager.getComponent<PositionComponent>(*it);
-		SizeComponent size = ecs::componentManager.getComponent<SizeComponent>(*it);
+		TextureComponent textureComponent = globalManager.getComponent<TextureComponent>(*it);
+		PositionComponent position = globalManager.getComponent<PositionComponent>(*it);
+		SizeComponent size = globalManager.getComponent<SizeComponent>(*it);
 
 		// Janky texture offset that is used to align texture with collison box
 		raylib::Vector2 textureOffset = (size.size * settings::tileSize) - (raylib::Vector2) textureComponent.rectangle.GetSize();
@@ -27,8 +27,8 @@ void systems::drawTextured() {
 
 void systems::drawDebug() {
 	for (Group::iterator it = drawDebugging.begin(); it != drawDebugging.end(); it++) {
-		PositionComponent position = ecs::componentManager.getComponent<PositionComponent>(*it);
-		SizeComponent size = ecs::componentManager.getComponent<SizeComponent>(*it);
+		PositionComponent position = globalManager.getComponent<PositionComponent>(*it);
+		SizeComponent size = globalManager.getComponent<SizeComponent>(*it);
 
 		raylib::Rectangle rectangle{position.position * settings::tileSize, size.size * settings::tileSize};
 		rectangle.DrawLines(BLUE);
@@ -38,8 +38,8 @@ void systems::drawDebug() {
 void systems::move(ObjectID objectID, raylib::Vector2 translation) {
 	assert(moveableObjects.find(objectID) != moveableObjects.end() && "This object is not a moveable object.");
 
-	PositionComponent &position = ecs::componentManager.getComponent<PositionComponent>(objectID);
-	SizeComponent &size = ecs::componentManager.getComponent<SizeComponent>(objectID);
+	PositionComponent &position = globalManager.getComponent<PositionComponent>(objectID);
+	SizeComponent &size = globalManager.getComponent<SizeComponent>(objectID);
 
 	position.position += translation;
 	game::clampWithin(settings::gridSize, position.position, size.size); // Clamp within the overall grid
@@ -57,19 +57,19 @@ void systems::handlePlayerInput() {
 	
 }
 
-ObjectID systems::collisionCheck(ObjectID objectID, const Group &objects) {
+ObjectID systems::collisionCheck(ObjectID objectID, const Group &createObject) {
 	raylib::Rectangle targetRectangle{
-		ecs::componentManager.getComponent<PositionComponent>(objectID).position,
-		ecs::componentManager.getComponent<SizeComponent>(objectID).size
+		globalManager.getComponent<PositionComponent>(objectID).position,
+		globalManager.getComponent<SizeComponent>(objectID).size
 	};
 
 	// Check for collision within a list of objects with collison
-	for (ObjectID testObject : objects) {
+	for (ObjectID testObject : createObject) {
 		if (objectID == testObject) continue; // If the targetRectangle is ourself continue.
 
 		raylib::Rectangle testRectangle{
-			ecs::componentManager.getComponent<PositionComponent>(testObject).position,
-			ecs::componentManager.getComponent<SizeComponent>(testObject).size
+			globalManager.getComponent<PositionComponent>(testObject).position,
+			globalManager.getComponent<SizeComponent>(testObject).size
 		};
 
 		// If this objects hit box is colliding, handle by returning the objectID

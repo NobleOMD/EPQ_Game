@@ -1,8 +1,8 @@
 #include "components.hpp"
-#include "ecs/entityComponentSystem.hpp"
+#include "ecs/ECSManager.hpp"
 
-void ecs::registerComponents() {
-	componentManager.newComponent<PositionComponent>();
-	componentManager.newComponent<SizeComponent>();
-	componentManager.newComponent<TextureComponent>();
+void registerComponents() {
+	globalManager.newComponent<PositionComponent>();
+	globalManager.newComponent<SizeComponent>();
+	globalManager.newComponent<TextureComponent>();
 }
