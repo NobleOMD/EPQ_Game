@@ -1,6 +1,7 @@
 #pragma once
 #include "componentManager.hpp"
 #include "signatureManager.hpp"
+#include "systemsManager.hpp"
 
 class ECSManager {
 private:
