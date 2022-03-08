@@ -8,22 +8,37 @@
 namespace systems
 {
 	void addToGroups(ObjectID objectID, std::vector<Group *> groups);
+	bool hasComponents(ObjectID objectID, Signature requiredComponents);
 
-	inline Group entities;				// All objectID's
+	// Drawing Systems
+	//---------------------------------------------------------------------------------
+	//inline Signature drawSignature = globalManager.createSignature( {typeid(PositionComponent), typeid(SizeComponent), typeid(TextureComponent)} );
 
-	inline Group drawnObjects;			// Requires Texture, Size, and Position components
-	void drawTextured();				// Draws all objects within above group
+	inline Group drawnObjects;
+	void drawTextured();	// Draws all objects within above group with their texture
 
 	inline Group drawDebugging;
-	void drawDebug();
+	void drawDebug();		// Draws all objects within above group with a blue outline
+	//---------------------------------------------------------------------------------
+
+	// Movement
+	//---------------------------------------------------------------------------------
+	//inline Signature moveSignature = globalManager.createSignature( {typeid(PositionComponent), typeid(SizeComponent)} );
 
 	inline Group moveableObjects;
 	void move(ObjectID objectID, raylib::Vector2 translation);
+	//---------------------------------------------------------------------------------
 
+	// Input
+	//---------------------------------------------------------------------------------
 	inline Group playerInput;
 	void handlePlayerInput();
-	
+	//---------------------------------------------------------------------------------
+
+	// Collision
+	//---------------------------------------------------------------------------------
 	inline Group collisionObjects;
 	ObjectID collisionCheck(ObjectID objectID, const Group &createObject);
 	void move(ObjectID objectID, raylib::Vector2 translation, const Group &collisionObjects);
+	//---------------------------------------------------------------------------------
 }

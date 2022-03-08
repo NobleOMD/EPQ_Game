@@ -1,7 +1,6 @@
 #pragma once
 #include "componentManager.hpp"
 #include "signatureManager.hpp"
-#include "systemsManager.hpp"
 
 class ECSManager {
 private:
@@ -54,7 +53,7 @@ public:
 	
 	// Get a components signature
 	template <typename Component>
-	Signature getObjectSignature() {
+	Signature getComponentSignature() {
 		return signatureManager.getComponentSignature<Component>();
 	}
 	
@@ -62,6 +61,12 @@ public:
 	template <typename Component>
 	std::shared_ptr<ComponentVector<Component>> &getComponentVector(ObjectID objectID) {
 		return componentManager.getComponentVector<Component>(objectID);
+	}
+
+	Signature createSignature(std::vector<std::type_index> components) {
+		Signature signature;
+		for (std::type_index component : components) signature |= signatureManager.getComponentSignature(component);
+		return signature;
 	}
 };
 

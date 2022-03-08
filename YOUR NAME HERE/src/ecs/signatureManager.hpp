@@ -14,7 +14,8 @@ public:
 	template <typename Component>
 	void newComponentSignature() {
 		std::type_index typeName = typeid(Component);
-		componentSignatures[typeName] = 0b0001 << componentSignatures.size();
+		Signature signature;
+		componentSignatures[typeName] = signature.set(componentSignatures.size());
 	};
 
 	// Add objectID
@@ -46,6 +47,10 @@ public:
 	template <typename Component>
 	Signature getComponentSignature() {
 		std::type_index typeName = typeid(Component);
+		return componentSignatures[typeName];
+	};
+
+	Signature getComponentSignature(std::type_index typeName) {
 		return componentSignatures[typeName];
 	};
 

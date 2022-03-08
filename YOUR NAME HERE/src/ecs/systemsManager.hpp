@@ -20,6 +20,12 @@ public:
 	}
 
 	template<typename TemplateSystem>
+	void addToSystem(ObjectID objectID) {
+		BaseSystem system = getSystem<TemplateSystem>();
+		system.group.insert(objectID);
+	}
+
+	template<typename TemplateSystem>
 	std::shared_ptr<TemplateSystem> getSystem() {
 		std::type_index systemTypeName = typeid(TemplateSystem);
 		return std::static_pointer_cast<TemplateSystem>(systems[systemTypeName]); // Cast the BaseSystem to the correct templated type
@@ -29,11 +35,5 @@ public:
 	Signature getSystemSignature() {
 		std::type_index systemTypeName = typeid(TemplateSystem);
 		return systemSignatures[systemTypeName];
-	}
-
-	template<typename TemplateSystem>
-	void addToSystem(ObjectID objectID) {
-		BaseSystem system = getSystem<TemplateSystem>();
-		system.group.insert(objectID);
 	}
 };

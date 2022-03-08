@@ -161,7 +161,6 @@
     <ClInclude Include="src\ecs\componentVector.hpp" />
     <ClInclude Include="src\ecs\ECSManager.hpp" />
     <ClInclude Include="src\ecs\signatureManager.hpp" />
-    <ClInclude Include="src\ecs\systemsManager.hpp" />
     <ClInclude Include="src\ecs\types.hpp" />
     <ClInclude Include="src\game.hpp" />
     <ClInclude Include="src\objects.hpp" />

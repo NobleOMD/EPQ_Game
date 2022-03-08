@@ -4,16 +4,28 @@
 #include "game.hpp"
 #include <cassert>
 
+// Basic system functions
+//---------------------------------------------------------------------------------
 void systems::addToGroups(ObjectID objectID, std::vector<Group *> groups) {
-	entities.insert(objectID);
 	for (Group *group : groups) group->insert(objectID);
 }
 
+bool systems::hasComponents(ObjectID objectID, Signature requiredComponents) {
+	return (globalManager.getObjectSignature(objectID) & requiredComponents) == requiredComponents;
+}
+//---------------------------------------------------------------------------------
+
+// Drawing
+//---------------------------------------------------------------------------------
 void systems::drawTextured() {
+	Signature drawSignature = globalManager.createSignature({typeid(PositionComponent), typeid(SizeComponent), typeid(TextureComponent)});
 	for (Group::iterator it = drawnObjects.begin(); it != drawnObjects.end(); it++) {
-		TextureComponent textureComponent = globalManager.getComponent<TextureComponent>(*it);
-		PositionComponent position = globalManager.getComponent<PositionComponent>(*it);
-		SizeComponent size = globalManager.getComponent<SizeComponent>(*it);
+		ObjectID objectID = *it;
+		assert(hasComponents(objectID, drawSignature) && "This object does not have the correct compontents to draw.");
+		
+		TextureComponent textureComponent = globalManager.getComponent<TextureComponent>(objectID);
+		PositionComponent position = globalManager.getComponent<PositionComponent>(objectID);
+		SizeComponent size = globalManager.getComponent<SizeComponent>(objectID);
 
 		// Janky texture offset that is used to align texture with collison box
 		raylib::Vector2 textureOffset = (size.size * settings::tileSize) - (raylib::Vector2) textureComponent.rectangle.GetSize();
@@ -35,8 +47,14 @@ void systems::drawDebug() {
 	}
 }
 
+//---------------------------------------------------------------------------------
+
+// Movement
+//---------------------------------------------------------------------------------
 void systems::move(ObjectID objectID, raylib::Vector2 translation) {
+	Signature moveSignature = globalManager.createSignature( {typeid(PositionComponent), typeid(SizeComponent)} );
 	assert(moveableObjects.find(objectID) != moveableObjects.end() && "This object is not a moveable object.");
+	assert(hasComponents(objectID, moveSignature) && "Object does not have the correct components for movement.");
 
 	PositionComponent &position = globalManager.getComponent<PositionComponent>(objectID);
 	SizeComponent &size = globalManager.getComponent<SizeComponent>(objectID);
@@ -44,7 +62,10 @@ void systems::move(ObjectID objectID, raylib::Vector2 translation) {
 	position.position += translation;
 	game::clampWithin(settings::gridSize, position.position, size.size); // Clamp within the overall grid
 }
+//---------------------------------------------------------------------------------
 
+// Input
+//---------------------------------------------------------------------------------
 void systems::handlePlayerInput() {
 	if (playerInput.size() == 0) return;
 	ObjectID playerID = *playerInput.begin();
@@ -54,9 +75,12 @@ void systems::handlePlayerInput() {
 	if (IsKeyPressed(KEY_S)) move(playerID, {0, 1}, collisionObjects);
 	if (IsKeyPressed(KEY_D)) move(playerID, {1, 0}, collisionObjects);
 
-	
-}
 
+}
+//---------------------------------------------------------------------------------
+
+// Collision
+//---------------------------------------------------------------------------------
 ObjectID systems::collisionCheck(ObjectID objectID, const Group &createObject) {
 	raylib::Rectangle targetRectangle{
 		globalManager.getComponent<PositionComponent>(objectID).position,
@@ -83,3 +107,4 @@ void systems::move(ObjectID objectID, raylib::Vector2 translation, const Group &
 	move(objectID, translation);
 	if (collisionCheck(objectID, collisionObjects) != UINT16_MAX) move(objectID, -translation);
 }
+//---------------------------------------------------------------------------------
