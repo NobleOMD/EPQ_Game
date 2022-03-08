@@ -43,6 +43,10 @@ public:
 	// Get a component belonging to an object
 	template <typename Component>
 	Component &getComponent(ObjectID objectID) {
+		Signature objectSignature = signatureManager.getObjectSignature(objectID);
+		Signature componentSignature = signatureManager.getComponentSignature<Component>();
+		assert((objectSignature & componentSignature) == componentSignature && "Object does not have the requested component.");
+
 		return componentManager.getComponent<Component>(objectID);
 	}
 

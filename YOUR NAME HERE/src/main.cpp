@@ -20,21 +20,23 @@ int main() {
 		raylib::Image(".png", __0x72_DungeonTilesetII_v1_4_png, __0x72_DungeonTilesetII_v1_4_png_len)
 	);
 
-	createObject::Actor(
-		raylib::Vector2{10, 10},
+	createObject::Player(
+		raylib::Vector2{8, 7},
 		raylib::Vector2{1, 1},
 		&tileSet,
-		raylib::Rectangle{128, 68, 16, 28}
+		raylib::Rectangle{128, 68, 16, 28},
+		{ 0, 1, 2, 3 },
+		0.3
 	);
 
-	createObject::Actor(
-		raylib::Vector2{10, 10},
-		raylib::Vector2{1, 1},
+	createObject::AnimatedActor(
+		raylib::Vector2{16, 6},
+		raylib::Vector2{2, 2},
 		&tileSet,
-		raylib::Rectangle{128, 68, 16, 28}
+		raylib::Rectangle{16, 364, 32, 36},
+		{ 0, 1, 2, 3 },
+		0.4
 	);
-
-	systems::playerInput.insert(0);
 
 	// Texture that the game is rendered to, this is then scaled to the window size
 	raylib::RenderTexture scalerCanvas{(int) settings::screenSize.x, (int) settings::screenSize.y};
@@ -46,6 +48,7 @@ int main() {
 		//----------------------------------------------------------------------------------
 		// Toggle full screen on F key presseds
 		systems::handlePlayerInput();
+		systems::tickAnimations();
 		if (IsKeyPressed(KEY_F)) game::scaleFullscreen(window, window.IsFullscreen());
 		//----------------------------------------------------------------------------------
 
@@ -55,7 +58,7 @@ int main() {
 		scalerCanvas.BeginMode();
 		{
 			window.ClearBackground(settings::backgroundColour);
-			systems::drawTextured();
+			systems::drawTextures();
 			systems::drawDebug();
 		}
 		scalerCanvas.EndMode();

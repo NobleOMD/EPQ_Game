@@ -17,12 +17,10 @@ bool systems::hasComponents(ObjectID objectID, Signature requiredComponents) {
 
 // Drawing
 //---------------------------------------------------------------------------------
-void systems::drawTextured() {
-	Signature drawSignature = globalManager.createSignature({typeid(PositionComponent), typeid(SizeComponent), typeid(TextureComponent)});
-	for (Group::iterator it = drawnObjects.begin(); it != drawnObjects.end(); it++) {
+void systems::drawTextures() {
+	for (Group::iterator it = drawTextured.begin(); it != drawTextured.end(); it++) {
 		ObjectID objectID = *it;
-		assert(hasComponents(objectID, drawSignature) && "This object does not have the correct compontents to draw.");
-		
+
 		TextureComponent textureComponent = globalManager.getComponent<TextureComponent>(objectID);
 		PositionComponent position = globalManager.getComponent<PositionComponent>(objectID);
 		SizeComponent size = globalManager.getComponent<SizeComponent>(objectID);
@@ -39,11 +37,36 @@ void systems::drawTextured() {
 
 void systems::drawDebug() {
 	for (Group::iterator it = drawDebugging.begin(); it != drawDebugging.end(); it++) {
-		PositionComponent position = globalManager.getComponent<PositionComponent>(*it);
-		SizeComponent size = globalManager.getComponent<SizeComponent>(*it);
+		ObjectID objectID = *it;
+
+		PositionComponent position = globalManager.getComponent<PositionComponent>(objectID);
+		SizeComponent size = globalManager.getComponent<SizeComponent>(objectID);
 
 		raylib::Rectangle rectangle{position.position * settings::tileSize, size.size * settings::tileSize};
 		rectangle.DrawLines(BLUE);
+	}
+}
+
+void systems::tickAnimations() {
+	for (Group::iterator it = drawAnimated.begin(); it != drawAnimated.end(); it++) {
+		ObjectID objectID = *it;
+
+		AnimationInfo &animationInfo = globalManager.getComponent<AnimationInfo>(objectID);
+		FrameTimer &frameTimer = globalManager.getComponent<FrameTimer>(objectID);
+		TextureComponent &textureComponent = globalManager.getComponent<TextureComponent>(objectID);
+
+		// Update the timer
+		frameTimer.timeRemaining -= GetFrameTime();
+		if (frameTimer.timeRemaining >= 0) continue;
+		else frameTimer.timeRemaining = frameTimer.timerLength;
+		
+		// If the timer completes a cycle tick through the animation
+		animationInfo.frameIndex++;
+		if (animationInfo.frameIndex >= animationInfo.frameOrder.size()) animationInfo.frameIndex = 0;
+
+		// Update the texture rectangle according to the current frame
+		float animationOffset = textureComponent.rectangle.width * animationInfo.frameOrder[animationInfo.frameIndex];
+		textureComponent.rectangle.x = animationInfo.frameZero + animationOffset;
 	}
 }
 
@@ -52,9 +75,7 @@ void systems::drawDebug() {
 // Movement
 //---------------------------------------------------------------------------------
 void systems::move(ObjectID objectID, raylib::Vector2 translation) {
-	Signature moveSignature = globalManager.createSignature( {typeid(PositionComponent), typeid(SizeComponent)} );
 	assert(moveableObjects.find(objectID) != moveableObjects.end() && "This object is not a moveable object.");
-	assert(hasComponents(objectID, moveSignature) && "Object does not have the correct components for movement.");
 
 	PositionComponent &position = globalManager.getComponent<PositionComponent>(objectID);
 	SizeComponent &size = globalManager.getComponent<SizeComponent>(objectID);
@@ -75,20 +96,20 @@ void systems::handlePlayerInput() {
 	if (IsKeyPressed(KEY_S)) move(playerID, {0, 1}, collisionObjects);
 	if (IsKeyPressed(KEY_D)) move(playerID, {1, 0}, collisionObjects);
 
-
 }
 //---------------------------------------------------------------------------------
 
 // Collision
 //---------------------------------------------------------------------------------
-ObjectID systems::collisionCheck(ObjectID objectID, const Group &createObject) {
+ObjectID systems::collisionCheck(ObjectID objectID, const Group &testObjects) {
+
 	raylib::Rectangle targetRectangle{
 		globalManager.getComponent<PositionComponent>(objectID).position,
 		globalManager.getComponent<SizeComponent>(objectID).size
 	};
 
 	// Check for collision within a list of objects with collison
-	for (ObjectID testObject : createObject) {
+	for (ObjectID testObject : testObjects) {
 		if (objectID == testObject) continue; // If the targetRectangle is ourself continue.
 
 		raylib::Rectangle testRectangle{

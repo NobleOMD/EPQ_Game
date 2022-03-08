@@ -12,19 +12,18 @@ namespace systems
 
 	// Drawing Systems
 	//---------------------------------------------------------------------------------
-	//inline Signature drawSignature = globalManager.createSignature( {typeid(PositionComponent), typeid(SizeComponent), typeid(TextureComponent)} );
-
-	inline Group drawnObjects;
-	void drawTextured();	// Draws all objects within above group with their texture
+	inline Group drawTextured;
+	void drawTextures();	// Draws all objects within above group with their texture
 
 	inline Group drawDebugging;
 	void drawDebug();		// Draws all objects within above group with a blue outline
+
+	inline Group drawAnimated;
+	void tickAnimations();
 	//---------------------------------------------------------------------------------
 
 	// Movement
 	//---------------------------------------------------------------------------------
-	//inline Signature moveSignature = globalManager.createSignature( {typeid(PositionComponent), typeid(SizeComponent)} );
-
 	inline Group moveableObjects;
 	void move(ObjectID objectID, raylib::Vector2 translation);
 	//---------------------------------------------------------------------------------
@@ -41,4 +40,5 @@ namespace systems
 	ObjectID collisionCheck(ObjectID objectID, const Group &createObject);
 	void move(ObjectID objectID, raylib::Vector2 translation, const Group &collisionObjects);
 	//---------------------------------------------------------------------------------
+
 }

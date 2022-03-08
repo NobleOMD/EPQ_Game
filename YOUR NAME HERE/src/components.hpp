@@ -22,3 +22,18 @@ struct TextureComponent {
 	raylib::Texture *texture;
 	raylib::Rectangle rectangle;
 };
+
+struct AnimationInfo {
+	ObjectID objectID;
+	float frameZero;
+	std::vector<uint8_t> frameOrder;
+	uint8_t frameIndex = 0;
+};
+
+struct Timer {
+	ObjectID objectID;
+	float timerLength;
+	float timeRemaining = timerLength;
+};
+
+struct FrameTimer: public Timer {};
