@@ -21,6 +21,18 @@ int main() {
 		raylib::Image(".png", __0x72_DungeonTilesetII_v1_4_png, __0x72_DungeonTilesetII_v1_4_png_len)
 	);
 
+	createObject::DamageAnimated(
+		raylib::Vector2{12, 7},				// Position
+		raylib::Vector2{1, 1},				// Size
+		&tileSet,							// Texture
+		raylib::Rectangle{16, 176, 16, 16},	// Texture sub-rectangle
+		{0, 1, 2, 3},						// Animation frame sequence
+		0.075,								// Animation frame duration
+		1,									// Damage
+		4,									// Penetration
+		&systems::player					// Targets
+	);
+
 	createObject::Player(
 		raylib::Vector2{8, 7},				// Position
 		raylib::Vector2{1, 1},				// Size
@@ -29,15 +41,6 @@ int main() {
 		{ 0, 1, 2, 3 },						// Animation frame sequence
 		0.2,								// Animation frame duration
 		100									// Health
-	);
-
-	createObject::DamagePlayer(
-		raylib::Vector2{12, 7},				// Position
-		raylib::Vector2{1, 1},				// Size
-		&tileSet,							// Texture
-		raylib::Rectangle{16, 176, 16, 16},	// Texture sub-rectangle
-		1,
-		4
 	);
 
 	createObject::Enemy(
@@ -58,13 +61,13 @@ int main() {
 	while (!window.ShouldClose()) { // Detect window close button or ESC key
 		// Update
 		//----------------------------------------------------------------------------------
-		// Toggle full screen on F key presseds
 		systems::handlePlayerInput();
 		systems::handleDamage();
 		systems::tickAnimations();
-		if (IsKeyPressed(KEY_F)) game::scaleFullscreen(window, window.IsFullscreen());
+		globalManager.removeObjects();
 
-		for (ObjectID objectID : systems::removeQueue) globalManager.removeObject(objectID);
+		// Toggle full screen on F key presseds
+		if (IsKeyPressed(KEY_F)) game::scaleFullscreen(window, window.IsFullscreen());
 		//----------------------------------------------------------------------------------
 
 		// Draw

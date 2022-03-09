@@ -1,10 +1,10 @@
 #include "objects.hpp"
 
-ObjectID createObject::Actor(raylib::Vector2 position, raylib::Vector2 size, raylib::Texture *texture, raylib::Rectangle textureRect) { // Parameters for this kind of object
+ObjectID createObject::TexturedRectangle(raylib::Vector2 position, raylib::Vector2 size, raylib::Texture *texture, raylib::Rectangle textureRect) { // Parameters for this kind of object
 	uint16_t objectID = globalManager.createObject();	// Unique objectID used to identify the components as belonging to this object
 
 	// Add object to relevant systems
-	systems::addToGroups(objectID, {&systems::drawTextured, &systems::moveableObjects, &systems::collisionObjects});
+	systems::addToGroups(objectID, {&systems::drawTextured, &systems::moveableObjects});
 
 	// Create components using this objectID and the parameters specified above
 	globalManager.addComponent<PositionComponent>({objectID, position});
@@ -14,8 +14,8 @@ ObjectID createObject::Actor(raylib::Vector2 position, raylib::Vector2 size, ray
 	return objectID;
 }
 
-ObjectID createObject::AnimatedActor(raylib::Vector2 position, raylib::Vector2 size, raylib::Texture *texture, raylib::Rectangle textureRect, std::vector<uint8_t> frameSequence, float frameTime) {
-	ObjectID objectID = createObject::Actor(position, size, texture, textureRect);
+ObjectID createObject::AnimatedTexture(raylib::Vector2 position, raylib::Vector2 size, raylib::Texture *texture, raylib::Rectangle textureRect, std::vector<uint8_t> frameSequence, float frameTime) {
+	ObjectID objectID = createObject::TexturedRectangle(position, size, texture, textureRect);
 
 	systems::addToGroups(objectID, {&systems::drawAnimated});
 
@@ -26,7 +26,9 @@ ObjectID createObject::AnimatedActor(raylib::Vector2 position, raylib::Vector2 s
 }
 
 ObjectID createObject::Entity(raylib::Vector2 position, raylib::Vector2 size, raylib::Texture *texture, raylib::Rectangle textureRect, std::vector<uint8_t> frameSequence, float frameTime, float health) {
-	ObjectID objectID = createObject::AnimatedActor(position, size, texture, textureRect, frameSequence, frameTime);
+	ObjectID objectID = createObject::AnimatedTexture(position, size, texture, textureRect, frameSequence, frameTime);
+
+	systems::addToGroups(objectID, {&systems::collisionObjects});
 
 	globalManager.addComponent<HealthComponent>({objectID, health});
 	
@@ -51,7 +53,7 @@ ObjectID createObject::Player(raylib::Vector2 position, raylib::Vector2 size, ra
 	return objectID;
 }
 
-ObjectID createObject::DamagePlayer(raylib::Vector2 position, raylib::Vector2 size, raylib::Texture *texture, raylib::Rectangle textureRect, float damage, uint8_t penetration) {
+ObjectID createObject::Damage(raylib::Vector2 position, raylib::Vector2 size, float damage, uint8_t penetration, Group *targets) {
 	uint16_t objectID = globalManager.createObject();	// Unique objectID used to identify the components as belonging to this object
 
 	// Add object to relevant systems
@@ -60,8 +62,19 @@ ObjectID createObject::DamagePlayer(raylib::Vector2 position, raylib::Vector2 si
 	// Create components using this objectID and the parameters specified above
 	globalManager.addComponent<PositionComponent>({objectID, position});
 	globalManager.addComponent<SizeComponent>({objectID, size});
+	globalManager.addComponent<DamageComponent>({objectID, damage, penetration, targets});
+
+	return objectID;
+}
+
+ObjectID createObject::DamageAnimated(raylib::Vector2 position, raylib::Vector2 size, raylib::Texture *texture, raylib::Rectangle textureRect, std::vector<uint8_t> frameSequence, float frameTime, float damage, uint8_t penetration, Group *targets) {
+	ObjectID objectID = createObject::Damage(position, size, damage, penetration, targets);
+
+	systems::addToGroups(objectID, {&systems::drawAnimated});
+
 	globalManager.addComponent<TextureComponent>({objectID, texture, textureRect});
-	globalManager.addComponent<DamageComponent>({objectID, damage, penetration, &systems::player});
+	globalManager.addComponent<AnimationInfo>({objectID, textureRect.x, frameSequence});
+	globalManager.addComponent<FrameTimer>({objectID, frameTime});
 
 	return objectID;
 }

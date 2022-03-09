@@ -8,6 +8,8 @@ private:
 	SignatureManager signatureManager;
 	std::vector<Group *> systemGroups;
 	
+	Group removeQueue;
+	
 	ObjectID createdObjects = 0;
 
 public:
@@ -42,12 +44,16 @@ public:
 		signatureManager.removeComponent<Component>(objectID);
 	}
 
-	void removeObject(ObjectID objectID) {
-		for (Group *group : systemGroups) group->erase(objectID);
-		componentManager.removeObject(objectID);
-		signatureManager.removeObject(objectID);
+	void removeObject(ObjectID objectID) { removeQueue.insert(objectID); }
+
+	void removeObjects() {
+		for (ObjectID objectID : removeQueue) {
+			for (Group *group : systemGroups) group->erase(objectID);
+			componentManager.removeObject(objectID);
+			signatureManager.removeObject(objectID);
+		}
+		removeQueue.clear();
 	}
-	// Todo: Delete an object
 	
 	// Get a component belonging to an object
 	template <typename Component>

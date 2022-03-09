@@ -1,6 +1,5 @@
 #pragma once
 #include <include/raylib-cpp.hpp>
-#include <vector>
 
 #include "ecs/ECSManager.hpp"
 #include "components.hpp"
@@ -10,8 +9,6 @@ namespace systems
 	void registerSystems();
 	void addToGroups(ObjectID objectID, std::vector<Group *> groups);
 	bool hasComponents(ObjectID objectID, Signature requiredComponents);
-
-	inline std::vector<ObjectID> removeQueue;
 
 	// Drawing Systems
 	//---------------------------------------------------------------------------------

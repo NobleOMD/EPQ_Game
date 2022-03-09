@@ -31,9 +31,7 @@ bool systems::hasComponents(ObjectID objectID, Signature requiredComponents) {
 // Drawing
 //---------------------------------------------------------------------------------
 void systems::drawTextures() {
-	for (Group::iterator it = drawTextured.begin(); it != drawTextured.end(); it++) {
-		ObjectID objectID = *it;
-
+	for (ObjectID objectID : drawTextured) {
 		TextureComponent textureComponent = globalManager.getComponent<TextureComponent>(objectID);
 		PositionComponent position = globalManager.getComponent<PositionComponent>(objectID);
 		SizeComponent size = globalManager.getComponent<SizeComponent>(objectID);
@@ -49,9 +47,7 @@ void systems::drawTextures() {
 }
 
 void systems::drawDebug() {
-	for (Group::iterator it = drawDebugging.begin(); it != drawDebugging.end(); it++) {
-		ObjectID objectID = *it;
-
+	for (ObjectID objectID : drawDebugging) {
 		PositionComponent position = globalManager.getComponent<PositionComponent>(objectID);
 		SizeComponent size = globalManager.getComponent<SizeComponent>(objectID);
 
@@ -61,9 +57,7 @@ void systems::drawDebug() {
 }
 
 void systems::tickAnimations() {
-	for (Group::iterator it = drawAnimated.begin(); it != drawAnimated.end(); it++) {
-		ObjectID objectID = *it;
-
+	for (ObjectID objectID : drawAnimated) {
 		AnimationInfo &animationInfo = globalManager.getComponent<AnimationInfo>(objectID);
 		FrameTimer &frameTimer = globalManager.getComponent<FrameTimer>(objectID);
 		TextureComponent &textureComponent = globalManager.getComponent<TextureComponent>(objectID);
@@ -153,12 +147,10 @@ void systems::doDamage(DamageComponent &damageObject, const Group &collisionObje
 }
 
 void systems::handleDamage() {
-	for (Group::iterator it = damageObjects.begin(); it != damageObjects.end(); it++) {
-		ObjectID objectID = *it;
-
+	for (ObjectID objectID : damageObjects) {
 		DamageComponent &damage = globalManager.getComponent<DamageComponent>(objectID);
 		doDamage(damage, *damage.targets);
-		if (damage.penetration <= 0) removeQueue.push_back(objectID);
+		if (damage.penetration <= 0) globalManager.removeObject(objectID);
 	}
 }
 //---------------------------------------------------------------------------------
