@@ -13,7 +13,8 @@ void systems::registerSystems() {
 		&player,
 		&enemies,
 		&collisionObjects,
-		&damageObjects
+		&damageObjects,
+		&healthObjects
 	});
 }
 
@@ -59,13 +60,12 @@ void systems::drawDebug() {
 void systems::tickAnimations() {
 	for (ObjectID objectID : drawAnimated) {
 		AnimationInfo &animationInfo = globalManager.getComponent<AnimationInfo>(objectID);
-		FrameTimer &frameTimer = globalManager.getComponent<FrameTimer>(objectID);
 		TextureComponent &textureComponent = globalManager.getComponent<TextureComponent>(objectID);
 
 		// Update the timer
-		frameTimer.timeRemaining -= GetFrameTime();
-		if (frameTimer.timeRemaining >= 0) continue;
-		else frameTimer.timeRemaining = frameTimer.timerLength;
+		animationInfo.timeRemaining -= GetFrameTime();
+		if (animationInfo.timeRemaining >= 0) continue;
+		else animationInfo.timeRemaining = animationInfo.timerLength;
 
 		// If the timer completes a cycle tick through the animation
 		animationInfo.frameIndex++;
@@ -143,14 +143,28 @@ void systems::doDamage(DamageComponent &damageObject, const Group &collisionObje
 	HealthComponent &health = globalManager.getComponent<HealthComponent>(collisionObject);
 
 	health.health -= damageObject.damage;
-	damageObject.penetration--;
+	damageObject.timeRemaining = damageObject.timerLength;
 }
 
 void systems::handleDamage() {
 	for (ObjectID objectID : damageObjects) {
 		DamageComponent &damage = globalManager.getComponent<DamageComponent>(objectID);
+
+		// Update the timer
+		damage.timeRemaining -= GetFrameTime();
+		if (damage.timeRemaining >= 0) continue;
+
 		doDamage(damage, *damage.targets);
-		if (damage.penetration <= 0) globalManager.removeObject(objectID);
+	}
+}
+
+void systems::handleHealth() {
+	for (ObjectID objectID : healthObjects) {
+		HealthComponent health = globalManager.getComponent<HealthComponent>(objectID);
+		if (health.health > 0) continue;
+
+		globalManager.removeObject(objectID);
+		if (objectID == *player.begin()) game::over = true;
 	}
 }
 //---------------------------------------------------------------------------------

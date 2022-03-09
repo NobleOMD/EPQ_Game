@@ -6,6 +6,8 @@
 
 namespace game
 {
+	inline bool over = false;
+
 	// Return a mt19937 random number seeded using time since game initialised
 	inline std::mt19937 random(GetTime() * 1'000'000);
 	// Return a mt19937 random number within the range specified
@@ -17,6 +19,8 @@ namespace game
 
 	// Maximise and minimise the (window) according to the correct scaling for the monitor being used
 	void scaleFullscreen(raylib::Window &window, bool fullscreen);
+
+	void textFromCentre(const std::string &text, int size, raylib::Color colour, raylib::Vector2 offset = {0, 0});
 }
 
 // User Interface

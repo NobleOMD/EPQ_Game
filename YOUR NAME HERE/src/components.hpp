@@ -3,7 +3,10 @@
 #include "ecs/types.hpp"
 
 // Setup all components with the component manager
-void registerComponents();
+namespace components
+{
+	void registerComponents();
+}
 
 // Components should be data only
 
@@ -25,18 +28,14 @@ struct TextureComponent {
 
 struct AnimationInfo {
 	ObjectID objectID;
+
 	float frameZero;
 	std::vector<uint8_t> frameSequence;
-	uint8_t frameIndex = 0;
-};
-
-struct Timer {
-	ObjectID objectID;
 	float timerLength;
+
+	uint8_t frameIndex = 0;
 	float timeRemaining = timerLength;
 };
-
-struct FrameTimer: public Timer {};
 
 struct HealthComponent {
 	ObjectID objectID;
@@ -45,7 +44,16 @@ struct HealthComponent {
 
 struct DamageComponent {
 	ObjectID objectID;
+
 	float damage;
-	uint8_t penetration;
 	Group *targets;
+
+	float timerLength;
+	float timeRemaining = 0;
+};
+
+struct PenetrationCompeont {
+	ObjectID objectID;
+
+	uint8_t penetration;
 };

@@ -44,6 +44,9 @@ namespace systems
 	inline Group damageObjects;
 	void doDamage(DamageComponent &damageObject, const Group &collisionObjects);
 	void handleDamage();
+
+	inline Group healthObjects;
+	void handleHealth();
 	//---------------------------------------------------------------------------------
 
 }
