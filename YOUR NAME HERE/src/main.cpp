@@ -15,27 +15,39 @@ int main() {
 	window.SetState(FLAG_VSYNC_HINT); // Use V-Sync to autodetect and run at monitor refresh rate
 
 	registerComponents(); // Register all components to the componentManager
+	systems::registerSystems();
 
 	raylib::Texture tileSet(
 		raylib::Image(".png", __0x72_DungeonTilesetII_v1_4_png, __0x72_DungeonTilesetII_v1_4_png_len)
 	);
 
 	createObject::Player(
-		raylib::Vector2{8, 7},
-		raylib::Vector2{1, 1},
-		&tileSet,
-		raylib::Rectangle{128, 68, 16, 28},
-		{ 0, 1, 2, 3 },
-		0.3
+		raylib::Vector2{8, 7},				// Position
+		raylib::Vector2{1, 1},				// Size
+		&tileSet,							// Texture
+		raylib::Rectangle{128, 68, 16, 28},	// Texture sub-rectangle
+		{ 0, 1, 2, 3 },						// Animation frame sequence
+		0.2,								// Animation frame duration
+		100									// Health
 	);
 
-	createObject::AnimatedActor(
+	createObject::DamagePlayer(
+		raylib::Vector2{12, 7},				// Position
+		raylib::Vector2{1, 1},				// Size
+		&tileSet,							// Texture
+		raylib::Rectangle{16, 176, 16, 16},	// Texture sub-rectangle
+		1,
+		4
+	);
+
+	createObject::Enemy(
 		raylib::Vector2{16, 6},
-		raylib::Vector2{2, 2},
+		raylib::Vector2{1, 2},
 		&tileSet,
 		raylib::Rectangle{16, 364, 32, 36},
 		{ 0, 1, 2, 3 },
-		0.4
+		0.3,
+		100
 	);
 
 	// Texture that the game is rendered to, this is then scaled to the window size
@@ -48,8 +60,11 @@ int main() {
 		//----------------------------------------------------------------------------------
 		// Toggle full screen on F key presseds
 		systems::handlePlayerInput();
+		systems::handleDamage();
 		systems::tickAnimations();
 		if (IsKeyPressed(KEY_F)) game::scaleFullscreen(window, window.IsFullscreen());
+
+		for (ObjectID objectID : systems::removeQueue) globalManager.removeObject(objectID);
 		//----------------------------------------------------------------------------------
 
 		// Draw

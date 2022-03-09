@@ -4,6 +4,19 @@
 #include "game.hpp"
 #include <cassert>
 
+void systems::registerSystems() {
+	globalManager.registerSystems({
+		&drawTextured,
+		&drawDebugging,
+		&drawAnimated,
+		&moveableObjects,
+		&player,
+		&enemies,
+		&collisionObjects,
+		&damageObjects
+	});
+}
+
 // Basic system functions
 //---------------------------------------------------------------------------------
 void systems::addToGroups(ObjectID objectID, std::vector<Group *> groups) {
@@ -59,13 +72,13 @@ void systems::tickAnimations() {
 		frameTimer.timeRemaining -= GetFrameTime();
 		if (frameTimer.timeRemaining >= 0) continue;
 		else frameTimer.timeRemaining = frameTimer.timerLength;
-		
+
 		// If the timer completes a cycle tick through the animation
 		animationInfo.frameIndex++;
-		if (animationInfo.frameIndex >= animationInfo.frameOrder.size()) animationInfo.frameIndex = 0;
+		if (animationInfo.frameIndex >= animationInfo.frameSequence.size()) animationInfo.frameIndex = 0;
 
 		// Update the texture rectangle according to the current frame
-		float animationOffset = textureComponent.rectangle.width * animationInfo.frameOrder[animationInfo.frameIndex];
+		float animationOffset = textureComponent.rectangle.width * animationInfo.frameSequence[animationInfo.frameIndex];
 		textureComponent.rectangle.x = animationInfo.frameZero + animationOffset;
 	}
 }
@@ -88,8 +101,8 @@ void systems::move(ObjectID objectID, raylib::Vector2 translation) {
 // Input
 //---------------------------------------------------------------------------------
 void systems::handlePlayerInput() {
-	if (playerInput.size() == 0) return;
-	ObjectID playerID = *playerInput.begin();
+	if (player.size() == 0) return;
+	ObjectID playerID = *player.begin();
 
 	if (IsKeyPressed(KEY_W)) move(playerID, {0, -1}, collisionObjects);
 	if (IsKeyPressed(KEY_A)) move(playerID, {-1, 0}, collisionObjects);
@@ -121,11 +134,31 @@ ObjectID systems::collisionCheck(ObjectID objectID, const Group &testObjects) {
 		if (CheckCollisionRecs(targetRectangle, testRectangle)) return testObject;
 	}
 
-	return -1; // If no collision is found return -1
+	return UINT16_MAX; // If no collision is found return max value for objectID
 }
 
 void systems::move(ObjectID objectID, raylib::Vector2 translation, const Group &collisionObjects) {
 	move(objectID, translation);
 	if (collisionCheck(objectID, collisionObjects) != UINT16_MAX) move(objectID, -translation);
+}
+
+void systems::doDamage(DamageComponent &damageObject, const Group &collisionObjects) {
+	ObjectID collisionObject = collisionCheck(damageObject.objectID, collisionObjects);
+	if (collisionObject == UINT16_MAX) return;
+
+	HealthComponent &health = globalManager.getComponent<HealthComponent>(collisionObject);
+
+	health.health -= damageObject.damage;
+	damageObject.penetration--;
+}
+
+void systems::handleDamage() {
+	for (Group::iterator it = damageObjects.begin(); it != damageObjects.end(); it++) {
+		ObjectID objectID = *it;
+
+		DamageComponent &damage = globalManager.getComponent<DamageComponent>(objectID);
+		doDamage(damage, *damage.targets);
+		if (damage.penetration <= 0) removeQueue.push_back(objectID);
+	}
 }
 //---------------------------------------------------------------------------------

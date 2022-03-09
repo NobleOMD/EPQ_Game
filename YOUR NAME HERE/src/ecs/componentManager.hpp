@@ -29,6 +29,14 @@ public:
 		getComponentVector<Component>()->remove(objectID);
 	}
 
+	void removeObject(ObjectID objectID) {
+		for (auto const &pair : componentVectors) {
+			auto const &component = pair.second;
+
+			component->removeObject(objectID);
+		}
+	}
+
 	template<typename Component>
 	Component &getComponent(ObjectID objectID) {
 		return getComponentVector<Component>()->get(objectID);

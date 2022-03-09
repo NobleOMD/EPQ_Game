@@ -2,9 +2,11 @@
 #include "ecs/ECSManager.hpp"
 
 void registerComponents() {
-	globalManager.newComponent<PositionComponent>();
-	globalManager.newComponent<SizeComponent>();
-	globalManager.newComponent<TextureComponent>();
-	globalManager.newComponent<AnimationInfo>();
-	globalManager.newComponent<FrameTimer>();
+	globalManager.registerComponent<PositionComponent>();
+	globalManager.registerComponent<SizeComponent>();
+	globalManager.registerComponent<TextureComponent>();
+	globalManager.registerComponent<AnimationInfo>();
+	globalManager.registerComponent<FrameTimer>();
+	globalManager.registerComponent<HealthComponent>();
+	globalManager.registerComponent<DamageComponent>();
 }

@@ -6,13 +6,14 @@ class ECSManager {
 private:
 	ComponentManager componentManager;
 	SignatureManager signatureManager;
+	std::vector<Group *> systemGroups;
 	
 	ObjectID createdObjects = 0;
 
 public:
 	// Register new component
 	template <typename Component>
-	void newComponent() {
+	void registerComponent() {
 		componentManager.newComponentVector<Component>();
 		signatureManager.newComponentSignature<Component>();
 	}
@@ -23,6 +24,9 @@ public:
 		signatureManager.newObjectSignature(objectID);
 		return objectID;
 	}
+
+	void registerSystems(std::vector<Group *> groups) {	systemGroups = groups; }
+	void registerSystem(Group *group) { systemGroups.push_back(group); }
 
 	// Add component to an object
 	template <typename Component>
@@ -38,6 +42,11 @@ public:
 		signatureManager.removeComponent<Component>(objectID);
 	}
 
+	void removeObject(ObjectID objectID) {
+		for (Group *group : systemGroups) group->erase(objectID);
+		componentManager.removeObject(objectID);
+		signatureManager.removeObject(objectID);
+	}
 	// Todo: Delete an object
 	
 	// Get a component belonging to an object

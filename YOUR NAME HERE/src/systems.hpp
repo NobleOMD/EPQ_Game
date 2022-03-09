@@ -7,8 +7,11 @@
 
 namespace systems
 {
+	void registerSystems();
 	void addToGroups(ObjectID objectID, std::vector<Group *> groups);
 	bool hasComponents(ObjectID objectID, Signature requiredComponents);
+
+	inline std::vector<ObjectID> removeQueue;
 
 	// Drawing Systems
 	//---------------------------------------------------------------------------------
@@ -30,7 +33,8 @@ namespace systems
 
 	// Input
 	//---------------------------------------------------------------------------------
-	inline Group playerInput;
+	inline Group player;
+	inline Group enemies;
 	void handlePlayerInput();
 	//---------------------------------------------------------------------------------
 
@@ -39,6 +43,10 @@ namespace systems
 	inline Group collisionObjects;
 	ObjectID collisionCheck(ObjectID objectID, const Group &createObject);
 	void move(ObjectID objectID, raylib::Vector2 translation, const Group &collisionObjects);
+
+	inline Group damageObjects;
+	void doDamage(DamageComponent &damageObject, const Group &collisionObjects);
+	void handleDamage();
 	//---------------------------------------------------------------------------------
 
 }

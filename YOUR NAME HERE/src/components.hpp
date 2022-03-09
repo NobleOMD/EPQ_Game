@@ -26,7 +26,7 @@ struct TextureComponent {
 struct AnimationInfo {
 	ObjectID objectID;
 	float frameZero;
-	std::vector<uint8_t> frameOrder;
+	std::vector<uint8_t> frameSequence;
 	uint8_t frameIndex = 0;
 };
 
@@ -37,3 +37,15 @@ struct Timer {
 };
 
 struct FrameTimer: public Timer {};
+
+struct HealthComponent {
+	ObjectID objectID;
+	float health;
+};
+
+struct DamageComponent {
+	ObjectID objectID;
+	float damage;
+	uint8_t penetration;
+	Group *targets;
+};

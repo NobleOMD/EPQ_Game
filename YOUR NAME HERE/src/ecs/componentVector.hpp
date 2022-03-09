@@ -4,10 +4,14 @@
 
 #include "types.hpp"
 
-class BaseContainer {}; // Base class that we can cast to the correct type
+// Base class that we can cast to the correct type
+class BaseContainer {
+public:
+	virtual void removeObject(ObjectID objectID) =0;
+}; 
 
-template <typename Component>
 // ComponentVector stores and components of template type, components can be fetched by their objectID
+template <typename Component>
 class ComponentVector: public BaseContainer {
 public:
 	std::vector<Component> components; // The storage location for all the components
@@ -27,6 +31,12 @@ public:
 		objectID_index[components[index].objectID] = index; // Update the map of | objectID : index | with the new position of the last element
 
 		components.pop_back();								// Remove the last element that had been duplicated
+	}
+
+	void removeObject(ObjectID objectID) override {
+		if (objectID_index.find(objectID) != objectID_index.end()) {
+			remove(objectID);
+		}
 	}
 
 	Component &get(ObjectID objectID) {
