@@ -1,8 +1,8 @@
 #pragma once
 #include <include/raylib-cpp.hpp>
 
-#include "ecs/ECSManager.hpp"
-#include "components.hpp"
+#include "../ecs/ECSManager.hpp"
+#include "../components/components.hpp"
 
 namespace systems
 {

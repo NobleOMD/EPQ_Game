@@ -1,7 +1,7 @@
 #include "systems.hpp"
 
-#include "settings.hpp"
-#include "game.hpp"
+#include "../settings.hpp"
+#include "../game.hpp"
 #include <cassert>
 
 void systems::registerSystems() {

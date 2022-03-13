@@ -149,14 +149,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\components.cpp" />
+    <ClCompile Include="src\components\components.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\objects.cpp" />
-    <ClCompile Include="src\systems.cpp" />
+    <ClCompile Include="src\objects\objects.cpp" />
+    <ClCompile Include="src\systems\systems.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\components.hpp" />
+    <ClInclude Include="src\components\components.hpp" />
     <ClInclude Include="src\ecs\componentManager.hpp" />
     <ClInclude Include="src\ecs\componentVector.hpp" />
     <ClInclude Include="src\ecs\ECSManager.hpp" />
@@ -164,9 +164,9 @@
     <ClInclude Include="src\ecs\systemsManager.hpp" />
     <ClInclude Include="src\ecs\types.hpp" />
     <ClInclude Include="src\game.hpp" />
-    <ClInclude Include="src\objects.hpp" />
+    <ClInclude Include="src\objects\objects.hpp" />
     <ClInclude Include="src\settings.hpp" />
-    <ClInclude Include="src\systems.hpp" />
+    <ClInclude Include="src\systems\systems.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

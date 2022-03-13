@@ -1,6 +1,6 @@
 #pragma once
 #include <include/raylib-cpp.hpp>
-#include "ecs/types.hpp"
+#include "../ecs/types.hpp"
 
 // Setup all components with the component manager
 namespace components

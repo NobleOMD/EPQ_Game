@@ -5,8 +5,8 @@
 #include "settings.hpp" // My global variables
 #include "game.hpp"		// General game functions
 
-#include "systems.hpp"
-#include "objects.hpp"
+#include "systems/systems.hpp"
+#include "objects/objects.hpp"
 
 int main() {
 	// Initialization

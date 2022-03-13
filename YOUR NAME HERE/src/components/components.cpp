@@ -1,5 +1,5 @@
 #include "components.hpp"
-#include "ecs/ECSManager.hpp"
+#include "../ecs/ECSManager.hpp"
 
 void components::registerComponents() {
 	globalManager.registerComponent<PositionComponent>();

@@ -8,6 +8,7 @@ using Group = std::set<ObjectID>;	// A group is just a set of ObjectID's that ca
 
 struct BaseSystem {
 	Group group;
+	virtual void update() = 0;
 	void removeObject(ObjectID objectID) { group.erase(objectID); }
 };
 

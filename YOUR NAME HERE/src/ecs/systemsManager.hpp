@@ -8,42 +8,60 @@
 
 class SystemManager {
 private:
-	std::unordered_map<std::type_index, std::shared_ptr<BaseSystem>> systems;
+	std::vector<std::shared_ptr<BaseSystem>> systems;
+	std::unordered_map<std::type_index, size_t> typeindex_index;
 	std::unordered_map<std::type_index, Signature> systemSignatures;
-	std::unordered_map<ObjectID, std::type_index> objectID_system;
 
 public:
-	template<typename System>
+	template <typename System>
 	void newSystem(Signature requiredComponents) {
 		std::type_index systemTypeName = typeid(System);
-		systems[systemTypeName] = std::make_shared<System>();
+
+		typeindex_index[systemTypeName] = systems.size();
+		systems.push_back(std::make_shared<System>());
+
 		systemSignatures[systemTypeName] = requiredComponents;
 	}
 
-	template<typename System>
+	template <typename System>
 	void addToSystem(ObjectID objectID) {
 		BaseSystem &system = getSystem<System>();
 		system.group.insert(objectID);
+	}
 
-		objectID_system[objectID] = typeid(System);
+	template <typename System>
+	void removeFromSystem(ObjectID objectID) {
+		BaseSystem &system = getSystem<System>();
+		system.group.erase(objectID);
 	}
 
 	void removeObject(ObjectID objectID) {
-		for (const auto &pair : systems) {
-			const auto &system = pair.second;
+		for (const std::shared_ptr<BaseSystem> &system : systems) {
 			system->removeObject(objectID);
 		}
 	}
 
-	template<typename System>
+	template <typename System>
 	std::shared_ptr<System> &getSystem() {
-		std::type_index systemTypeName = typeid(System);
-		return std::static_pointer_cast<System>(systems[systemTypeName]); // Cast the BaseSystem to the correct templated type
+		size_t systemIndex = typeindex_index[typeid(System)];
+		return std::static_pointer_cast<System>(systems[systemIndex]); // Cast the BaseSystem to the correct templated type
 	}
 
-	template<typename System>
+	template <typename System>
 	Signature getSystemSignature() {
 		std::type_index systemTypeName = typeid(System);
 		return systemSignatures[systemTypeName];
+	}
+
+	template <typename System>
+	void updateSystem() {
+		System system = getSystem<System>();
+		system.update();
+	}
+
+	void updateSystems() {
+		for (std::shared_ptr<BaseSystem> system : systems) {
+			system->update();
+		}
 	}
 };

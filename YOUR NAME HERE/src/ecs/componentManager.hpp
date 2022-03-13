@@ -8,7 +8,7 @@
 
 // ComponentManager stores and handles ComponentVectors of different types
 class ComponentManager {
-private:
+protected:
 	std::unordered_map<std::type_index, std::shared_ptr<BaseContainer>> componentVectors; // Map of vector type to pointer to vector
 
 public:

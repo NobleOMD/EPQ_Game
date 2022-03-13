@@ -21,13 +21,13 @@
     <ClCompile Include="src\game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\systems.cpp">
+    <ClCompile Include="src\systems\systems.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects.cpp">
+    <ClCompile Include="src\objects\objects.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\components.cpp">
+    <ClCompile Include="src\components\components.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,7 +38,7 @@
     <ClInclude Include="src\game.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\objects.hpp">
+    <ClInclude Include="src\objects\objects.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ecs\componentManager.hpp">
@@ -50,16 +50,19 @@
     <ClInclude Include="src\ecs\types.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\components.hpp">
+    <ClInclude Include="src\components\components.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\systems.hpp">
+    <ClInclude Include="src\systems\systems.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ecs\signatureManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ecs\ECSManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ecs\systemsManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
