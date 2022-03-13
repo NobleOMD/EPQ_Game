@@ -32,7 +32,6 @@ public:
 	void removeObject(ObjectID objectID) {
 		for (auto const &pair : componentVectors) {
 			auto const &component = pair.second;
-
 			component->removeObject(objectID);
 		}
 	}

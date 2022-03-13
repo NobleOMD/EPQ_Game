@@ -1,11 +1,14 @@
 #pragma once
 #include "componentManager.hpp"
 #include "signatureManager.hpp"
+#include "systemsManager.hpp"
 
 class ECSManager {
 private:
 	ComponentManager componentManager;
 	SignatureManager signatureManager;
+	SystemManager systemManager;
+
 	std::vector<Group *> systemGroups;
 	
 	Group removeQueue;
@@ -25,6 +28,11 @@ public:
 		ObjectID objectID = createdObjects++;
 		signatureManager.newObjectSignature(objectID);
 		return objectID;
+	}
+
+	template <typename System>
+	void newSystem(Signature requiredComponents) {
+		systemManager.newSystem<System>(requiredComponents)
 	}
 
 	void registerSystems(std::vector<Group *> groups) {	systemGroups = groups; }
@@ -51,6 +59,7 @@ public:
 			for (Group *group : systemGroups) group->erase(objectID);
 			componentManager.removeObject(objectID);
 			signatureManager.removeObject(objectID);
+			systemManager.removeObject(objectID);
 		}
 		removeQueue.clear();
 	}
