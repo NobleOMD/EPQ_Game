@@ -64,7 +64,7 @@ int main() {
 		systems::handlePlayerInput();
 		systems::handleDamage();
 		systems::handleHealth();
-		systems::tickAnimations();
+		globalManager.updateSystem<AnimatedTextures>();
 		globalManager.removeObjects();
 
 		// Toggle full screen on F key presseds
@@ -77,8 +77,10 @@ int main() {
 		scalerCanvas.BeginMode();
 		{
 			window.ClearBackground(settings::backgroundColour);
-			systems::drawTextures();
-			systems::drawDebug();
+
+			globalManager.updateSystem<DrawTextured>();
+			globalManager.updateSystem<DrawDebug>();
+
 			if (game::over) {
 				game::textFromCentre("Game Over", 30, RED, {0, -5});
 				game::textFromCentre("Press ESC to leave the game.", 5, RED, {0, 10});

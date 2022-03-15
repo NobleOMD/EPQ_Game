@@ -25,14 +25,14 @@ public:
 
 	template <typename System>
 	void addToSystem(ObjectID objectID) {
-		BaseSystem &system = getSystem<System>();
-		system.group.insert(objectID);
+		std::shared_ptr<System> system = getSystem<System>();
+		system->group.insert(objectID);
 	}
 
 	template <typename System>
 	void removeFromSystem(ObjectID objectID) {
-		BaseSystem &system = getSystem<System>();
-		system.group.erase(objectID);
+		std::shared_ptr<System> system = getSystem<System>();
+		system->group.erase(objectID);
 	}
 
 	void removeObject(ObjectID objectID) {
@@ -42,7 +42,7 @@ public:
 	}
 
 	template <typename System>
-	std::shared_ptr<System> &getSystem() {
+	std::shared_ptr<System> getSystem() {
 		size_t systemIndex = typeindex_index[typeid(System)];
 		return std::static_pointer_cast<System>(systems[systemIndex]); // Cast the BaseSystem to the correct templated type
 	}
@@ -55,8 +55,7 @@ public:
 
 	template <typename System>
 	void updateSystem() {
-		System system = getSystem<System>();
-		system.update();
+		getSystem<System>()->update();
 	}
 
 	void updateSystems() {

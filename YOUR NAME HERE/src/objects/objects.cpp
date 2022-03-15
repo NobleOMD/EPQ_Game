@@ -4,7 +4,9 @@ ObjectID createObject::TexturedRectangle(raylib::Vector2 position, raylib::Vecto
 	uint16_t objectID = globalManager.createObject();	// Unique objectID used to identify the components as belonging to this object
 
 	// Add object to relevant systems
-	systems::addToGroups(objectID, {&systems::drawTextured, &systems::moveableObjects});
+	systems::addToGroups(objectID, {&systems::moveableObjects});
+
+	globalManager.addToSystem<DrawTextured>(objectID);
 
 	// Create components using this objectID and the parameters specified above
 	globalManager.addComponent<PositionComponent>({objectID, position});
@@ -17,7 +19,7 @@ ObjectID createObject::TexturedRectangle(raylib::Vector2 position, raylib::Vecto
 ObjectID createObject::AnimatedTexture(raylib::Vector2 position, raylib::Vector2 size, raylib::Texture *texture, raylib::Rectangle textureRect, std::vector<uint8_t> frameSequence, float frameTime) {
 	ObjectID objectID = createObject::TexturedRectangle(position, size, texture, textureRect);
 
-	systems::addToGroups(objectID, {&systems::drawAnimated});
+	globalManager.addToSystem<AnimatedTextures>(objectID);
 
 	globalManager.addComponent<AnimationInfo>({objectID, textureRect.x, frameSequence, frameTime});
 
@@ -38,7 +40,8 @@ ObjectID createObject::Damage(raylib::Vector2 position, raylib::Vector2 size, fl
 	uint16_t objectID = globalManager.createObject();	// Unique objectID used to identify the components as belonging to this object
 
 	// Add object to relevant systems
-	systems::addToGroups(objectID, {&systems::drawTextured, &systems::damageObjects});
+	systems::addToGroups(objectID, {&systems::damageObjects});
+	globalManager.addToSystem<DrawTextured>(objectID);
 
 	// Create components using this objectID and the parameters specified above
 	globalManager.addComponent<PositionComponent>({objectID, position});
@@ -51,7 +54,7 @@ ObjectID createObject::Damage(raylib::Vector2 position, raylib::Vector2 size, fl
 ObjectID createObject::DamageAnimated(raylib::Vector2 position, raylib::Vector2 size, raylib::Texture *texture, raylib::Rectangle textureRect, std::vector<uint8_t> frameSequence, float frameTime, float damage, float cooldown, Group *targets) {
 	ObjectID objectID = createObject::Damage(position, size, damage, cooldown, targets);
 
-	systems::addToGroups(objectID, {&systems::drawAnimated});
+	globalManager.addToSystem<AnimatedTextures>(objectID);
 
 	globalManager.addComponent<TextureComponent>({objectID, texture, textureRect});
 	globalManager.addComponent<AnimationInfo>({objectID, textureRect.x, frameSequence, frameTime});

@@ -153,6 +153,7 @@
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\objects\objects.cpp" />
+    <ClCompile Include="src\systems\drawingSystems.cpp" />
     <ClCompile Include="src\systems\systems.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +167,7 @@
     <ClInclude Include="src\game.hpp" />
     <ClInclude Include="src\objects\objects.hpp" />
     <ClInclude Include="src\settings.hpp" />
+    <ClInclude Include="src\systems\drawingSystems.hpp" />
     <ClInclude Include="src\systems\systems.hpp" />
   </ItemGroup>
   <ItemGroup>

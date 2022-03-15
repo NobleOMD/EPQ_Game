@@ -98,18 +98,22 @@ public:
 	// Systems
 	//----------------------------------------------------------------------------
 	template <typename System>
-	void registerSystem(Signature requiredComponents) {
-		systemManager.newSystem<System>(requiredComponents);
+	void registerSystem(std::vector<std::type_index> requiredComponents) {
+		systemManager.newSystem<System>(createSignature(requiredComponents));
 	}
 
 	template <typename System>
-	void addToSystem(ObjectID objectID) { systemManager.addToSystem<System>(objectID); }
+	void addToSystem(ObjectID objectID) { 
+		systemManager.addToSystem<System>(objectID); 
+	}
 
 	template <typename System>
 	void removeFromSystem(ObjectID objectID) { systemManager.removeFromSystem<System>(objectID); }
 
 	template <typename System>
-	void updateSystem() { systemManager.updateSystem<System>(); }
+	void updateSystem() { 
+		systemManager.updateSystem<System>(); 
+	}
 	//----------------------------------------------------------------------------
 		
 	// Old Systems

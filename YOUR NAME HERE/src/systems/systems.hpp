@@ -3,6 +3,7 @@
 
 #include "../ecs/ECSManager.hpp"
 #include "../components/components.hpp"
+#include "drawingSystems.hpp"
 
 namespace systems
 {
