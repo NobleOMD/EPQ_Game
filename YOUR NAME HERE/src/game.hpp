@@ -2,10 +2,12 @@
 #include <random>
 #include <include/raylib-cpp.hpp>
 
+#include "ecs/types.hpp"
 #include "settings.hpp"
 
 namespace game
 {
+	inline ObjectID player = UINT16_MAX;
 	inline bool over = false;
 
 	// Return a mt19937 random number seeded using time since game initialised

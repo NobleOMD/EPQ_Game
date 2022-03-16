@@ -3,25 +3,16 @@
 
 #include "../ecs/ECSManager.hpp"
 #include "../components/components.hpp"
+
 #include "drawingSystems.hpp"
+#include "healthSystem.hpp"
+#include "playerInput.hpp"
 
 namespace systems
 {
 	void registerSystems();
 	void addToGroups(ObjectID objectID, std::vector<Group *> groups);
 	bool hasComponents(ObjectID objectID, Signature requiredComponents);
-
-	// Drawing Systems
-	//---------------------------------------------------------------------------------
-	inline Group drawTextured;
-	void drawTextures();	// Draws all objects within above group with their texture
-
-	inline Group drawDebugging;
-	void drawDebug();		// Draws all objects within above group with a blue outline
-
-	inline Group drawAnimated;
-	void tickAnimations();
-	//---------------------------------------------------------------------------------
 
 	// Movement
 	//---------------------------------------------------------------------------------

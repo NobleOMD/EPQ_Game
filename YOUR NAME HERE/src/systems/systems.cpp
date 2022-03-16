@@ -29,6 +29,12 @@ void systems::registerSystems() {
 		typeid(AnimationInfo),
 		typeid(TextureComponent)
 	});
+
+	globalManager.registerSystem<HealthSystem>({
+		typeid(HealthComponent)
+	});
+
+	globalManager.registerSystem<PlayerInput>({});
 }
 
 // Basic system functions
@@ -65,7 +71,6 @@ void systems::handlePlayerInput() {
 	if (IsKeyPressed(KEY_A)) move(playerID, {-1, 0}, collisionObjects);
 	if (IsKeyPressed(KEY_S)) move(playerID, {0, 1}, collisionObjects);
 	if (IsKeyPressed(KEY_D)) move(playerID, {1, 0}, collisionObjects);
-
 }
 //---------------------------------------------------------------------------------
 

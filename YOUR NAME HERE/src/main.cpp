@@ -61,9 +61,9 @@ int main() {
 	while (!window.ShouldClose()) { // Detect window close button or ESC key
 		// Update
 		//----------------------------------------------------------------------------------
-		systems::handlePlayerInput();
+		globalManager.updateSystem<PlayerInput>();
 		systems::handleDamage();
-		systems::handleHealth();
+		globalManager.updateSystem<HealthSystem>();
 		globalManager.updateSystem<AnimatedTextures>();
 		globalManager.removeObjects();
 

@@ -1,4 +1,5 @@
 #include "objects.hpp"
+#include "../game.hpp"
 
 ObjectID createObject::TexturedRectangle(raylib::Vector2 position, raylib::Vector2 size, raylib::Texture *texture, raylib::Rectangle textureRect) { // Parameters for this kind of object
 	uint16_t objectID = globalManager.createObject();	// Unique objectID used to identify the components as belonging to this object
@@ -74,6 +75,7 @@ ObjectID createObject::Enemy(raylib::Vector2 position, raylib::Vector2 size, ray
 
 
 ObjectID createObject::Player(raylib::Vector2 position, raylib::Texture *texture) {
+	// Defaults for player
 	raylib::Vector2 size{1, 1};
 	raylib::Rectangle textureRect{128, 68, 16, 28};
 	std::vector<uint8_t> frameSequence{0, 1, 2, 3};
@@ -82,8 +84,10 @@ ObjectID createObject::Player(raylib::Vector2 position, raylib::Texture *texture
 
 	ObjectID objectID = createObject::Entity(position, size, texture, textureRect, frameSequence, frameTime, health);
 
-	assert(systems::player.size() == 0 && "There is already a player created.");
-	systems::addToGroups(objectID, {&systems::collisionObjects, &systems::player});
+	assert(game::player == UINT16_MAX && "There is already a player created.");
+	systems::addToGroups(objectID, {&systems::collisionObjects});
+	globalManager.addToSystem<HealthSystem>(objectID);
+	globalManager.addToSystem<PlayerInput>(objectID);
 
 	return objectID;
 }
