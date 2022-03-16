@@ -48,6 +48,11 @@ public:
 	}
 
 	template <typename System>
+	Group *getGroup() {
+		return &getSystem<System>()->group;
+	}
+
+	template <typename System>
 	Signature getSystemSignature() {
 		std::type_index systemTypeName = typeid(System);
 		return systemSignatures[systemTypeName];
@@ -56,11 +61,5 @@ public:
 	template <typename System>
 	void updateSystem() {
 		getSystem<System>()->update();
-	}
-
-	void updateSystems() {
-		for (std::shared_ptr<BaseSystem> system : systems) {
-			system->update();
-		}
 	}
 };

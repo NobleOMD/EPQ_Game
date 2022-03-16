@@ -32,7 +32,7 @@ int main() {
 		0.075,								// Animation frame duration
 		100,								// Damage
 		0.2,								// Cooldown
-		&systems::player					// Targets
+		globalManager.getSystemGroup<PlayerInput>()	// Targets
 	);
 
 	createObject::Player(

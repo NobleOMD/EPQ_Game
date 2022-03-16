@@ -4,15 +4,15 @@
 ObjectID createObject::TexturedRectangle(raylib::Vector2 position, raylib::Vector2 size, raylib::Texture *texture, raylib::Rectangle textureRect) { // Parameters for this kind of object
 	uint16_t objectID = globalManager.createObject();	// Unique objectID used to identify the components as belonging to this object
 
-	// Add object to relevant systems
-	systems::addToGroups(objectID, {&systems::moveableObjects});
-
-	globalManager.addToSystem<DrawTextured>(objectID);
-
 	// Create components using this objectID and the parameters specified above
 	globalManager.addComponent<PositionComponent>({objectID, position});
 	globalManager.addComponent<SizeComponent>({objectID, size});
 	globalManager.addComponent<TextureComponent>({objectID, texture, textureRect});
+
+	// Add object to relevant systems
+	systems::addToGroups(objectID, {&systems::moveableObjects});
+
+	globalManager.addToSystem<DrawTextured>(objectID);
 
 	return objectID;
 }
@@ -20,9 +20,9 @@ ObjectID createObject::TexturedRectangle(raylib::Vector2 position, raylib::Vecto
 ObjectID createObject::AnimatedTexture(raylib::Vector2 position, raylib::Vector2 size, raylib::Texture *texture, raylib::Rectangle textureRect, std::vector<uint8_t> frameSequence, float frameTime) {
 	ObjectID objectID = createObject::TexturedRectangle(position, size, texture, textureRect);
 
-	globalManager.addToSystem<AnimatedTextures>(objectID);
-
 	globalManager.addComponent<AnimationInfo>({objectID, textureRect.x, frameSequence, frameTime});
+
+	globalManager.addToSystem<AnimatedTextures>(objectID);
 
 	return objectID;
 }
@@ -30,9 +30,9 @@ ObjectID createObject::AnimatedTexture(raylib::Vector2 position, raylib::Vector2
 ObjectID createObject::Entity(raylib::Vector2 position, raylib::Vector2 size, raylib::Texture *texture, raylib::Rectangle textureRect, std::vector<uint8_t> frameSequence, float frameTime, float health) {
 	ObjectID objectID = createObject::AnimatedTexture(position, size, texture, textureRect, frameSequence, frameTime);
 
-	systems::addToGroups(objectID, {&systems::healthObjects});
-
 	globalManager.addComponent<HealthComponent>({objectID, health});
+
+	globalManager.addToSystem<HealthSystem>(objectID);
 
 	return objectID;
 }
@@ -40,14 +40,14 @@ ObjectID createObject::Entity(raylib::Vector2 position, raylib::Vector2 size, ra
 ObjectID createObject::Damage(raylib::Vector2 position, raylib::Vector2 size, float damage, float cooldown, Group *targets) {
 	uint16_t objectID = globalManager.createObject();	// Unique objectID used to identify the components as belonging to this object
 
-	// Add object to relevant systems
-	systems::addToGroups(objectID, {&systems::damageObjects});
-	globalManager.addToSystem<DrawTextured>(objectID);
-
 	// Create components using this objectID and the parameters specified above
 	globalManager.addComponent<PositionComponent>({objectID, position});
 	globalManager.addComponent<SizeComponent>({objectID, size});
 	globalManager.addComponent<DamageComponent>({objectID, damage, targets, cooldown});
+
+	// Add object to relevant systems
+	systems::addToGroups(objectID, {&systems::damageObjects});
+	globalManager.addToSystem<DrawTextured>(objectID);
 
 	return objectID;
 }
@@ -64,11 +64,11 @@ ObjectID createObject::DamageAnimated(raylib::Vector2 position, raylib::Vector2 
 }
 
 ObjectID createObject::Enemy(raylib::Vector2 position, raylib::Vector2 size, raylib::Texture *texture, raylib::Rectangle textureRect, std::vector<uint8_t> frameSequence, float frameTime, float health, float damage, float cooldown) {
-	ObjectID objectID = createObject::DamageAnimated(position, size, texture, textureRect, frameSequence, frameTime, damage, cooldown, &systems::player);
-
-	systems::addToGroups(objectID, {&systems::enemies, &systems::healthObjects});
+	ObjectID objectID = createObject::DamageAnimated(position, size, texture, textureRect, frameSequence, frameTime, damage, cooldown, globalManager.getSystemGroup<PlayerInput>());
 
 	globalManager.addComponent<HealthComponent>({objectID, health});
+
+	globalManager.addToSystem<HealthSystem>(objectID);
 
 	return objectID;
 }
@@ -86,6 +86,7 @@ ObjectID createObject::Player(raylib::Vector2 position, raylib::Texture *texture
 
 	assert(game::player == UINT16_MAX && "There is already a player created.");
 	systems::addToGroups(objectID, {&systems::collisionObjects});
+
 	globalManager.addToSystem<HealthSystem>(objectID);
 	globalManager.addToSystem<PlayerInput>(objectID);
 

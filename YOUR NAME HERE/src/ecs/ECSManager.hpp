@@ -114,6 +114,11 @@ public:
 	void updateSystem() { 
 		systemManager.updateSystem<System>(); 
 	}
+
+	template <typename System>
+	Group *getSystemGroup() {
+		return systemManager.getGroup<System>();
+	}
 	//----------------------------------------------------------------------------
 		
 	// Old Systems

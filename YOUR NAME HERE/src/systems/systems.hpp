@@ -20,13 +20,6 @@ namespace systems
 	void move(ObjectID objectID, raylib::Vector2 translation);
 	//---------------------------------------------------------------------------------
 
-	// Input
-	//---------------------------------------------------------------------------------
-	inline Group player;
-	inline Group enemies;
-	void handlePlayerInput();
-	//---------------------------------------------------------------------------------
-
 	// Collision
 	//---------------------------------------------------------------------------------
 	inline Group collisionObjects;
@@ -36,9 +29,5 @@ namespace systems
 	inline Group damageObjects;
 	void doDamage(DamageComponent &damageObject, const Group &collisionObjects);
 	void handleDamage();
-
-	inline Group healthObjects;
-	void handleHealth();
 	//---------------------------------------------------------------------------------
-
 }

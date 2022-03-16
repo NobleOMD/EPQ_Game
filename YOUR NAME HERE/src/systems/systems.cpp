@@ -1,17 +1,14 @@
 #include "systems.hpp"
+#include <cassert>
 
 #include "../settings.hpp"
 #include "../game.hpp"
-#include <cassert>
 
 void systems::registerSystems() {
 	globalManager.registerSystems({
 		&moveableObjects,
-		&player,
-		&enemies,
 		&collisionObjects,
-		&damageObjects,
-		&healthObjects
+		&damageObjects
 	});
 
 	globalManager.registerSystem<DrawTextured>({
@@ -58,19 +55,6 @@ void systems::move(ObjectID objectID, raylib::Vector2 translation) {
 
 	position.position += translation;
 	game::clampWithin(settings::gridSize, position.position, size.size); // Clamp within the overall grid
-}
-//---------------------------------------------------------------------------------
-
-// Input
-//---------------------------------------------------------------------------------
-void systems::handlePlayerInput() {
-	if (player.size() == 0) return;
-	ObjectID playerID = *player.begin();
-
-	if (IsKeyPressed(KEY_W)) move(playerID, {0, -1}, collisionObjects);
-	if (IsKeyPressed(KEY_A)) move(playerID, {-1, 0}, collisionObjects);
-	if (IsKeyPressed(KEY_S)) move(playerID, {0, 1}, collisionObjects);
-	if (IsKeyPressed(KEY_D)) move(playerID, {1, 0}, collisionObjects);
 }
 //---------------------------------------------------------------------------------
 
@@ -123,16 +107,6 @@ void systems::handleDamage() {
 		if (damage.timeRemaining >= 0) continue;
 
 		doDamage(damage, *damage.targets);
-	}
-}
-
-void systems::handleHealth() {
-	for (ObjectID objectID : healthObjects) {
-		HealthComponent health = globalManager.getComponent<HealthComponent>(objectID);
-		if (health.health > 0) continue;
-
-		globalManager.removeObject(objectID);
-		if (objectID == *player.begin()) game::over = true;
 	}
 }
 //---------------------------------------------------------------------------------
