@@ -1,52 +1,164 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="ObjectRectangle">
-    <Position X="1.75" Y="0.5" Width="1.5" />
+  <Class Name="ComponentManager" Collapsed="true">
+    <Position X="4.75" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AABAAAAAAAAAAAAAAIKAIAAAAAAAACAAAAAAAAAEAAA=</HashCode>
-      <FileName>src\objects.hpp</FileName>
+      <HashCode>AAAABAAgAAAAAAAECAAAACAAAAAABAACAAAAAAAAAAA=</HashCode>
+      <FileName>src\ecs\componentManager.hpp</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ObjectTexture">
-    <Position X="0.5" Y="3.75" Width="1.5" />
+  <Class Name="BaseContainer" Collapsed="true">
+    <Position X="0.5" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAABAAAAAAAAAAAQAAABAA=</HashCode>
-      <FileName>src\objects.hpp</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\ecs\componentVector.hpp</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ObjectCollision">
-    <Position X="3" Y="3.75" Width="1.5" />
+  <Class Name="ComponentVector&lt;Component&gt;" Collapsed="true">
+    <Position X="2.75" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAABAAAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>src\objects.hpp</FileName>
+      <HashCode>AAAAAAAAAAAAAAAEAACAQCAAAAAAAAAAAAAAAQACAAA=</HashCode>
+      <FileName>src\ecs\componentVector.hpp</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ObjectEntity">
-    <Position X="5.25" Y="6.25" Width="1.5" />
-    <InheritanceLine Type="ObjectCollision" FixedFromPoint="true">
-      <Path>
-        <Point X="4.5" Y="4.438" />
-        <Point X="6" Y="4.438" />
-        <Point X="6" Y="6.25" />
-      </Path>
-    </InheritanceLine>
+  <Class Name="ECSManager" Collapsed="true">
+    <Position X="7" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAACAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>src\objects.hpp</FileName>
+      <HashCode>ACCABAAAAAIAAgAkCBAAADUAAAAQBBAAQIEAAABAAYA=</HashCode>
+      <FileName>src\ecs\ECSManager.hpp</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="raylib::Rectangle" Collapsed="true">
-    <Position X="4.25" Y="0.75" Width="1.25" />
+  <Class Name="SignatureManager" Collapsed="true">
+    <Position X="4.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>EAAABAAAAiAAAgKAAAQYAAAAAAAmEgCAAEAAAAAAAIA=</HashCode>
-      <FileName>D:\Documents\EPQ_Game\Dependancies\raylib-cpp-4.0.5\include\Rectangle.hpp</FileName>
+      <HashCode>AAAABAAAAAKAAAAACAAAACEAASAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>src\ecs\signatureManager.hpp</FileName>
     </TypeIdentifier>
   </Class>
-  <Struct Name="Rectangle">
-    <Position X="6.25" Y="0.5" Width="1.5" />
+  <Class Name="SystemManager" Collapsed="true">
+    <Position X="4.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAQAQAAAAAAAAAAAAAAAAABgAAAAAAA=</HashCode>
-      <FileName>D:\Documents\EPQ_Game\Dependancies\raylib-4.0.0\include\raylib.h</FileName>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAADAAAAAQAAAAAMEABAAIgAA=</HashCode>
+      <FileName>src\ecs\systemsManager.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrawTextured" Collapsed="true">
+    <Position X="17" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>src\systems\drawingSystems.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrawDebug" Collapsed="true">
+    <Position X="1.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>src\systems\drawingSystems.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AnimatedTextures" Collapsed="true">
+    <Position X="5.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>src\systems\drawingSystems.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HealthSystem" Collapsed="true">
+    <Position X="10.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAEAAA=</HashCode>
+      <FileName>src\systems\healthSystems.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MovementSystem" Collapsed="true">
+    <Position X="14.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>src\systems\movementSystems.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CollisionSystem" Collapsed="true">
+    <Position X="19.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAABAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>src\systems\collisionSystems.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DamageSystem" Collapsed="true">
+    <Position X="8" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>src\systems\damageSystems.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerInput" Collapsed="true">
+    <Position X="12.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>src\systems\playerInput.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="PositionComponent" Collapsed="true">
+    <Position X="2.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\components\components.hpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="SizeComponent" Collapsed="true">
+    <Position X="2.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\components\components.hpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="TextureComponent" Collapsed="true">
+    <Position X="2.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAAAACAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\components\components.hpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="AnimationInfo" Collapsed="true">
+    <Position X="2.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAMAAAAAAAAAAAAAABAADAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\components\components.hpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="HealthComponent" Collapsed="true">
+    <Position X="2.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>src\components\components.hpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="DamageComponent" Collapsed="true">
+    <Position X="2.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAMgAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>src\components\components.hpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="PenetrationCompeont" Collapsed="true">
+    <Position X="2.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>src\components\components.hpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="BaseSystem" Collapsed="true">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>src\ecs\types.hpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="CollisionObjects" Collapsed="true">
+    <Position X="3.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>src\systems\collisionSystems.hpp</FileName>
     </TypeIdentifier>
   </Struct>
   <Font Name="Segoe UI" Size="9" />
