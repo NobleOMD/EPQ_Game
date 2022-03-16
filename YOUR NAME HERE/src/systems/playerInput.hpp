@@ -1,10 +1,12 @@
 #pragma once
 #include "../ecs/types.hpp"
 
-struct PlayerInput: public BaseSystem {
+class PlayerInput: public BaseSystem {
+public:
 	void update() override {
 		playerInput();
 	}
 
+private:
 	void playerInput();
 };

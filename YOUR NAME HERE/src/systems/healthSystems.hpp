@@ -1,9 +1,11 @@
 #include "../ecs/types.hpp"
 
-struct HealthSystem: public BaseSystem {
+class HealthSystem: public BaseSystem {
+public:
 	void update () override {
 		handleHealth();
 	}
 
+private:
 	void handleHealth();
 };

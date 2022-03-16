@@ -153,8 +153,11 @@
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\objects\objects.cpp" />
+    <ClCompile Include="src\systems\collisionSystems.cpp" />
+    <ClCompile Include="src\systems\damageSystems.cpp" />
     <ClCompile Include="src\systems\drawingSystems.cpp" />
-    <ClCompile Include="src\systems\healthSystem.cpp" />
+    <ClCompile Include="src\systems\healthSystems.cpp" />
+    <ClCompile Include="src\systems\movementSystems.cpp" />
     <ClCompile Include="src\systems\playerInput.cpp" />
     <ClCompile Include="src\systems\playerInput.hpp" />
     <ClCompile Include="src\systems\systems.cpp" />
@@ -170,8 +173,11 @@
     <ClInclude Include="src\game.hpp" />
     <ClInclude Include="src\objects\objects.hpp" />
     <ClInclude Include="src\settings.hpp" />
+    <ClInclude Include="src\systems\collisionSystems.hpp" />
+    <ClInclude Include="src\systems\damageSystems.hpp" />
     <ClInclude Include="src\systems\drawingSystems.hpp" />
-    <ClInclude Include="src\systems\healthSystem.hpp" />
+    <ClInclude Include="src\systems\healthSystems.hpp" />
+    <ClInclude Include="src\systems\movementSystems.hpp" />
     <ClInclude Include="src\systems\systems.hpp" />
   </ItemGroup>
   <ItemGroup>

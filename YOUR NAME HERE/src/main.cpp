@@ -14,8 +14,8 @@ int main() {
 	raylib::Window window(settings::getScaledSize().x, settings::getScaledSize().y, settings::title);
 	window.SetState(FLAG_VSYNC_HINT); // Use V-Sync to autodetect and run at monitor refresh rate
 
-	components::registerComponents(); // Register all components to the componentManager
-	systems::registerSystems(); // Register all system groups with the globalManager
+	registerComponents(); // Register all components with the componentManager
+	registerSystems(); // Register all system groups with the systemManager
 
 	raylib::Texture tileSet(
 		raylib::Image(".png", __0x72_DungeonTilesetII_v1_4_png, __0x72_DungeonTilesetII_v1_4_png_len)
@@ -62,7 +62,7 @@ int main() {
 		// Update
 		//----------------------------------------------------------------------------------
 		globalManager.updateSystem<PlayerInput>();
-		systems::handleDamage();
+		globalManager.updateSystem<DamageSystem>();
 		globalManager.updateSystem<HealthSystem>();
 		globalManager.updateSystem<AnimatedTextures>();
 		globalManager.removeObjects();

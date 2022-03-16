@@ -1,26 +1,30 @@
 #pragma once
 #include "../ecs/types.hpp"
 
-struct DrawTextured: public BaseSystem {
+class DrawTextured: public BaseSystem {
+public:
 	void update() override {
 		drawTextures();
 	}
 
+private:
 	void drawTextures();
 };
 
-struct DrawDebug: public BaseSystem {
+class DrawDebug: public BaseSystem {
+public:
 	void update() override {
 		drawDebug();
 	}
-
+private:
 	void drawDebug();
 };
 
-struct AnimatedTextures: public BaseSystem {
+class AnimatedTextures: public BaseSystem {
+public:
 	void update() override {
 		tickAnimations();
 	}
-
+private:
 	void tickAnimations();
 };

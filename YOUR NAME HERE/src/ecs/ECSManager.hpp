@@ -88,11 +88,6 @@ public:
 		}
 		removeQueue.clear();
 	}
-
-	// Get an objects signature
-	Signature getObjectSignature(ObjectID objectID) {
-		return signatureManager.getObjectSignature(objectID);
-	}
 	//----------------------------------------------------------------------------
 
 	// Systems
@@ -104,6 +99,10 @@ public:
 
 	template <typename System>
 	void addToSystem(ObjectID objectID) { 
+		Signature objectSignature = signatureManager.getObjectSignature(objectID);
+		Signature systemSignature = systemManager.getSystemSignature<System>();
+		assert((objectSignature & systemSignature) == systemSignature && "Object does not have components for system.");
+
 		systemManager.addToSystem<System>(objectID); 
 	}
 
@@ -118,6 +117,11 @@ public:
 	template <typename System>
 	Group *getSystemGroup() {
 		return systemManager.getGroup<System>();
+	}
+
+	template <typename System>
+	std::shared_ptr<System> getSystem() {
+		return systemManager.getSystem<System>();
 	}
 	//----------------------------------------------------------------------------
 		
