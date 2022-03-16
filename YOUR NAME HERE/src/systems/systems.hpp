@@ -11,4 +11,9 @@
 #include "collisionSystems.hpp"
 #include "damageSystems.hpp"
 
-void registerSystems();
+namespace systems
+{
+	void registerSystems();
+	void updateSystems();
+	void drawSystems();
+}

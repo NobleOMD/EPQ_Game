@@ -2,7 +2,7 @@
 #include <include/raylib-cpp.hpp>
 #include "../ecs/types.hpp"
 
-class MovementSystem: public BaseSystem{
+class MovementSystem: public BaseSystem {
 public:
 	void update() override {}
 

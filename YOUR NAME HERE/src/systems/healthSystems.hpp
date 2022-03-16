@@ -2,7 +2,7 @@
 
 class HealthSystem: public BaseSystem {
 public:
-	void update () override {
+	void update() override {
 		handleHealth();
 	}
 

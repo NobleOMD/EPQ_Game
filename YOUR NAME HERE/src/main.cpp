@@ -14,8 +14,8 @@ int main() {
 	raylib::Window window(settings::getScaledSize().x, settings::getScaledSize().y, settings::title);
 	window.SetState(FLAG_VSYNC_HINT); // Use V-Sync to autodetect and run at monitor refresh rate
 
-	registerComponents(); // Register all components with the componentManager
-	registerSystems(); // Register all system groups with the systemManager
+	components::registerComponents(); // Register all components with the componentManager
+	systems::registerSystems(); // Register all system groups with the systemManager
 
 	raylib::Texture tileSet(
 		raylib::Image(".png", __0x72_DungeonTilesetII_v1_4_png, __0x72_DungeonTilesetII_v1_4_png_len)
@@ -45,7 +45,7 @@ int main() {
 		raylib::Vector2{1, 2},
 		&tileSet,
 		raylib::Rectangle{16, 364, 32, 36},
-		{ 0, 1, 2, 3 },
+		{0, 1, 2, 3},
 		0.3,
 		100,
 		100,								// Damage
@@ -61,10 +61,7 @@ int main() {
 	while (!window.ShouldClose()) { // Detect window close button or ESC key
 		// Update
 		//----------------------------------------------------------------------------------
-		globalManager.updateSystem<PlayerInput>();
-		globalManager.updateSystem<DamageSystem>();
-		globalManager.updateSystem<HealthSystem>();
-		globalManager.updateSystem<AnimatedTextures>();
+		systems::updateSystems();
 		globalManager.removeObjects();
 
 		// Toggle full screen on F key presseds
@@ -78,8 +75,7 @@ int main() {
 		{
 			window.ClearBackground(settings::backgroundColour);
 
-			globalManager.updateSystem<DrawTextured>();
-			globalManager.updateSystem<DrawDebug>();
+			systems::drawSystems();
 
 			if (game::over) {
 				game::textFromCentre("Game Over", 30, RED, {0, -5});

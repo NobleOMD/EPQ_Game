@@ -3,7 +3,9 @@
 #include "../ecs/types.hpp"
 
 // Setup all components with the component manager
-void registerComponents();
+namespace components {
+	void registerComponents();
+}
 
 // Components should be data only
 

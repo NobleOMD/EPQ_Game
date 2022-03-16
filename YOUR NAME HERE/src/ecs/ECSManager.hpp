@@ -12,7 +12,7 @@ private:
 	SystemManager systemManager;
 
 	std::vector<Group *> systemGroups;
-	
+
 	Group removeQueue;
 
 public:
@@ -44,7 +44,7 @@ public:
 	Signature getComponentSignature() {
 		return signatureManager.getComponentSignature<Component>();
 	}
-	
+
 	// Get a component belonging to an object
 	template <typename Component>
 	Component &getComponent(ObjectID objectID) {
@@ -98,20 +98,20 @@ public:
 	}
 
 	template <typename System>
-	void addToSystem(ObjectID objectID) { 
+	void addToSystem(ObjectID objectID) {
 		Signature objectSignature = signatureManager.getObjectSignature(objectID);
 		Signature systemSignature = systemManager.getSystemSignature<System>();
 		assert((objectSignature & systemSignature) == systemSignature && "Object does not have components for system.");
 
-		systemManager.addToSystem<System>(objectID); 
+		systemManager.addToSystem<System>(objectID);
 	}
 
 	template <typename System>
 	void removeFromSystem(ObjectID objectID) { systemManager.removeFromSystem<System>(objectID); }
 
 	template <typename System>
-	void updateSystem() { 
-		systemManager.updateSystem<System>(); 
+	void updateSystem() {
+		systemManager.updateSystem<System>();
 	}
 
 	template <typename System>
@@ -124,11 +124,11 @@ public:
 		return systemManager.getSystem<System>();
 	}
 	//----------------------------------------------------------------------------
-		
+
 	// Old Systems
 	//----------------------------------------------------------------------------
 	void newSystem(Group *group) { systemGroups.push_back(group); }
-	void registerSystems(std::vector<Group *> groups) {	for (Group *group : groups) newSystem(group); }
+	void registerSystems(std::vector<Group *> groups) { for (Group *group : groups) newSystem(group); }
 	//----------------------------------------------------------------------------
 };
 

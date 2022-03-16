@@ -7,8 +7,8 @@
 // Base class that we can cast to the correct type
 class BaseContainer {
 public:
-	virtual void removeObject(ObjectID objectID) =0;
-}; 
+	virtual void removeObject(ObjectID objectID) = 0;
+};
 
 // ComponentVector stores and components of template type, components can be fetched by their objectID
 template <typename Component>
