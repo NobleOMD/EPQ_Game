@@ -17,9 +17,8 @@ int main() {
 	components::registerComponents(); // Register all components with the componentManager
 	systems::registerSystems(); // Register all system groups with the systemManager
 
-	raylib::Texture tileSet(
-		raylib::Image(".png", __0x72_DungeonTilesetII_v1_4_png, __0x72_DungeonTilesetII_v1_4_png_len)
-	);
+	raylib::Texture tileSet("textures\\0x72_DungeonTilesetII_v1.4.png");
+	raylib::Texture background("textures\\background.png");
 
 	// Initialise game objects
 	//----------------------------------------------------------------------------------
@@ -33,6 +32,26 @@ int main() {
 		100,								// Damage
 		0.2,								// Cooldown
 		globalManager.getSystemGroup<PlayerInput>()	// Targets
+	);
+
+	createObject::Wall(
+		{0, 0},
+		{2, settings::gridSize.y}
+	);
+
+	createObject::Wall(
+		{settings::gridSize.x - 2, 0},
+		{2, settings::gridSize.y}
+	);
+
+	createObject::Wall(
+		{0, 0},
+		{settings::gridSize.x, 1}
+	);
+
+	createObject::Wall(
+		{0, settings::gridSize.y - 1},
+		{settings::gridSize.x, 1}
 	);
 
 	createObject::Player(
@@ -74,7 +93,7 @@ int main() {
 		scalerCanvas.BeginMode();
 		{
 			window.ClearBackground(settings::backgroundColour);
-
+			DrawTexture(background, 0, 0, WHITE);
 			systems::drawSystems();
 
 			if (game::over) {

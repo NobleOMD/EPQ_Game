@@ -1,5 +1,6 @@
 #pragma once
 #include <include/raylib-cpp.hpp>
+
 #include "../ecs/ECSManager.hpp"
 #include "../systems/systems.hpp"
 #include "../components/components.hpp"
@@ -13,4 +14,5 @@ namespace createObject
 	ObjectID DamageAnimated(raylib::Vector2 position, raylib::Vector2 size, raylib::Texture *texture, raylib::Rectangle textureRect, std::vector<uint8_t> frameSequence, float frameTime, float damage, float cooldown, Group *targets);
 	ObjectID Enemy(raylib::Vector2 position, raylib::Vector2 size, raylib::Texture *texture, raylib::Rectangle textureRect, std::vector<uint8_t> frameSequence, float frameTime, float health, float damage, float cooldown);
 	ObjectID Player(raylib::Vector2 position, raylib::Texture *texture);
+	ObjectID Wall(raylib::Vector2 position, raylib::Vector2 size = {1, 1});
 }
