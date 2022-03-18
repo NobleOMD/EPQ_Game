@@ -9,41 +9,37 @@ namespace components {
 
 // Components should be data only
 
-struct PositionComponent {
-	ObjectID objectID;
+struct Timer: public BaseComponent {
+	float timerDuration;
+	float timeRemaining;
+};
+
+struct PositionComponent: public BaseComponent {
 	raylib::Vector2 position;
 };
 
-struct SizeComponent {
-	ObjectID objectID;
+struct SizeComponent: public BaseComponent {
 	raylib::Vector2 size;
 };
 
-struct TextureComponent {
-	ObjectID objectID;
+struct TextureComponent: public BaseComponent {
 	raylib::Texture *texture;
 	raylib::Rectangle rectangle;
 };
 
-struct AnimationInfo {
-	ObjectID objectID;
-
+struct AnimationInfo: public BaseComponent {
 	float frameZero;
 	std::vector<uint8_t> frameSequence;
-	float timerLength;
-
 	uint8_t frameIndex = 0;
-	float timeRemaining = timerLength;
 };
 
-struct HealthComponent {
-	ObjectID objectID;
+struct AnimationTimer: public Timer {};
+
+struct HealthComponent: public BaseComponent {
 	float health;
 };
 
-struct DamageComponent {
-	ObjectID objectID;
-
+struct DamageComponent: public BaseComponent {
 	float damage;
 	Group *targets;
 
@@ -51,7 +47,12 @@ struct DamageComponent {
 	float timeRemaining = 0;
 };
 
-struct PenetrationCompeont {
-	ObjectID objectID;
+struct DamageTimer: public Timer {};
+
+struct PenetrationCompeont: public BaseComponent {
 	uint8_t penetration;
+};
+
+struct Movement: public BaseComponent {
+	raylib::Vector2 translation;
 };

@@ -2,6 +2,7 @@
 #include "../ecs/ECSManager.hpp"
 #include "../components/components.hpp"
 #include "../settings.hpp"
+#include "miscFunctions.hpp"
 
 void DrawTextured::drawTextures() {
 	for (ObjectID objectID : group) {
@@ -31,13 +32,14 @@ void DrawDebug::drawDebug() {
 
 void AnimatedTextures::tickAnimations() {
 	for (ObjectID objectID : group) {
+		AnimationTimer &animationTimer = globalManager.getComponent<AnimationTimer>(objectID);
+
+		// Update the timer continuing the loop if its not finished a cycle
+		if (!functions::updateTimer(animationTimer)) continue;
+
+		// If the timer has completed a cycle get the other components needed
 		AnimationInfo &animationInfo = globalManager.getComponent<AnimationInfo>(objectID);
 		TextureComponent &textureComponent = globalManager.getComponent<TextureComponent>(objectID);
-
-		// Update the timer
-		animationInfo.timeRemaining -= GetFrameTime();
-		if (animationInfo.timeRemaining >= 0) continue;
-		else animationInfo.timeRemaining = animationInfo.timerLength;
 
 		// If the timer completes a cycle tick through the animation
 		animationInfo.frameIndex++;

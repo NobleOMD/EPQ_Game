@@ -10,6 +10,7 @@
 #include "movementSystems.hpp"
 #include "collisionSystems.hpp"
 #include "damageSystems.hpp"
+#include "AImovement.hpp"
 
 namespace systems
 {

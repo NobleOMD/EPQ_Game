@@ -1,6 +1,6 @@
 #include <include/raylib-cpp.hpp> // Cpp headers that include class functionality
 
-#include "settings.hpp" // My global variables
+#include "settings.hpp"	// My global variables
 #include "game.hpp"		// General game functions
 #include "systems/systems.hpp"
 #include "objects/objects.hpp"

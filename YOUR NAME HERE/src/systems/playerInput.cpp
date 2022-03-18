@@ -14,4 +14,8 @@ void PlayerInput::playerInput() {
 	if (IsKeyPressed(KEY_A)) collisionSystem->move(playerID, {-1, 0}, collisionObjects);
 	if (IsKeyPressed(KEY_S)) collisionSystem->move(playerID, {0, 1}, collisionObjects);
 	if (IsKeyPressed(KEY_D)) collisionSystem->move(playerID, {1, 0}, collisionObjects);
+
+	if (IsKeyPressed(KEY_SPACE)) {
+		// Create new fireball
+	};
 }

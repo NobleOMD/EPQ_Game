@@ -12,42 +12,46 @@ void systems::registerSystems() {
 		typeid(TextureComponent),
 		typeid(PositionComponent),
 		typeid(SizeComponent)
-		});
+	});
 
 	globalManager.registerSystem<DrawDebug>({
 		typeid(PositionComponent),
 		typeid(SizeComponent)
-		});
+	});
 
 	globalManager.registerSystem<AnimatedTextures>({
 		typeid(AnimationInfo),
 		typeid(TextureComponent)
-		});
+	});
 
 	globalManager.registerSystem<HealthSystem>({
 		typeid(HealthComponent)
-		});
+	});
 
 	globalManager.registerSystem<PlayerInput>({});
 
 	globalManager.registerSystem<MovementSystem>({
 		typeid(PositionComponent),
 		typeid(SizeComponent)
-		});
+	});
 
 	globalManager.registerSystem<CollisionSystem>({
 		typeid(PositionComponent),
 		typeid(SizeComponent)
-		});
+	});
 
 	globalManager.registerSystem<CollisionObjects>({
 		typeid(PositionComponent),
 		typeid(SizeComponent)
-		});
+	});
 
 	globalManager.registerSystem<DamageSystem>({
 		typeid(DamageComponent)
-		});
+	});
+
+	globalManager.registerSystem<AIMovement>({
+		typeid(Movement)
+	});
 }
 
 void systems::updateSystems() {
@@ -55,6 +59,7 @@ void systems::updateSystems() {
 	globalManager.updateSystem<DamageSystem>();
 	globalManager.updateSystem<HealthSystem>();
 	globalManager.updateSystem<AnimatedTextures>();
+	globalManager.updateSystem<AIMovement>();
 }
 
 void systems::drawSystems() {
