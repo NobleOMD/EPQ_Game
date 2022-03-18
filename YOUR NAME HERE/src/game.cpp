@@ -2,7 +2,7 @@
 
 float game::mt19937range(float min, float max) {
 	int mod = max * 100.0f;
-	return min + (random() % mod) / 100.0f;
+	return min + ((random() % mod) / 100.0f);
 }
 
 // Clamp a (position) vector within a specified (area)
@@ -43,5 +43,6 @@ void game::scaleFullscreen(raylib::Window &window, bool fullscreen) {
 void game::textFromCentre(const std::string &text, int size, raylib::Color colour, raylib::Vector2 offset) {
 	raylib::Vector2 textSize = {(float) raylib::MeasureText(text, size), (float) size};
 	raylib::Vector2	textPosition = (settings::screenSize / 2) - (textSize / 2) + offset;
+
 	raylib::DrawText(text, textPosition.x, textPosition.y, size, colour);
 }

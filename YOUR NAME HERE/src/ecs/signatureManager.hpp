@@ -10,7 +10,7 @@ private:
 	std::unordered_map<std::type_index, Signature> componentSignatures;
 
 public:
-	// Add component signature
+	/// Add component signature to dataset
 	template <typename Component>
 	void newComponentSignature() {
 		std::type_index typeName = typeid(Component);
@@ -18,43 +18,44 @@ public:
 		componentSignatures[typeName] = signature.set(componentSignatures.size());
 	};
 
-	// Add objectID
+	/// Add objectID to | ObjectID : Signature | map
 	void newObjectSignature(ObjectID objectID) {
 		Signature newSignature = 0b0000;
 		objectID_signature[objectID] = newSignature;
 	};
 
-	// Add component to objectID
+	/// Add component to object
 	template <typename Component>
 	void addComponent(ObjectID objectID) {
 		Signature componentSignature = getComponentSignature<Component>();
 		objectID_signature[objectID] |= componentSignature;		// Bitwise OR the component signature with the current signature
 	};
 
-	// Remove component from objectID
+	/// Remove component from object
 	template <typename Component>
 	void removeComponent(ObjectID objectID) {
 		Signature componentSignature = getComponentSignature<Component>();
 		objectID_signature[objectID] ^= componentSignature;		// Bitwise XOR the component signature with the current signature
 	};
 
-	// Remove objectID
+	/// Remove objectID from | ObjectID : Signature | map
 	void removeObject(ObjectID objectID) {
 		objectID_signature.erase(objectID);
 	};
 
-	// Get signature by component
+	/// Get signature by component
 	template <typename Component>
 	Signature getComponentSignature() {
 		std::type_index typeName = typeid(Component);
 		return componentSignatures[typeName];
 	};
 
+	/// Get the signature of component by type
 	Signature getComponentSignature(std::type_index typeName) {
 		return componentSignatures[typeName];
 	};
 
-	// Get signature by objectID
+	/// Get signature by objectID
 	Signature getObjectSignature(ObjectID objectID) {
 		return objectID_signature[objectID];
 	};

@@ -10,7 +10,7 @@ namespace settings
 	inline raylib::Vector2 gridSize{25, 15}; // Size of the screen "grid" in tiles
 	inline raylib::Vector2 screenSize = gridSize * tileSize; // True screen size
 
-	inline raylib::Color backgroundColour(0x282c34ff); // Background colour, note the required use of 100% opacity
+	inline raylib::Color backgroundColour(0x222222FF); // Background colour, note the required use of 100% opacity
 
 	// Scaling globals
 	inline constexpr int defaultScaleFactor = 3;

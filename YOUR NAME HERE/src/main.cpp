@@ -1,10 +1,7 @@
 #include <include/raylib-cpp.hpp> // Cpp headers that include class functionality
 
-#include "../textures/dungeonTileset.h"
-
 #include "settings.hpp" // My global variables
 #include "game.hpp"		// General game functions
-
 #include "systems/systems.hpp"
 #include "objects/objects.hpp"
 
@@ -22,53 +19,25 @@ int main() {
 
 	// Initialise game objects
 	//----------------------------------------------------------------------------------
-	createObject::DamageAnimated(
-		raylib::Vector2{12, 7},				// Position
-		raylib::Vector2{1, 1},				// Size
-		&tileSet,							// Texture
-		raylib::Rectangle{16, 176, 16, 16},	// Texture sub-rectangle
-		{0, 1, 2, 3},						// Animation frame sequence
-		0.075,								// Animation frame duration
-		100,								// Damage
-		0.2,								// Cooldown
+	createObject::Wall({0, 0}, {2, settings::gridSize.y});
+	createObject::Wall({settings::gridSize.x - 2, 0}, {2, settings::gridSize.y});
+	createObject::Wall({0, 0}, {settings::gridSize.x, 1});
+	createObject::Wall({0, settings::gridSize.y - 1}, {settings::gridSize.x, 1});
+
+	createObject::Spikes(
+		raylib::Vector2{12, 7},						// Position
+		&tileSet,									// Texture
 		globalManager.getSystemGroup<PlayerInput>()	// Targets
 	);
 
-	createObject::Wall(
-		{0, 0},
-		{2, settings::gridSize.y}
-	);
-
-	createObject::Wall(
-		{settings::gridSize.x - 2, 0},
-		{2, settings::gridSize.y}
-	);
-
-	createObject::Wall(
-		{0, 0},
-		{settings::gridSize.x, 1}
-	);
-
-	createObject::Wall(
-		{0, settings::gridSize.y - 1},
-		{settings::gridSize.x, 1}
-	);
-
 	createObject::Player(
-		raylib::Vector2{8, 7},				// Position
-		&tileSet							// Texture
+		raylib::Vector2{8, 7},
+		&tileSet
 	);
 
-	createObject::Enemy(
+	createObject::BigDemon(
 		raylib::Vector2{16, 6},
-		raylib::Vector2{1, 2},
-		&tileSet,
-		raylib::Rectangle{16, 364, 32, 36},
-		{0, 1, 2, 3},
-		0.3,
-		100,
-		100,								// Damage
-		1.2									// Cooldown
+		&tileSet
 	);
 	//----------------------------------------------------------------------------------
 
@@ -83,7 +52,7 @@ int main() {
 		systems::updateSystems();
 		globalManager.removeObjects();
 
-		// Toggle full screen on F key presseds
+		// Toggle full screen on F key pressed
 		if (IsKeyPressed(KEY_F)) game::scaleFullscreen(window, window.IsFullscreen());
 		//----------------------------------------------------------------------------------
 
@@ -92,7 +61,8 @@ int main() {
 		// Draw the game the scale canvas 
 		scalerCanvas.BeginMode();
 		{
-			window.ClearBackground(settings::backgroundColour);
+			//window.ClearBackground(settings::backgroundColour);
+
 			DrawTexture(background, 0, 0, WHITE);
 			systems::drawSystems();
 

@@ -93,10 +93,37 @@ ObjectID createObject::Player(raylib::Vector2 position, raylib::Texture* texture
 ObjectID createObject::Wall(raylib::Vector2 position, raylib::Vector2 size) {
 	ObjectID objectID = globalManager.createObject();
 
-	globalManager.addComponent<PositionComponent>({objectID, position});
-	globalManager.addComponent<SizeComponent>({objectID, size});
+	globalManager.addComponent<PositionComponent>({ objectID, position });
+	globalManager.addComponent<SizeComponent>({ objectID, size });
 
 	globalManager.addToSystem<CollisionObjects>(objectID);
+
+	return objectID;
+}
+
+ObjectID createObject::Spikes(raylib::Vector2 position, raylib::Texture *texture, Group *targets) {
+	raylib::Vector2 size{1, 1};							// Size
+	raylib::Rectangle textureRect{16, 176, 16, 16};		// Texture sub-rectangle
+	std::vector<uint8_t> frameSequence{0, 1, 2, 3};		// Animation frame sequence
+	float frameTime = 0.075;							// Animation frame duration
+	float damage = 100;									// Damage
+	float damageCooldown = 0.2;							// Cooldown
+
+	ObjectID objectID = DamageAnimated(position, size, texture, textureRect, frameSequence, frameTime, damage, damageCooldown, targets);
+
+	return objectID;
+}
+
+ObjectID createObject::BigDemon(raylib::Vector2 position, raylib::Texture *texture) {
+	raylib::Vector2 size{1, 2};
+	raylib::Rectangle textureRect{16, 364, 32, 36};
+	std::vector<uint8_t> frameSequence{ 0, 1, 2, 3 };
+	float frameTime = 0.3;
+	float health = 100;
+	float damage = 100;
+	float damageCooldown = 1.2;
+
+	ObjectID objectID = Enemy(position, size, texture, textureRect, frameSequence, frameTime, health, damage, damageCooldown);
 
 	return objectID;
 }

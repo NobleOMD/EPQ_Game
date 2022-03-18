@@ -2,8 +2,8 @@
 #include <include/raylib-cpp.hpp>
 #include "../ecs/types.hpp"
 
-// Setup all components with the component manager
 namespace components {
+	/// Setup all components with the component manager
 	void registerComponents();
 }
 
@@ -53,6 +53,5 @@ struct DamageComponent {
 
 struct PenetrationCompeont {
 	ObjectID objectID;
-
 	uint8_t penetration;
 };
