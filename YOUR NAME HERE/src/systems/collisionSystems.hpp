@@ -11,6 +11,4 @@ public:
 	void move(ObjectID objectID, raylib::Vector2 translation, const Group &collisionObjects);
 };
 
-struct CollisionObjects: public BaseSystem {
-	void update() override {};
-};
+struct CollisionObjects: public SystemGroup {};

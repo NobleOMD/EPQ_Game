@@ -18,4 +18,5 @@ namespace createObject
 	ObjectID Wall(raylib::Vector2 position, raylib::Vector2 size = {1, 1});
 	ObjectID Spikes(raylib::Vector2 position, raylib::Texture *texture, Group *targets);
 	ObjectID BigDemon(raylib::Vector2 position, raylib::Texture *texture);
+	ObjectID FireBall(raylib::Vector2 position, raylib::Texture *texture);
 }

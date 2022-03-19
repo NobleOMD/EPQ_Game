@@ -39,6 +39,11 @@ int main() {
 		raylib::Vector2{16, 6},
 		&tileSet
 	);
+
+	createObject::FireBall(
+		raylib::Vector2{9, 7},
+		&tileSet
+	);
 	//----------------------------------------------------------------------------------
 
 	// Texture that the game is rendered to, this is then scaled to the window size

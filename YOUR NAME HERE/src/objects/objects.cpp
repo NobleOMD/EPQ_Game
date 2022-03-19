@@ -129,3 +129,14 @@ ObjectID createObject::BigDemon(raylib::Vector2 position, raylib::Texture *textu
 
 	return objectID;
 }
+
+ObjectID createObject::FireBall(raylib::Vector2 position, raylib::Texture *texture) {
+	raylib::Vector2 size{1, 1};
+	raylib::Rectangle textureRect{328, 270, 32, 13};
+	float damage = 100;
+	float damageCooldown = 1.2;
+
+	ObjectID objectID = TexturedRectangle(position, size, texture, textureRect);
+
+	return objectID;
+}
