@@ -12,3 +12,7 @@ void AIMovement::moveAI() {
 		movementSystem->move(objectID, movement.translation);
 	}
 }
+
+void AIMovement::update() {
+	moveAI();
+}

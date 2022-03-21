@@ -40,11 +40,7 @@ public:
 	}
 
 	/// Remove an object from all systems
-	void removeObject(ObjectID objectID) {
-		for (const std::shared_ptr<BaseSystem> &system : systems) {
-			system->removeObject(objectID);
-		}
-	}
+	void removeObject(ObjectID objectID);
 
 	/// Get a system
 	template <typename System>

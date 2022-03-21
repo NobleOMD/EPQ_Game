@@ -14,12 +14,14 @@ struct BaseComponent {
 using Signature = std::bitset<MAX_COMPONENTS>;
 using Group = std::set<ObjectID>;	// A group is just a set of ObjectID's that can be iterated over. A set is used as ObjectID's should be unique
 
-struct BaseSystem {
+class BaseSystem {
+public:
 	Group group;
 	virtual void update() = 0;
-	void removeObject(ObjectID objectID) { group.erase(objectID); }
+	void removeObject(ObjectID objectID);
 };
 
-struct SystemGroup: public BaseSystem {
-	void update() override {} // Remove the use of the update function for any derived class
+class SystemGroup: public BaseSystem {
+public:
+	void update() override; // Remove the use of the update function for any derived class
 };

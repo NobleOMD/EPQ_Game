@@ -25,3 +25,7 @@ void DamageSystem::doDamage(DamageComponent &damageObject, const Group &targetOb
 	health.health -= damageObject.damage;
 	damageObject.timeRemaining = damageObject.timerLength;
 }
+
+void DamageSystem::update() {
+	handleDamage();
+}

@@ -3,10 +3,8 @@
 
 #include "../ecs/types.hpp"
 
-class CollisionSystem: public BaseSystem {
+class CollisionSystem: public SystemGroup {
 public:
-	void update() override {};
-
 	ObjectID collisionCheck(ObjectID objectID, const Group &testObjects);
 	void move(ObjectID objectID, raylib::Vector2 translation, const Group &collisionObjects);
 };

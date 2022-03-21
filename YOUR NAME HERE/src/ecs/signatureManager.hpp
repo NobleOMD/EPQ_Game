@@ -19,10 +19,7 @@ public:
 	};
 
 	/// Add objectID to | ObjectID : Signature | map
-	void newObjectSignature(ObjectID objectID) {
-		Signature newSignature = 0b0000;
-		objectID_signature[objectID] = newSignature;
-	};
+	void newObjectSignature(ObjectID objectID);;
 
 	/// Add component to object
 	template <typename Component>
@@ -39,9 +36,7 @@ public:
 	};
 
 	/// Remove objectID from | ObjectID : Signature | map
-	void removeObject(ObjectID objectID) {
-		objectID_signature.erase(objectID);
-	};
+	void removeObject(ObjectID objectID);;
 
 	/// Get signature by component
 	template <typename Component>
@@ -51,9 +46,7 @@ public:
 	};
 
 	/// Get the signature of component by type
-	Signature getComponentSignature(std::type_index typeName) {
-		return componentSignatures[typeName];
-	};
+	Signature getComponentSignature(std::type_index typeName);;
 
 	/// Get signature by objectID
 	Signature getObjectSignature(ObjectID objectID) {

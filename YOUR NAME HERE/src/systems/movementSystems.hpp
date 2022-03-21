@@ -2,9 +2,7 @@
 #include <include/raylib-cpp.hpp>
 #include "../ecs/types.hpp"
 
-class MovementSystem: public BaseSystem {
+class MovementSystem: public SystemGroup {
 public:
-	void update() override {}
-
 	void move(ObjectID objectID, raylib::Vector2 translation);
 };

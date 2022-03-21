@@ -152,9 +152,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\components\components.cpp" />
+    <ClCompile Include="src\ecs\componentManager.cpp" />
+    <ClCompile Include="src\ecs\ECSManager.cpp" />
+    <ClCompile Include="src\ecs\signatureManager.cpp" />
+    <ClCompile Include="src\ecs\systemsManager.cpp" />
+    <ClCompile Include="src\ecs\types.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\objects\objects.cpp" />
+    <ClCompile Include="src\settings.cpp" />
     <ClCompile Include="src\systems\AImovement.cpp" />
     <ClCompile Include="src\systems\collisionSystems.cpp" />
     <ClCompile Include="src\systems\damageSystems.cpp" />

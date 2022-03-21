@@ -15,3 +15,7 @@ void HealthSystem::handleHealth() {
 		if (objectID == *player->begin()) game::over = true;
 	}
 }
+
+void HealthSystem::update() {
+	handleHealth();
+}

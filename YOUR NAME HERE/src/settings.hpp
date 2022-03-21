@@ -18,9 +18,7 @@ namespace settings
 	inline raylib::Vector2 scaleOrigin = {0, 0}; // Origin used by the scaleCanvas
 
 	// Get the current screen size according to the scale factor
-	inline raylib::Vector2 getScaledSize() {
-		return screenSize * scaleFactor;
-	};
+	raylib::Vector2 getScaledSize();
 
 	// Font Settings
 	inline raylib::Font defaultFont; // The default raylib text glyphs

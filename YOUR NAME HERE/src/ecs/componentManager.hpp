@@ -32,12 +32,7 @@ public:
 	}
 
 	/// Iterate over all the component vectors in the map and call their remove object function
-	void removeObject(ObjectID objectID) {
-		for (auto const &pair : componentVectors) {
-			auto const &component = pair.second;
-			component->removeObject(objectID);
-		}
-	}
+	void removeObject(ObjectID objectID);
 
 	/// Get a component by objectID
 	template<typename Component>

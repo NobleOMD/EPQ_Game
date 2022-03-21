@@ -20,6 +20,10 @@ void DrawTextured::drawTextures() {
 	}
 }
 
+void DrawTextured::update() {
+	drawTextures();
+}
+
 void DrawDebug::drawDebug() {
 	for (ObjectID objectID : group) {
 		PositionComponent position = globalManager.getComponent<PositionComponent>(objectID);
@@ -28,6 +32,10 @@ void DrawDebug::drawDebug() {
 		raylib::Rectangle rectangle{position.position * settings::tileSize, size.size * settings::tileSize};
 		rectangle.DrawLines(BLUE);
 	}
+}
+
+void DrawDebug::update() {
+	drawDebug();
 }
 
 void AnimatedTextures::tickAnimations() {
@@ -49,4 +57,8 @@ void AnimatedTextures::tickAnimations() {
 		float animationOffset = textureComponent.rectangle.width * animationInfo.frameSequence[animationInfo.frameIndex];
 		textureComponent.rectangle.x = animationInfo.frameZero + animationOffset;
 	}
+}
+
+void AnimatedTextures::update() {
+	tickAnimations();
 }

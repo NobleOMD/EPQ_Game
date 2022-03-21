@@ -2,29 +2,25 @@
 #include "../ecs/types.hpp"
 
 class DrawTextured: public BaseSystem {
-public:
-	void update() override {
-		drawTextures();
-	}
-
 private:
 	void drawTextures();
+
+public:
+	void update() override;
 };
 
 class DrawDebug: public BaseSystem {
-public:
-	void update() override {
-		drawDebug();
-	}
 private:
 	void drawDebug();
+
+public:
+	void update() override;
 };
 
 class AnimatedTextures: public BaseSystem {
-public:
-	void update() override {
-		tickAnimations();
-	}
 private:
 	void tickAnimations();
+
+public:
+	void update() override;
 };

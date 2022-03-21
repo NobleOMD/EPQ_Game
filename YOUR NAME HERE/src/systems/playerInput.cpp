@@ -19,3 +19,7 @@ void PlayerInput::playerInput() {
 		// Create new fireball
 	};
 }
+
+void PlayerInput::update() {
+	playerInput();
+}

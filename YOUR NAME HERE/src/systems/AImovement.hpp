@@ -3,10 +3,8 @@
 
 class AIMovement: public BaseSystem {
 public:
-	void update() override {
-		moveAI();
-	}
+	void update() override;
 
-	void moveAI();
 private:
+	void moveAI();
 };
