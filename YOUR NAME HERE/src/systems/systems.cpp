@@ -3,8 +3,7 @@
 
 #include "../settings.hpp"
 #include "../game.hpp"
-
-class PlayerInput;
+#include "../ecs/ECSManager.hpp"
 
 void systems::registerSystems() {
 

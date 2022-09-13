@@ -1,5 +1,9 @@
 #include "objects.hpp"
+
 #include "../game.hpp"
+#include "../ecs/ECSManager.hpp"
+#include "../systems/systems.hpp"
+#include "../components/components.hpp"
 
 ObjectID createObject::TexturedRectangle(raylib::Vector2 position, raylib::Vector2 size, raylib::Texture *texture, raylib::Rectangle textureRect) { // Parameters for this kind of object
 	uint16_t objectID = globalManager.createObject();	// Unique objectID used to identify the components as belonging to this object

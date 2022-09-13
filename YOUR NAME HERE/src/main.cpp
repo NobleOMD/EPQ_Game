@@ -2,6 +2,7 @@
 
 #include "settings.hpp"	// My global variables
 #include "game.hpp"		// General game functions
+
 #include "systems/systems.hpp"
 #include "objects/objects.hpp"
 
@@ -40,10 +41,10 @@ int main() {
 		&tileSet
 	);
 
-	createObject::FireBall(
+	/*createObject::FireBall(
 		raylib::Vector2{9, 7},
 		&tileSet
-	);
+	);*/
 	//----------------------------------------------------------------------------------
 
 	// Texture that the game is rendered to, this is then scaled to the window size

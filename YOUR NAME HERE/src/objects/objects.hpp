@@ -2,8 +2,6 @@
 #include <include/raylib-cpp.hpp>
 
 #include "../ecs/ECSManager.hpp"
-#include "../systems/systems.hpp"
-#include "../components/components.hpp"
 
 namespace createObject
 {
